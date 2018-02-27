@@ -1,0 +1,22 @@
+server:
+  port: 8080
+ 
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      
+  datasource:
+    name: myDataSource
+    url: jdbc:mysql://localhost:3307/tntconcept?autoReconnect=true&useSSL=false
+    username: tnt
+    password: tnt
+    driver-class-name: com.mysql.jdbc.Driver
+  
+   
+spring.queries.users-query: select login,password from User where login=?
+spring.queries.roles-query: Select name from Role where id=(Select roleId from User where login=?)
