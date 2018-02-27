@@ -45,6 +45,7 @@ public class ProjectTest {
 		projectRole.setName("Test");
 		projectRoleList.add(projectRole);
 		project.setProjectRoles(projectRoleList);
+		
 		assertEquals(project.getName(),"Modificar Proyecto");
 		assertEquals(project.getOpen(),false);
 		assertTrue(project.getOrganizationId() == 2);

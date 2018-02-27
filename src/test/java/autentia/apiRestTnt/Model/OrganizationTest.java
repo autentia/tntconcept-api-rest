@@ -17,6 +17,8 @@
 
 package autentia.apiRestTnt.Model;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class OrganizationTest {
 		List<Project> projectList = new ArrayList<>();
 		projectList.add(new Project());
 		organization.setProjects(projectList);
+		
+		assertEquals(organization.getName(),"Organization");
+		assertEquals(organization.getProjects().size(),1);
 	}
 
 }

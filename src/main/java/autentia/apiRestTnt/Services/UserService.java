@@ -29,9 +29,15 @@ import autentia.apiRestTnt.Repository.UserRepository;
 @Service
 public class UserService {
 	
-	@Autowired
+	
 	private UserRepository userRepository;
 	
+	@Autowired
+	public UserService(UserRepository userRepository) {
+		super();
+		this.userRepository = userRepository;
+	}
+
 	public User getUserByLogin() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();

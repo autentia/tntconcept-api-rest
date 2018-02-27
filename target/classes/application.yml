@@ -18,5 +18,3 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   
    
-spring.queries.users-query: select login,password from User where login=?
-spring.queries.roles-query: Select name from Role where id=(Select roleId from User where login=?)

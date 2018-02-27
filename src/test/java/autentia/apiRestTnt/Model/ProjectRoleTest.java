@@ -36,6 +36,7 @@ public class ProjectRoleTest {
 	public void getAndSetProjectRoleTest() {
 		projectRole.setName("Role");
 		projectRole.setProjectId(1);
+		
 		assertEquals(projectRole.getName(),"Role");
 		assertTrue(projectRole.getProjectId() == 1);
 	}
