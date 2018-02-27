@@ -32,7 +32,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import autentia.apiRestTnt.Model.ActivitiesDay;
+import autentia.apiRestTnt.Model.User;
 import autentia.apiRestTnt.Services.ActivityService;
+import autentia.apiRestTnt.Services.UserService;
 
 @RestController
 @RequestMapping("/api")
@@ -40,10 +42,13 @@ public class ActivitiesDayController {
 	
 	private ActivityService activityService;
 	
+	private UserService userService;
+	
 	@Autowired
-	public ActivitiesDayController(ActivityService activityService) {
+	public ActivitiesDayController(ActivityService activityService, UserService userService) {
 		super();
 		this.activityService = activityService;
+		this.userService = userService;
 	}
 
 	@GetMapping("/activitiesByDates")
@@ -55,11 +60,13 @@ public class ActivitiesDayController {
 		LocalDateTime localDateTimeIncrement = startDate;
 		
 		while((startDate.isEqual(localDateTimeIncrement)) || (endDate.isAfter(localDateTimeIncrement)) || (endDate.isEqual(localDateTimeIncrement))) {
-			System.out.println(localDateTimeIncrement.toString());
+
 			ActivitiesDay activitiesDay = getActivitiesByDay(localDateTimeIncrement);
+			
 			if(activitiesDay.getTotal_hours()!=null) {
 				activitiesDayList.add(activitiesDay);
 			}
+			
 			localDateTimeIncrement = localDateTimeIncrement.plusDays(1);
 		}
 		
@@ -71,11 +78,16 @@ public class ActivitiesDayController {
 	@DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime date){
 		
 		ActivitiesDay activitiesDay = new ActivitiesDay();
+		User user = userService.getUserByLogin();
+		
 		activitiesDay.setDate(Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		
 		Date startDay = Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date endDay = Date.from(date.plusDays(1).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		activitiesDay.setTotal_hours(activityService.calculateHours(startDay,endDay, 1));
-		activitiesDay.setActivities(activityService.getActivitiesByDay(startDay,endDay,1));
+		
+		activitiesDay.setTotal_hours(activityService.calculateHours(startDay,endDay, user.getId()));
+		activitiesDay.setActivities(activityService.getActivitiesByDay(startDay,endDay,user.getId()));
+		
 		return activitiesDay;
 	}
 }

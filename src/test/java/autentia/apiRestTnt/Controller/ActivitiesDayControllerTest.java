@@ -34,13 +34,17 @@ import org.junit.Test;
 
 import autentia.apiRestTnt.Model.ActivitiesDay;
 import autentia.apiRestTnt.Model.Activity;
+import autentia.apiRestTnt.Model.User;
 import autentia.apiRestTnt.Services.ActivityService;
+import autentia.apiRestTnt.Services.UserService;
 
 public class ActivitiesDayControllerTest {
 	
 	private final ActivityService activityService = mock(ActivityService.class);
 	
-	private final ActivitiesDayController activitiesDayController = new ActivitiesDayController(activityService);
+	private final UserService userService = mock(UserService.class);
+	
+	private final ActivitiesDayController activitiesDayController = new ActivitiesDayController(activityService,userService);
 	
 	private LocalDateTime startDay;
 	private LocalDateTime endDay;
@@ -55,11 +59,14 @@ public class ActivitiesDayControllerTest {
 	public void getActivitiesByDayShouldReturnActivitiesDay() {
 		Integer workedHours = 10;
 		List<Activity> activities = Arrays.asList(mock(Activity.class));
+		User userAuthenticated = mock(User.class);
+		
 		ActivitiesDay returnedActivitiesDay = new ActivitiesDay();
 		
 		
 		when(activityService.calculateHours(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(workedHours);
 		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
+		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
 		
 		returnedActivitiesDay.setActivities(activities);
 		returnedActivitiesDay.setTotal_hours(workedHours);
@@ -73,10 +80,11 @@ public class ActivitiesDayControllerTest {
 	public void getActivitiesByDatesShouldReturnActivitiesDayBetweenTwoDates() {
 		Integer workedHours = 10;
 		List<Activity> activities = Arrays.asList(mock(Activity.class));
+		User userAuthenticated = mock(User.class);
 		
 		when(activityService.calculateHours(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(workedHours);
 		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
-		
+		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
 		
 		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay,endDay);
 		

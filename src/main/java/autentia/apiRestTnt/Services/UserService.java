@@ -15,15 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package autentia.apiRestTnt.Repository;
+package autentia.apiRestTnt.Services;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import autentia.apiRestTnt.Model.User;
+import autentia.apiRestTnt.Repository.UserRepository;
 
-@Repository
-public interface UserRepository extends JpaRepository<User,Integer>{
+@Service
+public class UserService {
 	
-	User getUserByLogin(String login);
+	@Autowired
+	private UserRepository userRepository;
+	
+	public User getUserByLogin() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) auth.getPrincipal();
+		String login = userDetails.getUsername();
+		return userRepository.getUserByLogin(login);
+	}
+
 }
