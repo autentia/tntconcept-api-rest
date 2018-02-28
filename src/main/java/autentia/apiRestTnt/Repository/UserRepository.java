@@ -26,4 +26,5 @@ import autentia.apiRestTnt.Model.User;
 public interface UserRepository extends JpaRepository<User,Integer>{
 	
 	User getUserByLogin(String login);
+	
 }

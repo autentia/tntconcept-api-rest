@@ -28,52 +28,54 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Model.Project;
+import autentia.apiRestTnt.Model.ProjectRole;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DataJpaTest
 @Transactional
-public class ProjectRepositoryTestIT {
+public class ProjectRoleRepositoryTestIT {
 	
 	@Autowired
-	ProjectRepository projectRepository;
+	ProjectRoleRepository projectRoleRepository;
 	
-	private Project project;
+	private ProjectRole projectRole;
 	
 	@Before
 	public void setUp() {
-		this.project = new Project();
-		project.setName("Vacaciones");
+		projectRole = new ProjectRole();
+		projectRole.setName("Vacaciones");
 		
-		projectRepository.save(project);
+		projectRoleRepository.save(projectRole);
 	}
 	
 	@Test
-	public void findOneShouldReturnProjectFromDB() {
-		final Integer id = 1;
-		Project resultProject = projectRepository.findOne(id);
+	public void findOneShouldReturnProjectRoleFromDB() {
+		final Integer id = 1; 
 		
-		assertEquals(resultProject.getName(),"Vacaciones");
+		ProjectRole searchedProjectRole = projectRoleRepository.findOne(id);
+		
+		assertEquals(searchedProjectRole.getName(),"Vacaciones");
 	}
 	
 	@Test
-	public void saveShouldReturnProjectAfterSaving() {
-		Project projectToSave = new Project();
-		projectToSave.setName("Permiso extraordinario");
+	public void saveShouldReturnProjectRoleAfterSaving() {
+		ProjectRole projectRoleToSave = new ProjectRole();
+		projectRoleToSave.setName("PermisoExtraordinario");
 		
-		Project savedProject = projectRepository.save(projectToSave);
+		ProjectRole savedProjectRole = projectRoleRepository.save(projectRoleToSave);
 		
-		assertEquals(savedProject,projectToSave);
+		assertEquals(savedProjectRole,projectRoleToSave);
 		
 	}
 	
 	@Test
-	public void deleteShouldDeleteProjectFromDB() {
-		projectRepository.delete(project);
-		Project result = projectRepository.findOne(1);
+	public void deleteShouldDeleteProjectRoleFromDB() {
+		projectRoleRepository.delete(projectRole);
+		ProjectRole result = projectRoleRepository.findOne(1);
 		
 		assertEquals(result,null);
 	}
 	
+
 }

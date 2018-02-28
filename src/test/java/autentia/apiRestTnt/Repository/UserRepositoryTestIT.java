@@ -28,52 +28,60 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Model.Project;
+import autentia.apiRestTnt.Model.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DataJpaTest
 @Transactional
-public class ProjectRepositoryTestIT {
+public class UserRepositoryTestIT {
 	
 	@Autowired
-	ProjectRepository projectRepository;
+	private UserRepository userRepository;
 	
-	private Project project;
+	private User user;
 	
 	@Before
 	public void setUp() {
-		this.project = new Project();
-		project.setName("Vacaciones");
+		this.user = new User();
+		this.user.setLogin("login");
+		this.user.setPassword("password");
 		
-		projectRepository.save(project);
+		userRepository.save(user);
 	}
 	
 	@Test
-	public void findOneShouldReturnProjectFromDB() {
-		final Integer id = 1;
-		Project resultProject = projectRepository.findOne(id);
+	public void findOneShouldReturnUserFromDB(){
+		User searchedUser = userRepository.findOne(1);
 		
-		assertEquals(resultProject.getName(),"Vacaciones");
+		assertEquals(searchedUser.getLogin(),"login");
 	}
 	
 	@Test
-	public void saveShouldReturnProjectAfterSaving() {
-		Project projectToSave = new Project();
-		projectToSave.setName("Permiso extraordinario");
+	public void saveShouldReturnUserAfterSaving() {
+		User userToSave = new User ();
+		userToSave.setLogin("user");
 		
-		Project savedProject = projectRepository.save(projectToSave);
+		User savedUser = userRepository.save(userToSave);
 		
-		assertEquals(savedProject,projectToSave);
-		
+		assertEquals(savedUser, userToSave);
 	}
 	
 	@Test
-	public void deleteShouldDeleteProjectFromDB() {
-		projectRepository.delete(project);
-		Project result = projectRepository.findOne(1);
+	public void deleteShouldDeleteUserFromDB() {
+		userRepository.delete(user);
+		User result = userRepository.findOne(1);
 		
 		assertEquals(result,null);
 	}
 	
+	@Test
+	public void getUserByLoginShouldReturnUserByLoginFromDB() {
+		final String login = "login";
+		
+		User result = userRepository.getUserByLogin(login);
+		
+		assertEquals(result,user);
+	}
+
 }

@@ -19,6 +19,8 @@ package autentia.apiRestTnt.Repository;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,52 +30,63 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Model.Project;
+import autentia.apiRestTnt.Model.Organization;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DataJpaTest
 @Transactional
-public class ProjectRepositoryTestIT {
+public class OrganizationRepositoryTestIT {
 	
 	@Autowired
-	ProjectRepository projectRepository;
+	private OrganizationRepository organizationRepository;
 	
-	private Project project;
+	Organization organization;
 	
 	@Before
 	public void setUp() {
-		this.project = new Project();
-		project.setName("Vacaciones");
+		this.organization = new Organization();
 		
-		projectRepository.save(project);
+		organization.setName("Nuestra empresa");
+		
+		organizationRepository.save(organization);
 	}
 	
 	@Test
-	public void findOneShouldReturnProjectFromDB() {
+	public void findOneShouldReturnOrganizationFromDB() {
 		final Integer id = 1;
-		Project resultProject = projectRepository.findOne(id);
 		
-		assertEquals(resultProject.getName(),"Vacaciones");
+		Organization organizationSearched = organizationRepository.findOne(id);
+		
+		assertEquals(organizationSearched.getName(),"Nuestra empresa");
 	}
 	
 	@Test
-	public void saveShouldReturnProjectAfterSaving() {
-		Project projectToSave = new Project();
-		projectToSave.setName("Permiso extraordinario");
+	public void saveShouldReturnOrganizationAfterSaving() {
+		Organization organizationToSave = new Organization();
+		organization.setName("Indefinida");
 		
-		Project savedProject = projectRepository.save(projectToSave);
+		Organization savedOrganization = organizationRepository.save(organizationToSave);
 		
-		assertEquals(savedProject,projectToSave);
-		
+		assertEquals(savedOrganization,organizationToSave);
 	}
 	
 	@Test
-	public void deleteShouldDeleteProjectFromDB() {
-		projectRepository.delete(project);
-		Project result = projectRepository.findOne(1);
+	public void deleteShouldDeleteOrganizationFromDB() {
+		organizationRepository.delete(this.organization);
 		
+		Organization result = organizationRepository.findOne(1);
 		assertEquals(result,null);
 	}
 	
+	@Test 
+	public void findAllShouldReturnAllOrganizationsFromDB() {
+		
+		List<Organization> allOrganizations = organizationRepository.findAll();
+		
+		assertEquals(allOrganizations.size(),1);
+	}
+	
+	
+
 }
