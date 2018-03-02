@@ -25,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import autentia.apiRestTnt.Model.Activity;
-import autentia.apiRestTnt.Model.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -46,37 +44,12 @@ public class ActivityRepositoryTestIT {
 	@Autowired
 	private ActivityRepository activityRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	private Activity activity;
-	
-	private User user;
-	
-	@Before
-	public void setUp() throws ParseException {
-		this.activity = new Activity();
-		this.activity.setDescription("Prueba");
-		this.activity.setUserId(1);
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
-		final Date startDay = format.parse("2018-02-08");
-		this.activity.setStartDate(startDay);
-		this.activity.setDuration(60);
-		
-		this.user = new User();
-		this.user.setLogin("login");
-		this.user.setPassword("password");
-		
-		userRepository.save(user);
-		activityRepository.save(activity);
-	}
-	
 	@Test
 	public void findOneShouldReturnActivityFromDB() {
 		final Integer id = 1;
 		Activity searchedActivity = activityRepository.findOne(id);
 		
-		assertEquals(searchedActivity.getDescription(),"Prueba");
+		assertTrue(searchedActivity.getId() == 1);
 		
 	}
 	
@@ -92,7 +65,10 @@ public class ActivityRepositoryTestIT {
 	
 	@Test
 	public void deleteShouldDeleteActivityFromDB() {
-		activityRepository.delete(this.activity);
+		
+		Activity activityToDelete = activityRepository.findOne(1);
+		
+		activityRepository.delete(activityToDelete);
 		
 		Activity result = activityRepository.findOne(1);
 		
@@ -101,29 +77,40 @@ public class ActivityRepositoryTestIT {
 	
 	@Test
 	public void getActivitiesByDayShouldReturnActivitiesByWorkerAtDayFromDB() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		final Date startDay = format.parse("2018-02-08");
 		final Date endDay = format.parse("2018-02-09");
-		List<Activity> activitiesByDay = activityRepository.getActivitiesByDay(startDay, endDay, 1);
+		final Integer userId = 1;
 		
-		assertEquals(activitiesByDay.size(),1);
+		List<Activity> activitiesByDay = activityRepository.getActivitiesByDay(startDay, endDay, userId);
+		
+		assertTrue(activitiesByDay.get(0).getUserId() == userId);
 		
 	}
 	
 	@Test
 	public void calculateHoursShouldReturnWorkedHoursByWorkerAtDayFromDB() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		final Date startDay = format.parse("2018-02-08");
 		final Date endDay = format.parse("2018-02-09");
-		Integer workedHours = activityRepository.calculateHours(startDay, endDay, 1);
+		final Integer userId = 1;
+		Integer workedHours = 0;
 		
-		assertTrue(workedHours == 1);
+		List<Activity> activitiesByDay = activityRepository.getActivitiesByDay(startDay, endDay, userId);
+		for (Activity activity: activitiesByDay) {
+			workedHours += activity.getDuration()/60;
+		}
+		Integer result = activityRepository.calculateHours(startDay, endDay, userId);
+		
+		assertTrue(workedHours == result);
 	}
 	
 	@Test
 	public void findAllShouldReturnAllActivitiesFromDB() {
+		Activity activityToCompare = activityRepository.findOne(1);
+		
 		List<Activity> allActivities = activityRepository.findAll();
 		
-		assertEquals(allActivities.size(),1);
+		assertTrue(allActivities.contains(activityToCompare));
 	}
 }

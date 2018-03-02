@@ -46,5 +46,17 @@ public class OrganizationServiceTest {
 		
 		assertThat(result,is(organizations));
 	}
+	
+	@Test
+	public void getOrganizationByNameShouldReturnOrganizationFromRepository() {
+		final String name = "Organization";
+		final Organization organization = mock(Organization.class);
+		
+		when(organizationRepository.findByName(name)).thenReturn(organization);
+		
+		final Organization result = organizationService.getOrganizationByName(name);
+		
+		assertThat(result,is(organization));
+	}
 
 }

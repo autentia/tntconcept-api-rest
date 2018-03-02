@@ -19,24 +19,38 @@ package autentia.apiRestTnt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import autentia.apiRestTnt.Controller.ActivitiesDayController;
 import autentia.apiRestTnt.Model.ActivitiesDay;
+import autentia.apiRestTnt.Repository.ActivityRepository;
+import autentia.apiRestTnt.Repository.UserRepository;
+import autentia.apiRestTnt.Services.ActivityService;
+import autentia.apiRestTnt.Services.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Transactional
 public class ActivitiesDayRestControllerTestIT {
 	
 	@Value("${local.server.port}")
@@ -44,38 +58,67 @@ public class ActivitiesDayRestControllerTestIT {
 	
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
 	
+	private ActivityRepository activityRepository;
+
+	private UserRepository userRepository;
+	
+	private final UserService userService = new UserService(userRepository);
+	private final ActivityService activityService = new ActivityService(activityRepository);
+	@Autowired
+	private final ActivitiesDayController activitiesDayController = new ActivitiesDayController(activityService,userService);
+	
 	@Test
 	public void shouldReturnActivitiesBetweenTwoDatesByWorker() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
-		Date startDate = format.parse("2018-02-08");
-		Date endDate = format.parse("2018-02-09");
-				
+		LocalDateTime startDate = LocalDateTime.of(2018,2,8,00,00,00);
+		LocalDateTime endDate = LocalDateTime.of(2018,2,9,00,00,00);
 		
-		final ResponseEntity<ActivitiesDay[]> response = restTemplate.getForEntity(getBaseUrl() + "/activitiesByDates",
-				ActivitiesDay[].class,startDate,endDate);
+		SecurityContext secContext = mock(SecurityContext.class);
+		Authentication auth = mock(Authentication.class);
+		UserDetails userDetails = mock(UserDetails.class);
+		final String login = "admin";
+		SecurityContextHolder.setContext(secContext);
 		
-		final ActivitiesDay[] activitiesDays = response.getBody();
+		when(secContext.getAuthentication()).thenReturn(auth);
+		when(auth.getPrincipal()).thenReturn(userDetails);
+		when(userDetails.getUsername()).thenReturn(login);
 		
-		assertEquals(activitiesDays[0].getDate(),startDate);
-		assertTrue(activitiesDays[0].getTotal_hours() == 3);
+		List<ActivitiesDay> activitiesDay = activitiesDayController.getActivitiesByDates(startDate, endDate);
 		
-		assertEquals(activitiesDays.length,1);
+		final ResponseEntity<ActivitiesDay[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/activitiesByDates?startDate=2018-02-08T00:00:00&endDate=2018-02-09T00:00:00",
+				ActivitiesDay[].class);
+		
+		final ActivitiesDay[] result = response.getBody();
+		
+		assertTrue(result[0].getTotal_hours() == activitiesDay.get(0).getTotal_hours());
+		
+		assertEquals(result.length,activitiesDay.size());
 	}
 	
 	@Test
 	public void shouldReturnActivitiesByWorkerAtDay() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
-		Date startDate = format.parse("2018-02-08");
+		LocalDateTime date = LocalDateTime.of(2018,2,8,00,00,00);
 		
-		final ResponseEntity<ActivitiesDay> response = restTemplate.getForEntity(getBaseUrl() + "/activitiesByDay",
-				ActivitiesDay.class,startDate);
+		SecurityContext secContext = mock(SecurityContext.class);
+		Authentication auth = mock(Authentication.class);
+		UserDetails userDetails = mock(UserDetails.class);
+		final String login = "admin";
+		SecurityContextHolder.setContext(secContext);
 		
-		final ActivitiesDay activitiesDay = response.getBody();
+		when(secContext.getAuthentication()).thenReturn(auth);
+		when(auth.getPrincipal()).thenReturn(userDetails);
+		when(userDetails.getUsername()).thenReturn(login);
 		
-		assertEquals(activitiesDay.getDate(),startDate);
-		assertTrue(activitiesDay.getTotal_hours() == 3);
+		ActivitiesDay activitiesDay = activitiesDayController.getActivitiesByDay(date);
 		
-		assertEquals(activitiesDay.getActivities().size(),2);
+		final ResponseEntity<ActivitiesDay> response = restTemplate.getForEntity(getBaseUrl() + "/api/activitiesByDay?date=2018-02-08T00:00",
+				ActivitiesDay.class);
+		
+		final ActivitiesDay result = response.getBody();
+	
+		assertTrue(result.getTotal_hours() == activitiesDay.getTotal_hours());
+		
+		assertEquals(result.getActivities().size(),activitiesDay.getActivities().size());
+		
 	}
 	
 	private String getBaseUrl() {

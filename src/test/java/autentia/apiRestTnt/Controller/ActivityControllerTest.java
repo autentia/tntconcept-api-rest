@@ -22,9 +22,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Test;
 
 import autentia.apiRestTnt.Model.Activity;
@@ -36,15 +33,6 @@ public class ActivityControllerTest {
 
 	private final ActivityController activityController = new ActivityController(activityService);
 
-	@Test
-	public void getActivitiesShouldReturnActivitiesFromService() {
-		final List<Activity> activities = Arrays.asList(mock(Activity.class));
-		when(activityService.getActivities()).thenReturn(activities);
-
-		final List<Activity> result = activityController.getActivities();
-
-		assertThat(result, is(activities));
-	}
 
 	@Test
 	public void addActivityShouldReturnActivityAfterSaving() {

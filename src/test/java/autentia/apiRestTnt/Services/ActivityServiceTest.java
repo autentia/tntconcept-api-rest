@@ -45,7 +45,7 @@ public class ActivityServiceTest {
 	
 	@Before
 	public void setUp() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		this.startDay = format.parse("2018-02-08");
 		this. endDay = format.parse("2018-02-09");
 		userId = 1;

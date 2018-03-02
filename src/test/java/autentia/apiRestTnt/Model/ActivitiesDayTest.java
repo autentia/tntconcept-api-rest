@@ -39,7 +39,7 @@ public class ActivitiesDayTest {
 	
 	@Test
 	public void getAndSetActivitiesDayTest() throws ParseException {
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		activitiesDay.setDate(format.parse("2018-02-26"));
 		activitiesDay.setTotal_hours(10);
 		List<Activity> activities = new ArrayList<>();

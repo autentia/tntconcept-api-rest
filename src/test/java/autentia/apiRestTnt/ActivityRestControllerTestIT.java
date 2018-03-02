@@ -22,17 +22,23 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import autentia.apiRestTnt.Controller.ActivityController;
 import autentia.apiRestTnt.Model.Activity;
+import autentia.apiRestTnt.Repository.ActivityRepository;
+import autentia.apiRestTnt.Services.ActivityService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Transactional
 public class ActivityRestControllerTestIT {
 
 	@Value("${local.server.port}")
@@ -40,30 +46,26 @@ public class ActivityRestControllerTestIT {
 	
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
 	
-	@Test
-	public void shouldReturnActivityDetails() {
-		final ResponseEntity<Activity> response = restTemplate.getForEntity(getBaseUrl() + "/activities/{activityId}",
-				Activity.class,1);
-		
-		final Activity activity = response.getBody();
-		
-		assertTrue(activity.getId() == 1);
-		assertEquals(activity.getDescription(), "Prueba");
-		assertEquals(activity.getBilliable(), true);
-		assertTrue(activity.getDuration() == 360);
-	}
+	private ActivityRepository activityRepository;
+	
+	private final ActivityService activityService = new ActivityService(activityRepository);
+	 
+	@Autowired
+	private final ActivityController activityController = new ActivityController(activityService);
 	
 	@Test
-	public void shouldReturnAllActivities() {
-		final ResponseEntity<Activity[]> response = restTemplate.getForEntity(getBaseUrl() + "/activities" ,
-				Activity[].class);
+	public void shouldReturnActivityDetails() {
+		final Integer id = 1;
+		Activity activity = activityController.getActivity(id);
+		final ResponseEntity<Activity> response = restTemplate.getForEntity(getBaseUrl() + "/api/activities/{activityId}",
+				Activity.class,id);
 		
-		final Activity[] activities = response.getBody();
+		final Activity result = response.getBody();
 		
-		assertTrue(activities[0].getId() == 1);
-		assertEquals(activities[0].getDescription(), "Prueba");
-		assertEquals(activities[0].getBilliable(), true);
-		assertTrue(activities[0].getDuration() == 360);
+		assertTrue(activity.getId() == result.getId());
+		assertEquals(activity.getDescription(), result.getDescription());
+		assertEquals(activity.getBilliable(), result.getBilliable());
+		assertTrue(activity.getDuration().intValue() == result.getDuration().intValue());
 	}
 	
 	@Test
@@ -73,12 +75,16 @@ public class ActivityRestControllerTestIT {
 		activityToSave.setDescription("Test");
 		activityToSave.setDuration(60);
 		
-		final ResponseEntity<Activity> response = restTemplate.postForEntity(getBaseUrl() + "/addActivity",activityToSave,
+		Activity savedActivity = activityController.addActivity(activityToSave);
+		
+		final ResponseEntity<Activity> response = restTemplate.postForEntity(getBaseUrl() + "/api/addActivity",activityToSave,
 				Activity.class);
 		
-		Activity savedActivity = response.getBody();
+		final Activity result = response.getBody();
 		
-		assertEquals(savedActivity,activityToSave);
+		assertEquals(result.getBilliable(),savedActivity.getBilliable());
+		assertEquals(result.getDescription(),savedActivity.getDescription());
+		assertEquals(result.getDuration(),savedActivity.getDuration());
 	}
 	
 	private String getBaseUrl() {

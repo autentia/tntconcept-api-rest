@@ -18,8 +18,8 @@
 package autentia.apiRestTnt.Repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +39,13 @@ public class ProjectRepositoryTestIT {
 	@Autowired
 	ProjectRepository projectRepository;
 	
-	private Project project;
-	
-	@Before
-	public void setUp() {
-		this.project = new Project();
-		project.setName("Vacaciones");
-		
-		projectRepository.save(project);
-	}
 	
 	@Test
 	public void findOneShouldReturnProjectFromDB() {
 		final Integer id = 1;
 		Project resultProject = projectRepository.findOne(id);
 		
-		assertEquals(resultProject.getName(),"Vacaciones");
+		assertTrue(resultProject.getId() == id);
 	}
 	
 	@Test
@@ -69,11 +60,13 @@ public class ProjectRepositoryTestIT {
 	}
 	
 	@Test
-	public void deleteShouldDeleteProjectFromDB() {
-		projectRepository.delete(project);
-		Project result = projectRepository.findOne(1);
+	public void findByNameShouldReturnProjectFromDB() {
+		final String name = "Vacaciones";
+		Project resultProject = projectRepository.findByName(name);
 		
-		assertEquals(result,null);
+		assertEquals(resultProject.getName(),"Vacaciones");
 	}
+	
+	
 	
 }

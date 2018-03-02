@@ -43,4 +43,8 @@ public class OrganizationService {
 	public List<Organization> getOrganizations(){
 		return organizationRepository.findAll();
 	}
+	
+	public Organization getOrganizationByName(String name) {
+		return organizationRepository.findByName(name);
+	}
 }

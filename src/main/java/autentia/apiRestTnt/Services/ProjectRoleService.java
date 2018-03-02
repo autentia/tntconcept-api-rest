@@ -38,6 +38,10 @@ public class ProjectRoleService {
 		return projectRoleRepository.findOne(projectRoleId);
 	}
 	
+	public ProjectRole getProjectRoleByName(String name) {
+		return projectRoleRepository.findByName(name);
+	}
+	
 //	public List<ProjectRole> getProjectRolesByProject(Integer projectId){
 //		return projectRoleRepository.findByProjectId(projectId);
 //	}

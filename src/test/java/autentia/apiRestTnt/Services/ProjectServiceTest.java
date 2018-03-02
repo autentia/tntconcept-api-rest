@@ -42,5 +42,17 @@ public class ProjectServiceTest {
 		final Project result = projectService.getProjectById(projectToReturn.getId());
 		assertThat(result,is(returnedProject));
 	}
+	
+	@Test
+	public void getOrganizationByNameShouldReturnOrganizationFromRepository() {
+		final String name = "Project";
+		final Project project = mock(Project.class);
+		
+		when(projectRepository.findByName(name)).thenReturn(project);
+		
+		final Project result = projectService.getProjectByName(name);
+		
+		assertThat(result,is(project));
+	}
 
 }

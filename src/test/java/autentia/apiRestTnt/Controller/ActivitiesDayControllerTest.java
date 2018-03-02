@@ -17,6 +17,8 @@
 
 package autentia.apiRestTnt.Controller;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -73,7 +75,7 @@ public class ActivitiesDayControllerTest {
 		returnedActivitiesDay.setDate(Date.from(startDay.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
 		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay);
-		assertTrue(result.equals(returnedActivitiesDay)); 		 
+		assertThat(result,is(returnedActivitiesDay)); 		 
 	}
 	
 	@Test

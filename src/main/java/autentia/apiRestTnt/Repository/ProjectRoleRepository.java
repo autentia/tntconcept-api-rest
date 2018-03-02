@@ -25,6 +25,6 @@ import autentia.apiRestTnt.Model.ProjectRole;
 
 @Repository
 public interface ProjectRoleRepository extends JpaRepository<ProjectRole,Integer> {
-	
+	ProjectRole findByName(String name);
 //	List<ProjectRole> findByProjectId(Integer projectId);
 }

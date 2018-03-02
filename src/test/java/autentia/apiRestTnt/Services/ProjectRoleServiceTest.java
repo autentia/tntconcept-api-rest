@@ -44,4 +44,16 @@ public class ProjectRoleServiceTest {
 		
 		assertThat(result,is(returnedProjectRole));
 	}
+	
+	@Test
+	public void getOrganizationByNameShouldReturnOrganizationFromRepository() {
+		final String name = "ProjectRole";
+		final ProjectRole projectRole = mock(ProjectRole.class);
+		
+		when(projectRoleRepository.findByName(name)).thenReturn(projectRole);
+		
+		final ProjectRole result = projectRoleService.getProjectRoleByName(name);
+		
+		assertThat(result,is(projectRole));
+	}
 }

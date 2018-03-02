@@ -22,17 +22,23 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import autentia.apiRestTnt.Controller.ProjectController;
 import autentia.apiRestTnt.Model.Project;
+import autentia.apiRestTnt.Repository.ProjectRepository;
+import autentia.apiRestTnt.Services.ProjectService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Transactional
 public class ProjectRestControllerTestIT {
 	
 	@Value("${local.server.port}")
@@ -40,16 +46,25 @@ public class ProjectRestControllerTestIT {
 	
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
 	
+	private ProjectRepository projectRepository;
+	private final ProjectService projectService = new ProjectService(projectRepository);
+	@Autowired
+	private final ProjectController projectController = new ProjectController(projectService);
+	
 	@Test
 	public void shouldReturnProjectDetails() {
-		final ResponseEntity<Project> response = restTemplate.getForEntity(getBaseUrl() + "/project/{projectId}",
-				Project.class,1);
+		final Integer id = 1;
 		
-		final Project project = response.getBody();
+		Project project = projectController.getProjectById(id);
 		
-		assertTrue(project.getId() == 1);
-		assertEquals(project.getName(), "Vacaciones");
-		assertEquals(project.getOpen(),true);
+		final ResponseEntity<Project> response = restTemplate.getForEntity(getBaseUrl() + "/api/projects/{projectId}",
+				Project.class,id);
+		
+		final Project result = response.getBody();
+		
+		assertTrue(result.getId() == project.getId());
+		assertEquals(result.getName(), project.getName());
+		assertEquals(result.getOpen(),project.getOpen());
 	}
 	
 	private String getBaseUrl() {

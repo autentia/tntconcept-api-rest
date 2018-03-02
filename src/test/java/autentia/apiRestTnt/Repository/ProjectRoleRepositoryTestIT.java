@@ -18,8 +18,8 @@
 package autentia.apiRestTnt.Repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,23 +39,13 @@ public class ProjectRoleRepositoryTestIT {
 	@Autowired
 	ProjectRoleRepository projectRoleRepository;
 	
-	private ProjectRole projectRole;
-	
-	@Before
-	public void setUp() {
-		projectRole = new ProjectRole();
-		projectRole.setName("Vacaciones");
-		
-		projectRoleRepository.save(projectRole);
-	}
-	
 	@Test
 	public void findOneShouldReturnProjectRoleFromDB() {
-		final Integer id = 1; 
+		final Integer id = 1;
 		
 		ProjectRole searchedProjectRole = projectRoleRepository.findOne(id);
 		
-		assertEquals(searchedProjectRole.getName(),"Vacaciones");
+		assertTrue(searchedProjectRole.getId() == id);
 	}
 	
 	@Test
@@ -71,10 +61,23 @@ public class ProjectRoleRepositoryTestIT {
 	
 	@Test
 	public void deleteShouldDeleteProjectRoleFromDB() {
-		projectRoleRepository.delete(projectRole);
-		ProjectRole result = projectRoleRepository.findOne(1);
+		final String name = "Vacaciones";
+		
+		ProjectRole projectRoleToDelete = projectRoleRepository.findByName(name);
+		
+		projectRoleRepository.delete(projectRoleToDelete);
+		ProjectRole result = projectRoleRepository.findByName(name);
 		
 		assertEquals(result,null);
+	}
+	
+	@Test
+	public void findByNameShouldReturnProjectRoleFromDB() {
+		final String name = "Vacaciones";
+		
+		ProjectRole searchedProjectRole = projectRoleRepository.findByName(name);
+		
+		assertEquals(searchedProjectRole.getName(),"Vacaciones");
 	}
 	
 

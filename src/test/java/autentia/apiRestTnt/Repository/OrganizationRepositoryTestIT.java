@@ -18,10 +18,10 @@
 package autentia.apiRestTnt.Repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,30 +41,19 @@ public class OrganizationRepositoryTestIT {
 	@Autowired
 	private OrganizationRepository organizationRepository;
 	
-	Organization organization;
-	
-	@Before
-	public void setUp() {
-		this.organization = new Organization();
-		
-		organization.setName("Nuestra empresa");
-		
-		organizationRepository.save(organization);
-	}
-	
 	@Test
 	public void findOneShouldReturnOrganizationFromDB() {
 		final Integer id = 1;
 		
 		Organization organizationSearched = organizationRepository.findOne(id);
 		
-		assertEquals(organizationSearched.getName(),"Nuestra empresa");
+		assertTrue(organizationSearched.getId() == 1);
 	}
 	
 	@Test
 	public void saveShouldReturnOrganizationAfterSaving() {
 		Organization organizationToSave = new Organization();
-		organization.setName("Indefinida");
+		organizationToSave.setName("Indefinida");
 		
 		Organization savedOrganization = organizationRepository.save(organizationToSave);
 		
@@ -73,18 +62,34 @@ public class OrganizationRepositoryTestIT {
 	
 	@Test
 	public void deleteShouldDeleteOrganizationFromDB() {
-		organizationRepository.delete(this.organization);
+		final String name = "Indefinida";
 		
-		Organization result = organizationRepository.findOne(1);
+		Organization organizationToDelete = organizationRepository.findByName(name);
+		
+		organizationRepository.delete(organizationToDelete);
+		
+		Organization result = organizationRepository.findByName(name);
+		
 		assertEquals(result,null);
 	}
 	
 	@Test 
 	public void findAllShouldReturnAllOrganizationsFromDB() {
+		final String name = "Indefinida";
 		
+		Organization organizationToCompare = organizationRepository.findByName(name);
 		List<Organization> allOrganizations = organizationRepository.findAll();
 		
-		assertEquals(allOrganizations.size(),1);
+		assertTrue(allOrganizations.contains(organizationToCompare));
+	}
+	
+	@Test
+	public void findByNameShouldReturnOrganizationFromDB() {
+		final String name = "Nuestra empresa";
+		
+		Organization organizationSearched = organizationRepository.findByName(name);
+		
+		assertEquals(organizationSearched.getName(),"Nuestra empresa");
 	}
 	
 	

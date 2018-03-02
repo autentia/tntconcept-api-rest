@@ -18,8 +18,8 @@
 package autentia.apiRestTnt.Repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +39,13 @@ public class UserRepositoryTestIT {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private User user;
-	
-	@Before
-	public void setUp() {
-		this.user = new User();
-		this.user.setLogin("login");
-		this.user.setPassword("password");
-		
-		userRepository.save(user);
-	}
-	
 	@Test
 	public void findOneShouldReturnUserFromDB(){
-		User searchedUser = userRepository.findOne(1);
+		final Integer id = 1;
 		
-		assertEquals(searchedUser.getLogin(),"login");
+		User searchedUser = userRepository.findOne(id);
+		
+		assertTrue(searchedUser.getId() == id);
 	}
 	
 	@Test
@@ -69,19 +60,22 @@ public class UserRepositoryTestIT {
 	
 	@Test
 	public void deleteShouldDeleteUserFromDB() {
-		userRepository.delete(user);
-		User result = userRepository.findOne(1);
+		final String login = "aortiz";
+		User userToDelete = userRepository.getUserByLogin(login);
+		userRepository.delete(userToDelete);
+		
+		User result = userRepository.getUserByLogin(login);
 		
 		assertEquals(result,null);
 	}
 	
 	@Test
 	public void getUserByLoginShouldReturnUserByLoginFromDB() {
-		final String login = "login";
+		final String login = "admin";
 		
-		User result = userRepository.getUserByLogin(login);
+		User searchedUser = userRepository.getUserByLogin(login);
 		
-		assertEquals(result,user);
+		assertEquals(searchedUser.getLogin(),login);
 	}
 
 }

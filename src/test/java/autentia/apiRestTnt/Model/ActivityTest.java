@@ -42,7 +42,7 @@ public class ActivityTest {
 		activity.setDuration(10);
 		activity.setRoleId(1);
 		activity.setUserId(1);
-		SimpleDateFormat format = new SimpleDateFormat("yy-mm-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		activity.setStartDate(format.parse("2018-02-26"));
 		
 		

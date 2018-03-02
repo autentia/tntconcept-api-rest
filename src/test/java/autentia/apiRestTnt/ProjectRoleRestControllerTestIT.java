@@ -22,32 +22,47 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import autentia.apiRestTnt.Controller.ProjectRoleController;
 import autentia.apiRestTnt.Model.ProjectRole;
+import autentia.apiRestTnt.Repository.ProjectRoleRepository;
+import autentia.apiRestTnt.Services.ProjectRoleService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@Transactional
 public class ProjectRoleRestControllerTestIT {
 	@Value("${local.server.port}")
 	private int port;
 	
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
 	
+	private ProjectRoleRepository projectRoleRepository;
+	
+	private final ProjectRoleService projectRoleService = new ProjectRoleService(projectRoleRepository);
+	
+	@Autowired
+	private final ProjectRoleController projectRoleController = new ProjectRoleController(projectRoleService);
+	
 	@Test
 	public void shouldReturnProjectRoleDetails() {
-		final ResponseEntity<ProjectRole> response = restTemplate.getForEntity(getBaseUrl() + "/projectRole/{projectRoleId}",
-				ProjectRole.class,1);
+		final Integer id = 1;
+		ProjectRole projectRole = projectRoleController.getProjectRoleById(id);
+		final ResponseEntity<ProjectRole> response = restTemplate.getForEntity(getBaseUrl() + "/api/projectsRole/{projectRoleId}",
+				ProjectRole.class,id);
 		
-		final ProjectRole projectRole = response.getBody();
+		final ProjectRole result = response.getBody();
 		
-		assertTrue(projectRole.getId() == 1);
-		assertEquals(projectRole.getName(), "Vacaciones");
+		assertTrue(result.getId() == projectRole.getId());
+		assertEquals(result.getName(), projectRole.getName());
 	}
 	
 	private String getBaseUrl() {

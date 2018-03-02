@@ -17,8 +17,6 @@
 
 package autentia.apiRestTnt.Controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,15 +40,11 @@ public class ActivityController {
 		this.activityService = activityService;
 	}
 
+	//Controlar que la actividad corresponde con el usuario
 	@GetMapping(value="/activities/{activityId}")
 	public Activity getActivity(@PathVariable("activityId") Integer activityId) {
 		return activityService.getActivityById(activityId);
 	}
-
-	 @GetMapping(value="/activities")
-	 public List<Activity> getActivities() {
-		 return activityService.getActivities();
-	 }
 
 	@PostMapping(value = "/addActivity")
 	public Activity addActivity(@RequestBody Activity activity) {
