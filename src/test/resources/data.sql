@@ -15,7 +15,7 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --
 
-INSERT INTO `Activity` (`id`,`userid`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (1,2,'2018-02-01 09:00:00',360,'Prueba',1,4);
 INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (2,3,'2018-02-01 09:00:00',420,'Horas facturables',1,4);

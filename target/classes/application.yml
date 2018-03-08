@@ -16,5 +16,3 @@ spring:
     username: tnt
     password: tnt
     driver-class-name: com.mysql.jdbc.Driver
-  
-   

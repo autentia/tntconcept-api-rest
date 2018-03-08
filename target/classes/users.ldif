@@ -1,3 +1,4 @@
+
 dn: o=autentia
 objectClass: organization
 objectClass: extensibleObject

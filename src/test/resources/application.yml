@@ -14,9 +14,5 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     database: mysql
-    
-  h2:
-    console:
-      enabled: true
       
     
