@@ -1,33 +1,33 @@
 
-dn: o=autentia
+dn: dc=autentia,dc=com
 objectClass: organization
 objectClass: extensibleObject
 objectClass: top
-o: autentia
+dc: autentia
 
-dn: ou=groups,o=autentia
+dn: ou=groups,dc=autentia,dc=com
 objectclass: top
 objectclass: organizationalUnit
 ou: groups
 
-dn: ou=users,o=autentia
+dn: ou=users,dc=autentia,dc=com
 objectclass: top
 objectclass: organizationalUnit
 ou: users
 
-dn: cn=admin,ou=groups,o=autentia
+dn: cn=admin,ou=groups,dc=autentia,dc=com
 objectclass: top
 objectclass: groupOfNames
 cn: admin
-member: uid=admin,ou=users,o=autentia
+member: uid=admin,ou=users,dc=autentia,dc=com
 
-dn: cn=user,ou=groups,o=autentia
+dn: cn=user,ou=groups,dc=autentia,dc=com
 objectclass: top
 objectclass: groupOfNames
 cn: user
 member: uid=iperez,ou=users,o=people
 
-dn: uid=admin,ou=users,o=autentia
+dn: uid=admin,ou=users,dc=autentia,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -37,7 +37,7 @@ sn: admin
 uid: admin
 userPassword: adminadmin
 
-dn: uid=iperez,ou=users,o=autentia
+dn: uid=iperez,ou=users,dc=autentia,dc=com
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson

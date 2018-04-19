@@ -18,6 +18,7 @@
 package autentia.apiRestTnt.Security;
 
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,6 +31,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;*/
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -49,11 +53,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.userSearchFilter("(uid={0})")
 			.groupSearchBase("ou=groups")
 			.groupSearchFilter("member={0}")
-			.contextSource()
-			.root("o=autentia")
-			.ldif("classpath:users.ldif");
+			.contextSource(contextSource());
 	}
-    
+
+
+	@Bean
+	public DefaultSpringSecurityContextSource contextSource() {
+		return  new DefaultSpringSecurityContextSource(
+				Collections.singletonList("ldap://localhost:33389"), "dc=autentia,dc=com");
+	}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

@@ -2,6 +2,18 @@ server:
   port: 8080
  
 spring:
+  ldap:
+
+    embedded:
+      base-dn: dc=autentia,dc=com
+      credential:
+        username: uid=admin
+        password: adminadmin
+      ldif: classpath:users.ldif
+      port: 33389
+      validation:
+        enabled: false
+
   jpa:
     generate-ddl: false
     show-sql: true
@@ -12,7 +24,7 @@ spring:
       
   datasource:
     name: myDataSource
-    url: jdbc:mysql://localhost:3307/tntconcept?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/tntconcept?autoReconnect=true&useSSL=false
     username: tnt
     password: tnt
     driver-class-name: com.mysql.jdbc.Driver
