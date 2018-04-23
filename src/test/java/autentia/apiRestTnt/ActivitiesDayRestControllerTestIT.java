@@ -88,7 +88,7 @@ public class ActivitiesDayRestControllerTestIT {
 				ActivitiesDay[].class);
 		
 		final ActivitiesDay[] result = response.getBody();
-		
+
 		assertTrue(result[0].getTotal_hours() == activitiesDay.get(0).getTotal_hours());
 		
 		assertEquals(result.length,activitiesDay.size());

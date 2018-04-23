@@ -18,30 +18,28 @@
 package autentia.apiRestTnt.Security;
 
 
-import autentia.apiRestTnt.Services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-/*import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;*/
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
-
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@Profile("prod")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+	@Value("${spring.ldap.urls}")
+	private String ldapUrl;
+
+	@Value("${spring.ldap.username}")
+	private String ldapUsername;
+
+	@Value("${spring.ldap.password}")
+	private String ldapPassword;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -52,15 +50,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
+     	auth
 				.ldapAuthentication()
-				.userDnPatterns("uid={0},ou=people")
+				.userDnPatterns("uid={0},ou=users")
 				.groupSearchBase("ou=groups")
+				.groupSearchFilter("member={0}")
 				.contextSource()
-					.url("ldap://localhost:1389/dc=tsers,dc=org")
-					.managerDn("cn=admin,dc=tsers,dc=org")
-					.managerPassword("admin");
+					.url(ldapUrl)
+					.managerDn(ldapUsername)
+					.managerPassword(ldapPassword);
 	}
-
-
 }

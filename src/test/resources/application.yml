@@ -1,11 +1,13 @@
 spring:
+  profiles:
+    active: test
+
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/testTnt?autoReconnect=true&useSSL=false
     username: test
     password: test
-    
-        
+
   jpa:
     generate-ddl: true
     hibernate:

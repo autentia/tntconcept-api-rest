@@ -14,9 +14,9 @@ services:
     - "1636:636"
     - "1389:389"
     environment:
-      LDAP_ORGANISATION: "tsers organization"
-      LDAP_DOMAIN: "tsers.org"
-      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_ORGANISATION: "autentia organization"
+      LDAP_DOMAIN: "autentia.com"
+      LDAP_ADMIN_PASSWORD: "adminadmin"
   openldap-seed:
     image: osixia/openldap:1.2.0
     volumes:

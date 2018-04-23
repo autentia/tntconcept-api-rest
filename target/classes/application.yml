@@ -1,28 +1,15 @@
 server:
   port: 8080
- 
-spring:
-#  ldap:
-    # Spring LDAP
-    #
-    # In this example we use an embedded ldap server. When using a real one,
-    # you can configure the settings here.
-    #
-    # urls: ldap://localhost:12345
-    # base: dc=memorynotfound,dc=com
-    # username: uid=admin
-    # password: secret
 
-#    # Embedded Spring LDAP
-#    embedded:
-#      base-dn: dc=memorynotfound,dc=com
-#      credential:
-#        username: uid=admin
-#        password: secret
-#      ldif: classpath:users.ldif
-#      port: 12345
-#      validation:
-#        enabled: false
+spring:
+
+  profiles:
+    active: prod
+
+  ldap:
+     urls: ldap://localhost:1389/dc=autentia,dc=com
+     username: cn=admin,dc=autentia,dc=com
+     password: adminadmin
 
   jpa:
     generate-ddl: false
@@ -34,7 +21,7 @@ spring:
       
   datasource:
     name: myDataSource
-    url: jdbc:mysql://localhost:13307/tntconcept?autoReconnect=true&useSSL=false
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3306/tntconcept?autoReconnect=true&useSSL=false
+    username: tnt
+    password: tnt
     driver-class-name: com.mysql.jdbc.Driver
