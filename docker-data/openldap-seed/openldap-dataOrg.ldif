@@ -8,12 +8,12 @@ objectclass: top
 objectclass: organizationalUnit
 ou: people
 
-dn: uid=john,ou=people,dc=tsers,dc=org
+dn: uid=arnold,ou=people,dc=tsers,dc=org
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
 objectclass: inetOrgPerson
-cn: John Doe
-sn: Doe
-uid: john
-userPassword: secret
+cn: Arnold Schwarzenegger
+sn: Schwarzenegger
+uid: arnold
+userPassword: arnold

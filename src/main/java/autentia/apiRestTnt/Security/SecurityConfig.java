@@ -55,20 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth
 				.ldapAuthentication()
 				.userDnPatterns("uid={0},ou=people")
-				.userSearchBase("ou=people")
-				.userSearchFilter("uid={0}")
 				.groupSearchBase("ou=groups")
-				.groupSearchFilter("uniqueMember={0}")
-				.contextSource(contextSource())
-				.passwordCompare()
-				.passwordEncoder(new LdapShaPasswordEncoder())
-				.passwordAttribute("userPassword");
-	}
-
-	@Bean
-	public DefaultSpringSecurityContextSource contextSource() {
-		return  new DefaultSpringSecurityContextSource(
-				Collections.singletonList("ldap://localhost:12345"), "dc=memorynotfound,dc=com");
+				.contextSource()
+					.url("ldap://localhost:1389/dc=tsers,dc=org")
+					.managerDn("cn=admin,dc=tsers,dc=org")
+					.managerPassword("admin");
 	}
 
 

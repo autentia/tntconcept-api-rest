@@ -23,4 +23,4 @@ services:
       - ./docker-data/openldap-seed:/ldif_files
     links:
       - openldap
-    entrypoint: '/ldif_files/importData.sh'
+    entrypoint: sh -c '/ldif_files/importData.sh'
