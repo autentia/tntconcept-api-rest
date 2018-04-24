@@ -9,7 +9,7 @@ spring:
   ldap:
      urls: ldap://localhost:1389/dc=autentia,dc=com
      username: cn=admin,dc=autentia,dc=com
-     password: adminadmin
+     password: ENC(tviqG9QS2DxEZRGfgVnC35hiAIqPj+eQ)
 
   jpa:
     generate-ddl: false
@@ -21,7 +21,12 @@ spring:
       
   datasource:
     name: myDataSource
-    url: jdbc:mysql://localhost:3306/tntconcept?autoReconnect=true&useSSL=false
-    username: tnt
-    password: tnt
+    url: jdbc:mysql://localhost:13307/tntconcept?autoReconnect=true&useSSL=false
+    username: root
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
+
+jasypt:
+   encryptor:
+     algorithm: PBEWithMD5AndDES
+     password: ${JASYPT_ENCRYPTOR_PASSWORD:}

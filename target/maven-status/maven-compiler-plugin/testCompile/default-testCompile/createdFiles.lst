@@ -12,6 +12,7 @@ autentia/apiRestTnt/Model/ProjectRoleTest.class
 autentia/apiRestTnt/Repository/OrganizationRepositoryTestIT.class
 autentia/apiRestTnt/Services/ActivityServiceTest.class
 autentia/apiRestTnt/Repository/UserRepositoryTestIT.class
+autentia/apiRestTnt/SecurityConfigTest.class
 autentia/apiRestTnt/Controller/OrganizationControllerTest.class
 autentia/apiRestTnt/Controller/ProjectControllerTest.class
 autentia/apiRestTnt/Repository/ActivityRepositoryTestIT.class
