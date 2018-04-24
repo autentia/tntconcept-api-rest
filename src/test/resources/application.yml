@@ -8,11 +8,11 @@ spring:
       ddl-auto:  create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    database: mysql
+    database: h2
 
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/testTnt?autoReconnect=true&useSSL=false
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
     username: test
     password: test
     initialization-mode: always
