@@ -27,6 +27,8 @@ import org.junit.Test;
 import autentia.apiRestTnt.Model.ProjectRole;
 import autentia.apiRestTnt.Repository.ProjectRoleRepository;
 
+import java.util.Optional;
+
 public class ProjectRoleServiceTest {
 	
 	private final ProjectRoleRepository projectRoleRepository = mock(ProjectRoleRepository.class);
@@ -38,7 +40,7 @@ public class ProjectRoleServiceTest {
 		final ProjectRole projectRoleToReturn = mock(ProjectRole.class);
 		final ProjectRole returnedProjectRole = mock(ProjectRole.class);
 		
-		when(projectRoleRepository.findOne(projectRoleToReturn.getId())).thenReturn(returnedProjectRole);
+		when(projectRoleRepository.findById(projectRoleToReturn.getId())).thenReturn(Optional.ofNullable(returnedProjectRole));
 		
 		final ProjectRole result = projectRoleService.getProjectRoleById(projectRoleToReturn.getId());
 		

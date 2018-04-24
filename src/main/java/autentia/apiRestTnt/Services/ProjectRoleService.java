@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 import autentia.apiRestTnt.Model.ProjectRole;
 import autentia.apiRestTnt.Repository.ProjectRoleRepository;
 
+import java.util.Optional;
+
 @Service
 public class ProjectRoleService {
 
@@ -35,7 +37,8 @@ public class ProjectRoleService {
 	}
 
 	public ProjectRole getProjectRoleById(Integer projectRoleId) {
-		return projectRoleRepository.findOne(projectRoleId);
+		return projectRoleRepository.findById(projectRoleId)
+				.orElseThrow(()->new IllegalArgumentException("The requested projectRoleId ["+projectRoleId+"] does not exist."));
 	}
 	
 	public ProjectRole getProjectRoleByName(String name) {

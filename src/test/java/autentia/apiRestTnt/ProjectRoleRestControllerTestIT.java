@@ -17,9 +17,6 @@
 
 package autentia.apiRestTnt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +32,8 @@ import autentia.apiRestTnt.Controller.ProjectRoleController;
 import autentia.apiRestTnt.Model.ProjectRole;
 import autentia.apiRestTnt.Repository.ProjectRoleRepository;
 import autentia.apiRestTnt.Services.ProjectRoleService;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -60,12 +59,12 @@ public class ProjectRoleRestControllerTestIT {
 				ProjectRole.class,id);
 		
 		final ProjectRole result = response.getBody();
-		
-		assertTrue(result.getId() == projectRole.getId());
+
+		assertSame(result.getId(), projectRole.getId());
 		assertEquals(result.getName(), projectRole.getName());
 	}
 	
 	private String getBaseUrl() {
-        return new StringBuilder("http://localhost:").append(port).toString();
+        return "http://localhost:" + port;
     }
 }

@@ -43,8 +43,8 @@ public class ProjectRoleRepositoryTestIT {
 	public void findOneShouldReturnProjectRoleFromDB() {
 		final Integer id = 1;
 		
-		ProjectRole searchedProjectRole = projectRoleRepository.findOne(id);
-		
+		ProjectRole searchedProjectRole = projectRoleRepository.findById(id).get();
+
 		assertTrue(searchedProjectRole.getId() == id);
 	}
 	

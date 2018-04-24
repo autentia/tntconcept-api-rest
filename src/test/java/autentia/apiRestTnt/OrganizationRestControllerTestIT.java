@@ -17,9 +17,6 @@
 
 package autentia.apiRestTnt;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.junit.Test;
@@ -37,6 +34,8 @@ import autentia.apiRestTnt.Controller.OrganizationController;
 import autentia.apiRestTnt.Model.Organization;
 import autentia.apiRestTnt.Repository.OrganizationRepository;
 import autentia.apiRestTnt.Services.OrganizationService;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -64,14 +63,14 @@ public class OrganizationRestControllerTestIT {
 				Organization[].class);
 		
 		final Organization[] result = response.getBody();
-		
-		assertTrue(result[0].getId() == organizations.get(0).getId());
+
+		assertSame(result[0].getId(), organizations.get(0).getId());
 		assertEquals(result[0].getName(), organizations.get(0).getName());
 		
 		assertEquals(result.length,organizations.size());
 	}
 	
 	private String getBaseUrl() {
-        return new StringBuilder("http://localhost:").append(port).toString();
+        return "http://localhost:" + port;
     }
 }

@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import autentia.apiRestTnt.Model.Project;
 import autentia.apiRestTnt.Repository.ProjectRepository;
 
+import java.util.Optional;
+
 @Service
 public class ProjectService {
 	
@@ -36,7 +38,8 @@ public class ProjectService {
 	}
 
 	public Project getProjectById(Integer projectId) {
-		return projectRepository.findOne(projectId);
+		return projectRepository.findById(projectId)
+				.orElseThrow(()->new IllegalArgumentException("The requested projectId ["+projectId+"] does not exist."));
 	}
 	
 	public Project getProjectByName(String name) {

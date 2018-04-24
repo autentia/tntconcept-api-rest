@@ -43,7 +43,7 @@ public class ProjectRepositoryTestIT {
 	@Test
 	public void findOneShouldReturnProjectFromDB() {
 		final Integer id = 1;
-		Project resultProject = projectRepository.findOne(id);
+		Project resultProject = projectRepository.findById(id).get();
 		
 		assertTrue(resultProject.getId() == id);
 	}

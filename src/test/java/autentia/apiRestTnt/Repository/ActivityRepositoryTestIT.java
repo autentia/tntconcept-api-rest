@@ -17,9 +17,6 @@
 
 package autentia.apiRestTnt.Repository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +32,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import autentia.apiRestTnt.Model.Activity;
 
+import javax.validation.constraints.Null;
+
+import static org.junit.Assert.*;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DataJpaTest
@@ -47,9 +48,9 @@ public class ActivityRepositoryTestIT {
 	@Test
 	public void findOneShouldReturnActivityFromDB() {
 		final Integer id = 1;
-		Activity searchedActivity = activityRepository.findOne(id);
-		
-		assertTrue(searchedActivity.getId() == 1);
+		Activity searchedActivity = activityRepository.findById(id).get();
+
+		assertEquals(1, (int) searchedActivity.getId());
 		
 	}
 	
@@ -66,13 +67,13 @@ public class ActivityRepositoryTestIT {
 	@Test
 	public void deleteShouldDeleteActivityFromDB() {
 		
-		Activity activityToDelete = activityRepository.findOne(1);
+		Activity activityToDelete = activityRepository.findById(1).get();
 		
 		activityRepository.delete(activityToDelete);
 		
-		Activity result = activityRepository.findOne(1);
-		
-		assertEquals(result,null);
+		Activity result = activityRepository.findById(1).orElse(null);
+
+		assertNull(result);
 	}
 	
 	@Test
@@ -83,8 +84,8 @@ public class ActivityRepositoryTestIT {
 		final Integer userId = 1;
 		
 		List<Activity> activitiesByDay = activityRepository.getActivitiesByDay(startDay, endDay, userId);
-		
-		assertTrue(activitiesByDay.get(0).getUserId() == userId);
+
+		assertSame(activitiesByDay.get(0).getUserId(), userId);
 		
 	}
 	
@@ -101,13 +102,13 @@ public class ActivityRepositoryTestIT {
 			workedHours += activity.getDuration()/60;
 		}
 		Integer result = activityRepository.calculateHours(startDay, endDay, userId);
-		
-		assertTrue(workedHours == result);
+
+		assertSame(workedHours, result);
 	}
 	
 	@Test
 	public void findAllShouldReturnAllActivitiesFromDB() {
-		Activity activityToCompare = activityRepository.findOne(1);
+		Activity activityToCompare = activityRepository.findById(1).get();
 		
 		List<Activity> allActivities = activityRepository.findAll();
 		

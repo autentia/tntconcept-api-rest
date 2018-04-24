@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +77,7 @@ public class ActivityServiceTest {
 	public void getActivityShouldReturnActivityFromService() {
 		final Activity activityToReturn = mock(Activity.class);
 		final Activity returnedActivity = mock(Activity.class);
-		when(activityRepository.findOne(activityToReturn.getId())).thenReturn(returnedActivity);
+		when(activityRepository.findById(activityToReturn.getId())).thenReturn(Optional.ofNullable(returnedActivity));
 		
 		final Activity result = activityService.getActivityById(activityToReturn.getId());
 		assertThat(result, is(returnedActivity));

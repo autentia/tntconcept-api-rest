@@ -29,7 +29,5 @@ public class SecurityConfigTest extends WebSecurityConfigurerAdapter {
 				.contextSource()
 				.root("dc=autentia,dc=com")
 				.ldif("classpath:users.ldif");
-
-
     }
 }

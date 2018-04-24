@@ -43,7 +43,7 @@ public class UserRepositoryTestIT {
 	public void findOneShouldReturnUserFromDB(){
 		final Integer id = 1;
 		
-		User searchedUser = userRepository.findOne(id);
+		User searchedUser = userRepository.findById(id).get();
 		
 		assertTrue(searchedUser.getId() == id);
 	}

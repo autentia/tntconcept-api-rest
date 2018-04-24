@@ -31,7 +31,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Profile("prod")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
 	@Value("${spring.ldap.urls}")
 	private String ldapUrl;
 

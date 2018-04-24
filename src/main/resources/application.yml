@@ -1,11 +1,6 @@
 server:
   port: 8080
 
-jasypt:
-  encryptor:
-    algorithm: PBEWithMD5AndDES
-    password: adminadmin
-
 spring:
 
   profiles:
@@ -26,7 +21,7 @@ spring:
       
   datasource:
     name: myDataSource
-    url: jdbc:mysql://localhost:3306/tntconcept?autoReconnect=true&useSSL=false
-    username: tnt
-    password: tnt
+    url: jdbc:mysql://localhost:13307/tntconcept?autoReconnect=true&useSSL=false
+    username: root
+    password: root
     driver-class-name: com.mysql.jdbc.Driver

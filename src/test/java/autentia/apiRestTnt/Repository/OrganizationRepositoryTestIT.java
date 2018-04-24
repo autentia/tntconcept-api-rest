@@ -45,7 +45,7 @@ public class OrganizationRepositoryTestIT {
 	public void findOneShouldReturnOrganizationFromDB() {
 		final Integer id = 1;
 		
-		Organization organizationSearched = organizationRepository.findOne(id);
+		Organization organizationSearched = organizationRepository.findById(id).get();
 		
 		assertTrue(organizationSearched.getId() == 1);
 	}

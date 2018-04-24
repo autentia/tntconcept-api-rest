@@ -27,6 +27,8 @@ import org.junit.Test;
 import autentia.apiRestTnt.Model.Project;
 import autentia.apiRestTnt.Repository.ProjectRepository;
 
+import java.util.Optional;
+
 public class ProjectServiceTest {
 	
 	private final ProjectRepository projectRepository = mock(ProjectRepository.class);
@@ -37,7 +39,7 @@ public class ProjectServiceTest {
 		final Project projectToReturn = mock(Project.class);
 		final Project returnedProject = mock(Project.class);
 		
-		when(projectRepository.findOne(projectToReturn.getId())).thenReturn(returnedProject);
+		when(projectRepository.findById(projectToReturn.getId())).thenReturn(Optional.ofNullable(returnedProject));
 		
 		final Project result = projectService.getProjectById(projectToReturn.getId());
 		assertThat(result,is(returnedProject));
