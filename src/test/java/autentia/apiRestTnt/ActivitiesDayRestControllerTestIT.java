@@ -116,7 +116,6 @@ public class ActivitiesDayRestControllerTestIT {
 				ActivitiesDay.class);
 		
 		final ActivitiesDay result = response.getBody();
-		System.out.println("result = " + result);
 
 		assertSame(result.getTotal_hours(), activitiesDay.getTotal_hours());
 		assertEquals(result.getActivities().size(),activitiesDay.getActivities().size());

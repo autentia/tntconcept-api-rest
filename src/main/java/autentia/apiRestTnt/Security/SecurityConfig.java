@@ -18,6 +18,7 @@
 package autentia.apiRestTnt.Security;
 
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -28,6 +29,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
+@EnableEncryptableProperties
 @Profile("prod")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
