@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +37,6 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Transactional
 public class ActivityRestControllerTestIT {
 
 	@Value("${local.server.port}")
@@ -55,35 +54,53 @@ public class ActivityRestControllerTestIT {
 	@Test
 	public void shouldReturnActivityDetails() {
 		final Integer id = 1;
+
 		Activity activity = activityController.getActivity(id);
-		final ResponseEntity<Activity> response = restTemplate.getForEntity(getBaseUrl() + "/api/activities/{activityId}",
-				Activity.class,id);
-		
-		final Activity result = response.getBody();
+		final Activity result = restTemplate.getForEntity(getBaseUrl() + "/api/activities/{activityId}",
+				Activity.class,id).getBody();
 
 		assertSame(activity.getId(), result.getId());
 		assertEquals(activity.getDescription(), result.getDescription());
-		assertEquals(activity.getBilliable(), result.getBilliable());
+		assertEquals(activity.getBillable(), result.getBillable());
 		assertEquals(activity.getDuration().intValue(), result.getDuration().intValue());
 	}
 	
 	@Test
+	@Transactional
 	public void shouldReturnActivityAfterSaving() {
 		Activity activityToSave = new Activity();
-		activityToSave.setBilliable(true);
+		activityToSave.setBillable(true);
 		activityToSave.setDescription("Test");
 		activityToSave.setDuration(60);
-		
+
 		Activity savedActivity = activityController.addActivity(activityToSave);
+
+		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activities",activityToSave,
+				Activity.class).getBody();
 		
-		final ResponseEntity<Activity> response = restTemplate.postForEntity(getBaseUrl() + "/api/addActivity",activityToSave,
-				Activity.class);
-		
-		final Activity result = response.getBody();
-		
-		assertEquals(result.getBilliable(),savedActivity.getBilliable());
-		assertEquals(result.getDescription(),savedActivity.getDescription());
-		assertEquals(result.getDuration(),savedActivity.getDuration());
+		assertEquals(result.getBillable(),activityToSave.getBillable());
+		assertEquals(result.getDescription(),activityToSave.getDescription());
+		assertEquals(result.getDuration(),activityToSave.getDuration());
+	}
+
+	@Test
+	public void shouldHaveEqualDescriptionAfterEditing() {
+		Activity activityToEdit = activityController.getActivity(11);
+		activityToEdit.setDescription("test");
+
+		Activity editedActivity = activityController.editActivity(activityToEdit);
+
+		assertEquals(editedActivity.getDescription(),editedActivity.getDescription());
+		assertEquals(editedActivity.getBillable(),editedActivity.getBillable());
+	}
+
+	@Test(expected = InvalidDataAccessApiUsageException.class)
+	public void shouldThrowExceptionAfterDeleting() throws InvalidDataAccessApiUsageException {
+		final Integer id = 11;
+
+		activityController.deleteActivity(id);
+
+		restTemplate.delete(getBaseUrl() + "/api/activities/{activityId}",Activity.class,id);
 	}
 	
 	private String getBaseUrl() {

@@ -19,8 +19,7 @@ package autentia.apiRestTnt.Services;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -101,6 +100,16 @@ public class ActivityServiceTest {
 		
 		final List<Activity> result = activityService.getActivitiesByDay(startDay, endDay, userId);
 		assertThat(result,is(activities));
+	}
+
+	@Test
+	public void deleteActivityShouldDeleteActivityFromDatabase(){
+		final Integer id = 12;
+		doNothing().when(activityRepository).deleteById(id);
+
+		activityService.deleteActivityById(id);
+
+		verify(activityRepository).deleteById(id);
 	}
 
 }

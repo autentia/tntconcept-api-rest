@@ -37,7 +37,7 @@ public class ActivityTest {
 	
 	@Test
 	public void getAndSetActivityTest() throws ParseException {
-		activity.setBilliable(true);
+		activity.setBillable(true);
 		activity.setDescription("Description");
 		activity.setDuration(10);
 		activity.setRoleId(1);
@@ -46,7 +46,7 @@ public class ActivityTest {
 		activity.setStartDate(format.parse("2018-02-26"));
 		
 		
-		assertEquals(activity.getBilliable(),true);
+		assertEquals(activity.getBillable(),true);
 		assertEquals(activity.getDescription(),"Description");
 		assertTrue(activity.getDuration() == 10);
 		assertTrue(activity.getRoleId() == 1);

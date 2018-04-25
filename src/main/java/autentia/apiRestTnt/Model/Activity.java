@@ -70,12 +70,12 @@ public class Activity {
 		this.duration = duration;
 	}
 
-	public Boolean getBilliable() {
+	public Boolean getBillable() {
 		return billable;
 	}
 
-	public void setBilliable(Boolean billiable) {
-		this.billable = billiable;
+	public void setBillable(Boolean billable) {
+		this.billable = billable;
 	}
 
 	public Integer getUserId() {

@@ -58,4 +58,8 @@ public class ActivityService {
 	public Integer calculateHours(Date startDay, Date endDay, Integer userId) {
 		return activityRepository.calculateHours(startDay, endDay, userId);
 	}
+
+	public void deleteActivityById(Integer id){
+		activityRepository.deleteById(id);
+	}
 }

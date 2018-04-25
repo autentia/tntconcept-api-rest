@@ -18,12 +18,7 @@
 package autentia.apiRestTnt.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import autentia.apiRestTnt.Model.Activity;
 import autentia.apiRestTnt.Services.ActivityService;
@@ -46,9 +41,19 @@ public class ActivityController {
 		return activityService.getActivityById(activityId);
 	}
 
-	@PostMapping(value = "/addActivity")
+	@PostMapping(value = "/activities")
 	public Activity addActivity(@RequestBody Activity activity) {
 		return activityService.saveActivity(activity);
+	}
+
+	@PutMapping(value = "/activities")
+	public Activity editActivity(@RequestBody Activity activity){
+		return activityService.saveActivity(activity);
+	}
+
+	@DeleteMapping(value = "/activities/{activityId}")
+	public void deleteActivity(@PathVariable("activityId") Integer activityId){
+		activityService.deleteActivityById(activityId);
 	}
 
 }
