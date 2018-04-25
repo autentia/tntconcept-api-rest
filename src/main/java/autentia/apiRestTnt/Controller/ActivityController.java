@@ -36,22 +36,22 @@ public class ActivityController {
 	}
 
 	//Controlar que la actividad corresponde con el usuario
-	@GetMapping(value="/activities/{activityId}")
+	@GetMapping(value="/activity/{activityId}")
 	public Activity getActivity(@PathVariable("activityId") Integer activityId) {
 		return activityService.getActivityById(activityId);
 	}
 
-	@PostMapping(value = "/activities")
+	@PostMapping(value = "/activity")
 	public Activity addActivity(@RequestBody Activity activity) {
 		return activityService.saveActivity(activity);
 	}
 
-	@PutMapping(value = "/activities")
+	@PutMapping(value = "/activity")
 	public Activity editActivity(@RequestBody Activity activity){
 		return activityService.saveActivity(activity);
 	}
 
-	@DeleteMapping(value = "/activities/{activityId}")
+	@DeleteMapping(value = "/activity/{activityId}")
 	public void deleteActivity(@PathVariable("activityId") Integer activityId){
 		activityService.deleteActivityById(activityId);
 	}

@@ -56,7 +56,7 @@ public class ActivityRestControllerTestIT {
 		final Integer id = 1;
 
 		Activity activity = activityController.getActivity(id);
-		final Activity result = restTemplate.getForEntity(getBaseUrl() + "/api/activities/{activityId}",
+		final Activity result = restTemplate.getForEntity(getBaseUrl() + "/api/activity/{activityId}",
 				Activity.class,id).getBody();
 
 		assertSame(activity.getId(), result.getId());
@@ -75,7 +75,7 @@ public class ActivityRestControllerTestIT {
 
 		Activity savedActivity = activityController.addActivity(activityToSave);
 
-		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activities",activityToSave,
+		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity",activityToSave,
 				Activity.class).getBody();
 		
 		assertEquals(result.getBillable(),activityToSave.getBillable());
@@ -100,7 +100,7 @@ public class ActivityRestControllerTestIT {
 
 		activityController.deleteActivity(id);
 
-		restTemplate.delete(getBaseUrl() + "/api/activities/{activityId}",Activity.class,id);
+		restTemplate.delete(getBaseUrl() + "/api/activity/{activityId}",Activity.class,id);
 	}
 	
 	private String getBaseUrl() {

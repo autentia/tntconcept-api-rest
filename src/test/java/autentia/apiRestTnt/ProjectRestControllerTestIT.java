@@ -56,7 +56,7 @@ public class ProjectRestControllerTestIT {
 		
 		Project project = projectController.getProjectById(id);
 		
-		final ResponseEntity<Project> response = restTemplate.getForEntity(getBaseUrl() + "/api/projects/{projectId}",
+		final ResponseEntity<Project> response = restTemplate.getForEntity(getBaseUrl() + "/api/project/{projectId}",
 				Project.class,id);
 		
 		final Project result = response.getBody();

@@ -38,7 +38,7 @@ public class ProjectController {
 		this.projectService = projectService;
 	}
 
-	@GetMapping("/projects/{projectId}")
+	@GetMapping("/project/{projectId}")
 	public Project getProjectById(@PathVariable("projectId") Integer projectId) {
 		return projectService.getProjectById(projectId);
 	}
