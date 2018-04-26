@@ -1,42 +1,40 @@
 openapi: 3.0.1
 info:
   title: Rest API TNT
-  description: 'Independent API Rest for TNTConcept'
+  description: Independent API Rest for TNTConcept
   version: '0.5'
-  termsOfService: https://github.com/autentia/tntconcept-api-rest/blob/master/LICENSE.txt
+  termsOfService: 'https://github.com/autentia/tntconcept-api-rest/blob/master/LICENSE.txt'
   contact:
     name: Autentia
-    url: https://www.autentia.com/
+    url: 'https://www.autentia.com/'
   license:
-    name: "GNU General Public License v3.0"
-    url: https://www.gnu.org/licenses/gpl-3.0.en.html
+    name: GNU General Public License v3.0
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
 servers:
-- url: http://localhost:8080/api/
+  - url: 'http://localhost:8080/api/'
 paths:
   /activitiesByDates:
     get:
       tags:
-      - Activities
-      summary: "Imputations between two dates inclusive"
-      description: ""
+        - Activities
+      summary: Imputations between two dates inclusive
+      description: ''
       operationId: getActivitiesByDates
       parameters:
-      - name: startDate
-        in: query
-        description: "The start date"
-        schema:
-          $ref: '#/components/schemas/date-string'
-        example: "2018-04-17T00:00:00"
-
-      - name: endDate
-        in: query
-        description: "The end date"
-        schema:
-          $ref: '#/components/schemas/date-string'
-        example: "2018-04-18T00:00:00"
-
+        - name: startDate
+          in: query
+          description: The start date
+          schema:
+            $ref: '#/components/schemas/date-string'
+          example: '2018-04-17T00:00:00'
+        - name: endDate
+          in: query
+          description: The end date
+          schema:
+            $ref: '#/components/schemas/date-string'
+          example: '2018-04-18T00:00:00'
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
@@ -44,137 +42,126 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ActivityByDay'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
   /activitiesByDay:
     get:
       tags:
-      - Activities
-      summary: "Imputations on a specific day"
-      description: "Returns all the imputations of a user on that day of the ActivitiesDay object"
+        - Activities
+      summary: Imputations on a specific day
+      description: >-
+        Returns all the imputations of a user on that day of the ActivitiesDay
+        object
       operationId: getActivitiesByDay
       parameters:
-      - name: date
-        in: query
-        description: ""
-        schema:
-          $ref: '#/components/schemas/date-string'
-        example: "2018-04-17T00:00:00"
-
+        - name: date
+          in: query
+          description: ''
+          schema:
+            $ref: '#/components/schemas/date-string'
+          example: '2018-04-17T00:00:00'
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActivityByDay'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
-  /activity/{activityId}:
+  '/activity/{activityId}':
     get:
       tags:
-      - Activities
-      summary: "Get imputation by id"
-      description: ""
+        - Activities
+      summary: Get imputation by id
+      description: ''
       operationId: getActivityById
       parameters:
-      - name: activityId
-        in: path
-        required: true
-        description: "The id that needs to be fetched."
-        schema:
-          $ref: '#/components/schemas/id'
-        example: 1
-
+        - name: activityId
+          in: path
+          required: true
+          description: The id that needs to be fetched.
+          schema:
+            $ref: '#/components/schemas/id'
+          example: 1
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Activity'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
     delete:
       tags:
-      - Activities
-      summary: "Deletes an activity"
-      description: ""
+        - Activities
+      summary: Deletes an activity
+      description: ''
       operationId: deleteActivity
       parameters:
-      - name: activityId
-        in: path
-        description: "Activity id to delete."
-        required: true
-        schema:
-          $ref: '#/components/schemas/id'
-        example: "1"
-
+        - name: activityId
+          in: path
+          description: Activity id to delete.
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+          example: '1'
       responses:
-        400:
+        '400':
           description: Invalid ID supplied
-
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
   /activity:
     post:
       tags:
-      - Activities
-      summary: "Add a new activity"
-      description: ""
+        - Activities
+      summary: Add a new activity
+      description: ''
       operationId: addActivity
-
       requestBody:
-        description: "Activity object that needs to be added to the database."
+        description: Activity object that needs to be added to the database.
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Activity'
-
       responses:
-        405:
-          description: Invalid Input
-
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
+        '405':
+          description: Invalid Input
     put:
       tags:
-      - Activities
-      summary: "Update an existing activity"
-      description: ""
+        - Activities
+      summary: Update an existing activity
+      description: ''
       operationId: editActivity
       requestBody:
-        description: "Activity object that needs to be added to the database."
+        description: Activity object that needs to be added to the database.
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Activity'
-
       responses:
-        400:
+        '400':
           description: Invalid ID supplied
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-        404:
+        '404':
           description: Activity not found
-
   /organizations:
     get:
       tags:
-      - Organizations
-      summary: "Returns all organizations"
-      description: "Each organization contains a list of projects, and each project a list of roles"
+        - Organizations
+      summary: Returns all organizations
+      description: >-
+        Each organization contains a list of projects, and each project a list
+        of roles
       operationId: getOrganizations
-
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
@@ -188,72 +175,65 @@ paths:
                     example: Nuestra Empresa
                   projects:
                     $ref: '#/components/schemas/Project'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
-  /project/{projectId}:
+  '/project/{projectId}':
     get:
       tags:
-      - Projects
-      summary: "Get project by project id"
-      description: ""
+        - Projects
+      summary: Get project by project id
+      description: ''
       operationId: getProjectById
       parameters:
-      - name: projectId
-        in: path
-        description: "The id that needs to be fetched."
-        required: true
-        schema:
-          $ref: '#/components/schemas/id'
-        example: "1"
-
+        - name: projectId
+          in: path
+          description: The id that needs to be fetched.
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+          example: '1'
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
-  /projectRole/{projectRoleId}:
+  '/projectRole/{projectRoleId}':
     get:
       tags:
-      - ProjectRole
-      summary: "Get role by project role id"
-      description: ""
+        - ProjectRole
+      summary: Get role by project role id
+      description: ''
       operationId: getProjectRoleById
       parameters:
-      - name: projectRoleId
-        in: path
-        description: "The id that needs to be fetched."
-        required: true
-        schema:
-          $ref: '#/components/schemas/id'
-        example: "1"
-
+        - name: projectRoleId
+          in: path
+          description: The id that needs to be fetched.
+          required: true
+          schema:
+            $ref: '#/components/schemas/id'
+          example: '1'
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectRole'
-        401:
+        '401':
           $ref: '#/components/responses/UnauthorizedError'
-
 components:
   schemas:
     date-string:
       type: string
       format: date-time
-
     id:
       type: integer
       format: int32
       example: 1
-
     ProjectRole:
       type: object
       properties:
@@ -264,12 +244,11 @@ components:
           example: Vacaciones
         ProjectId:
           $ref: '#/components/schemas/id'
-
     Project:
       type: object
       properties:
         id:
-           $ref: '#/components/schemas/id'
+          $ref: '#/components/schemas/id'
         name:
           type: string
           example: Vacaciones
@@ -282,12 +261,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProjectRole'
-
     Activity:
       type: object
       properties:
         id:
-           $ref: '#/components/schemas/id'
+          $ref: '#/components/schemas/id'
         startDate:
           type: integer
           format: int32
@@ -298,7 +276,7 @@ components:
           example: 360
         description:
           type: string
-          example: "Prueba"
+          example: Prueba
         userId:
           $ref: '#/components/schemas/id'
         roleId:
@@ -306,7 +284,6 @@ components:
         billable:
           type: boolean
           example: true
-
     ActivityByDay:
       type: object
       properties:
@@ -322,19 +299,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Activity'
-
   responses:
     UnauthorizedError:
       description: Authentication information is missing or invalid
-
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-
 security:
-- basicAuth: []
-
+  - basicAuth: []
 externalDocs:
   description: API Documentation
-  url: https://github.com/autentia/tntconcept-api-rest/
+  url: 'https://github.com/autentia/tntconcept-api-rest/'
