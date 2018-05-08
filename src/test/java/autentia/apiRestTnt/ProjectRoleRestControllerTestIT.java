@@ -28,10 +28,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Controller.ProjectRoleController;
-import autentia.apiRestTnt.Model.ProjectRole;
-import autentia.apiRestTnt.Repository.ProjectRoleRepository;
-import autentia.apiRestTnt.Services.ProjectRoleService;
+import autentia.apiRestTnt.controller.ProjectRoleController;
+import autentia.apiRestTnt.model.ProjectRole;
+import autentia.apiRestTnt.repository.ProjectRoleRepository;
+import autentia.apiRestTnt.services.ProjectRoleService;
 
 import static org.junit.Assert.*;
 

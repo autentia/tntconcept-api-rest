@@ -28,10 +28,10 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Controller.ActivityController;
-import autentia.apiRestTnt.Model.Activity;
-import autentia.apiRestTnt.Repository.ActivityRepository;
-import autentia.apiRestTnt.Services.ActivityService;
+import autentia.apiRestTnt.controller.ActivityController;
+import autentia.apiRestTnt.model.Activity;
+import autentia.apiRestTnt.repository.ActivityRepository;
+import autentia.apiRestTnt.services.ActivityService;
 
 import static org.junit.Assert.*;
 

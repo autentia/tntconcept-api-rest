@@ -37,16 +37,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Controller.ActivitiesDayController;
-import autentia.apiRestTnt.Model.ActivitiesDay;
-import autentia.apiRestTnt.Repository.ActivityRepository;
-import autentia.apiRestTnt.Repository.UserRepository;
-import autentia.apiRestTnt.Services.ActivityService;
-import autentia.apiRestTnt.Services.UserService;
+import autentia.apiRestTnt.controller.ActivitiesDayController;
+import autentia.apiRestTnt.model.ActivitiesDay;
+import autentia.apiRestTnt.repository.ActivityRepository;
+import autentia.apiRestTnt.repository.UserRepository;
+import autentia.apiRestTnt.services.ActivityService;
+import autentia.apiRestTnt.services.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

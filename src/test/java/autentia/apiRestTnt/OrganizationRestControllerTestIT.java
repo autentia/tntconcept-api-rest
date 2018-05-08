@@ -30,10 +30,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Controller.OrganizationController;
-import autentia.apiRestTnt.Model.Organization;
-import autentia.apiRestTnt.Repository.OrganizationRepository;
-import autentia.apiRestTnt.Services.OrganizationService;
+import autentia.apiRestTnt.controller.OrganizationController;
+import autentia.apiRestTnt.model.Organization;
+import autentia.apiRestTnt.repository.OrganizationRepository;
+import autentia.apiRestTnt.services.OrganizationService;
 
 import static org.junit.Assert.*;
 

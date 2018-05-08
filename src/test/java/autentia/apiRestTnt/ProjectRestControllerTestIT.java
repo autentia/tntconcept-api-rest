@@ -28,10 +28,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import autentia.apiRestTnt.Controller.ProjectController;
-import autentia.apiRestTnt.Model.Project;
-import autentia.apiRestTnt.Repository.ProjectRepository;
-import autentia.apiRestTnt.Services.ProjectService;
+import autentia.apiRestTnt.controller.ProjectController;
+import autentia.apiRestTnt.model.Project;
+import autentia.apiRestTnt.repository.ProjectRepository;
+import autentia.apiRestTnt.services.ProjectService;
 
 import static org.junit.Assert.*;
 
