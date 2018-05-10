@@ -17,7 +17,9 @@
 
 package autentia.apiRestTnt.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +27,7 @@ import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Organization {
 	
 	@Id
@@ -56,6 +59,10 @@ public class Organization {
 
 	public void setName(String name) {
 		this.name = name;
-	}	
-	
+	}
+
+	protected Organization withoutProjects() {
+		this.projects = null;
+		return this;
+	}
 }

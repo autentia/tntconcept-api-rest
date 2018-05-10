@@ -87,7 +87,7 @@ public class ActivitiesDayController {
 		
 		activitiesDay.setTotal_hours(activityService.calculateHours(startDay,endDay, user.getId()));
 		activitiesDay.setActivities(activityService.getActivitiesByDay(startDay,endDay,user.getId()));
-		
+
 		return activitiesDay;
 	}
 }

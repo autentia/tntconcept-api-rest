@@ -19,12 +19,15 @@
 package autentia.apiRestTnt.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 
 @Entity
+@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProjectRole {
 	
 	@Id
@@ -38,6 +41,11 @@ public class ProjectRole {
 	@JoinColumn(name="projectId")
 	@JsonBackReference
 	private Project project;
+
+	@JsonProperty
+	public Project getProjectParent() {
+		return project.withoutRoles();
+	}
 
 	public Integer getId() {
 		return id;

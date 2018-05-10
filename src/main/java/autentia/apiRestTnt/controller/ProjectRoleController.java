@@ -38,7 +38,7 @@ public class ProjectRoleController {
 		this.projectRoleService = projectRoleService;
 	}
 
-	@GetMapping("/projectsRole/{projectRoleId}")
+	@GetMapping("/projectRole/{projectRoleId}")
 	public ProjectRole getProjectRoleById(@PathVariable("projectRoleId")Integer projectRoleId) {
 		return projectRoleService.getProjectRoleById(projectRoleId);
 	}

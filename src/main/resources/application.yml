@@ -27,8 +27,10 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
 
+  jackson:
+    default-property-inclusion: non_null
+
 jasypt:
    encryptor:
      algorithm: PBEWithMD5AndDES
      password: ${JASYPT_ENCRYPTOR_PASSWORD:}
-

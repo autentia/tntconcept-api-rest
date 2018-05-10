@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import autentia.apiRestTnt.model.Project;
 import autentia.apiRestTnt.repository.ProjectRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProjectService {
@@ -35,11 +36,18 @@ public class ProjectService {
 		this.projectRepository = projectRepository;
 	}
 
+	@Transactional
 	public Project getProjectById(Integer projectId) {
-		return projectRepository.findById(projectId)
+		Project project = projectRepository.findById(projectId)
 				.orElseThrow(()->new IllegalArgumentException("The requested projectId ["+projectId+"] does not exist."));
+		fillRolesLazyProperty(project);
+		return  project;
 	}
-	
+
+	private void fillRolesLazyProperty(Project project) {
+		project.getProjectRoles().size();
+	}
+
 	public Project getProjectByName(String name) {
 		return projectRepository.findByName(name);
 	}

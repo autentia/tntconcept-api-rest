@@ -18,9 +18,7 @@
 
 package autentia.apiRestTnt.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +26,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Project")
+@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Project {
 	
 	@Id
@@ -44,11 +43,15 @@ public class Project {
 	@JoinColumn(name="organizationId")
     @JsonBackReference
     private Organization organization;
-	
+
 	@OneToMany(mappedBy= "project", fetch = FetchType.LAZY)
     @JsonManagedReference
 	private List<ProjectRole> projectRoles;
-    
+
+	@JsonProperty
+	public Organization getOrganizationParent() {
+		return organization.withoutProjects();
+	}
 	
     
     public List<ProjectRole> getProjectRoles() {
@@ -89,7 +92,10 @@ public class Project {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
-	
 
 
+	protected Project withoutRoles() {
+		projectRoles = null;
+		return this;
+	}
 }
