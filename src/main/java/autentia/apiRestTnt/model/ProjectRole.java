@@ -18,11 +18,10 @@
 
 package autentia.apiRestTnt.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -34,9 +33,11 @@ public class ProjectRole {
 	
 	@Column
 	private String name;
-	
-	@Column
-	private Integer projectId;
+
+	@ManyToOne
+	@JoinColumn(name="projectId")
+	@JsonBackReference
+	private Project project;
 
 	public Integer getId() {
 		return id;
@@ -52,13 +53,11 @@ public class ProjectRole {
 	}
 
 
-	public Integer getProjectId() {
-		return projectId;
+	public Project getProject() {
+		return project;
 	}
 
-
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
+	public void setProject(Project project) {
+		this.project = project;
 	}
-
 }

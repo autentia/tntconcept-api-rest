@@ -17,6 +17,7 @@
 
 package autentia.apiRestTnt.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,8 @@ public class OrganizationController {
 
 	@GetMapping("/organizations")
 	public List<Organization> getOrganizations(){
-		return organizationService.getOrganizations();
+	    List<Organization> organizations = organizationService.getOrganizations();
+		return organizations;
 	}
 
 }
