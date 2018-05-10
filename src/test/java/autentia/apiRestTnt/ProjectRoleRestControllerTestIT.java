@@ -55,7 +55,7 @@ public class ProjectRoleRestControllerTestIT {
 	public void shouldReturnProjectRoleDetails() {
 		final Integer id = 1;
 		ProjectRole projectRole = projectRoleController.getProjectRoleById(id);
-		final ResponseEntity<ProjectRole> response = restTemplate.getForEntity(getBaseUrl() + "/api/projectsRole/{projectRoleId}",
+		final ResponseEntity<ProjectRole> response = restTemplate.getForEntity(getBaseUrl() + "/api/projectRole/{projectRoleId}",
 				ProjectRole.class,id);
 		
 		final ProjectRole result = response.getBody();

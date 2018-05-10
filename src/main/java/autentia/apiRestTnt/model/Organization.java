@@ -17,17 +17,16 @@
 
 package autentia.apiRestTnt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.*;
 
 @Entity
-@JsonIdentityInfo( generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",scope = Organization.class)
 public class Organization {
 	
 	@Id
@@ -36,18 +35,6 @@ public class Organization {
 	
 	@Column
 	private String name;
-
-	@OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
-	@JsonManagedReference
-	private List<Project> projects;
-	
-	public List<Project> getProjects() {
-		return projects;
-	}
-
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
 	
 	public Integer getId() {
 		return id;
@@ -61,8 +48,4 @@ public class Organization {
 		this.name = name;
 	}
 
-	protected Organization withoutProjects() {
-		this.projects = null;
-		return this;
-	}
 }

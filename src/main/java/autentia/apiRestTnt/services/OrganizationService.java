@@ -41,24 +41,9 @@ public class OrganizationService {
 //	public Organization getOrganizationById(Integer organizationId) {
 //		return organizationRepository.findOne(organizationId);
 //	}
-	@Transactional
+
 	public List<Organization> getOrganizations(){
-		List<Organization> orgs = organizationRepository.findAll();
-		fillProjects(orgs);
-		return orgs;
-	}
-
-	private void fillProjects(List<Organization> orgs) {
-		for (Organization o: orgs) {
-			List<Project> projs = o.getProjects();
-			fillProjectRoles(projs);
-		}
-	}
-
-	private void fillProjectRoles(List<Project> projs) {
-		for (Project p: projs) {
-			p.getProjectRoles().size();
-		}
+		return organizationRepository.findAll();
 	}
 
 	public Organization getOrganizationByName(String name) {

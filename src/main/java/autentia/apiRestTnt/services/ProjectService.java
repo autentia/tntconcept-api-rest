@@ -36,16 +36,9 @@ public class ProjectService {
 		this.projectRepository = projectRepository;
 	}
 
-	@Transactional
 	public Project getProjectById(Integer projectId) {
-		Project project = projectRepository.findById(projectId)
+		return projectRepository.findById(projectId)
 				.orElseThrow(()->new IllegalArgumentException("The requested projectId ["+projectId+"] does not exist."));
-		fillRolesLazyProperty(project);
-		return  project;
-	}
-
-	private void fillRolesLazyProperty(Project project) {
-		project.getProjectRoles().size();
 	}
 
 	public Project getProjectByName(String name) {

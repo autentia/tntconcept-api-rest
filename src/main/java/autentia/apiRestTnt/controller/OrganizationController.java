@@ -33,7 +33,7 @@ import autentia.apiRestTnt.services.OrganizationService;
 public class OrganizationController {
 	
 	private OrganizationService organizationService;
-	
+
 	@Autowired
 	public OrganizationController(OrganizationService organizationService) {
 		super();
@@ -42,7 +42,7 @@ public class OrganizationController {
 
 	@GetMapping("/organizations")
 	public List<Organization> getOrganizations(){
-	    List<Organization> organizations = organizationService.getOrganizations();
+		List<Organization> organizations = organizationService.getOrganizations();
 		return organizations;
 	}
 

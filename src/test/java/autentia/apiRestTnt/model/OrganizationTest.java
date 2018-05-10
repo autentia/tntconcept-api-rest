@@ -37,12 +37,8 @@ public class OrganizationTest {
 	@Test
 	public void getAndSetOrganizationTest() {
 		organization.setName("Organization");
-		List<Project> projectList = new ArrayList<>();
-		projectList.add(new Project());
-		organization.setProjects(projectList);
-		
+
 		assertEquals(organization.getName(),"Organization");
-		assertEquals(organization.getProjects().size(),1);
 	}
 
 }

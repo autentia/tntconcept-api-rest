@@ -40,16 +40,10 @@ public class ProjectTest {
 		project.setName("Modificar Proyecto");
 		project.setOpen(false);
 		//project.setOrganizationId(2);
-		List<ProjectRole> projectRoleList = new ArrayList<>();
-		ProjectRole projectRole = new ProjectRole();
-		projectRole.setName("Test");
-		projectRoleList.add(projectRole);
-		project.setProjectRoles(projectRoleList);
 		
 		assertEquals(project.getName(),"Modificar Proyecto");
 		assertEquals(project.getOpen(),false);
 		//assertTrue(project.getOrganizationId() == 2);
-		assertEquals(project.getProjectRoles().size(),projectRoleList.size());
 	}
 	
 }
