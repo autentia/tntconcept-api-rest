@@ -19,11 +19,7 @@ package autentia.apiRestTnt.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Activity {
@@ -40,15 +36,16 @@ public class Activity {
 	
 	@Column
 	private String description;
+
+	@ManyToOne
+	@JoinColumn(name = "roleId")
+	private ProjectRole projectRole;
 	
 	@Column
 	private Boolean billable;
 	
 	@Column
 	private Integer userId;
-	
-	@Column
-	private Integer roleId;
 
 	public Integer getId() {
 		return id;
@@ -86,14 +83,6 @@ public class Activity {
 		this.userId = userId;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -101,9 +90,12 @@ public class Activity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
-	
-	
 
+	public ProjectRole getProjectRole() {
+		return projectRole;
+	}
+
+	public void setProjectRole(ProjectRole projectRole) {
+		this.projectRole = projectRole;
+	}
 }

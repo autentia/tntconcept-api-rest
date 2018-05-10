@@ -39,7 +39,7 @@ public class ProjectTest {
 	public void getAndSetProjectTest() {
 		project.setName("Modificar Proyecto");
 		project.setOpen(false);
-		project.setOrganizationId(2);
+		//project.setOrganizationId(2);
 		List<ProjectRole> projectRoleList = new ArrayList<>();
 		ProjectRole projectRole = new ProjectRole();
 		projectRole.setName("Test");
@@ -48,7 +48,7 @@ public class ProjectTest {
 		
 		assertEquals(project.getName(),"Modificar Proyecto");
 		assertEquals(project.getOpen(),false);
-		assertTrue(project.getOrganizationId() == 2);
+		//assertTrue(project.getOrganizationId() == 2);
 		assertEquals(project.getProjectRoles().size(),projectRoleList.size());
 	}
 	

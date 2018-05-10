@@ -18,6 +18,7 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    open-in-view: false
       
   datasource:
     name: myDataSource
@@ -30,3 +31,4 @@ jasypt:
    encryptor:
      algorithm: PBEWithMD5AndDES
      password: ${JASYPT_ENCRYPTOR_PASSWORD:}
+

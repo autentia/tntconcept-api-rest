@@ -18,15 +18,13 @@
 
 package autentia.apiRestTnt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Project")
@@ -41,11 +39,14 @@ public class Project {
     
 	@Column
     private Boolean open;
+
+	@ManyToOne
+	@JoinColumn(name="organizationId")
+    @JsonBackReference
+    private Organization organization;
 	
-	@Column
-    private Integer organizationId;
-	
-	@OneToMany(mappedBy= "projectId")
+	@OneToMany(mappedBy= "project", fetch = FetchType.LAZY)
+    @JsonManagedReference
 	private List<ProjectRole> projectRoles;
     
 	
@@ -81,12 +82,12 @@ public class Project {
 		this.open = open;
 	}
 
-	public Integer getOrganizationId() {
-		return organizationId;
+	public Organization getOrganization() {
+		return organization;
 	}
 
-	public void setOrganizationId(Integer organizationId) {
-		this.organizationId = organizationId;
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 	
 

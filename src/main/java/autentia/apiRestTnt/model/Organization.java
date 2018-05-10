@@ -17,14 +17,12 @@
 
 package autentia.apiRestTnt.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import java.util.List;
+import java.util.Objects;
+
+import javax.persistence.*;
 
 @Entity
 public class Organization {
@@ -35,8 +33,9 @@ public class Organization {
 	
 	@Column
 	private String name;
-	
-	@OneToMany(mappedBy = "organizationId")
+
+	@OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<Project> projects;
 	
 	public List<Project> getProjects() {

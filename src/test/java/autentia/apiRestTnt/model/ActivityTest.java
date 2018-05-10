@@ -40,7 +40,6 @@ public class ActivityTest {
 		activity.setBillable(true);
 		activity.setDescription("Description");
 		activity.setDuration(10);
-		activity.setRoleId(1);
 		activity.setUserId(1);
 		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
 		activity.setStartDate(format.parse("2018-02-26"));
@@ -49,7 +48,6 @@ public class ActivityTest {
 		assertEquals(activity.getBillable(),true);
 		assertEquals(activity.getDescription(),"Description");
 		assertTrue(activity.getDuration() == 10);
-		assertTrue(activity.getRoleId() == 1);
 		assertTrue(activity.getUserId() == 1);
 		assertEquals(activity.getStartDate(),format.parse("2018-02-26"));
 		

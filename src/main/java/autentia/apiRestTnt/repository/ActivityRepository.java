@@ -28,7 +28,7 @@ import autentia.apiRestTnt.model.Activity;
 
 public interface ActivityRepository extends JpaRepository<Activity,Integer> {
 	
-	@Query("SELECT a FROM Activity a WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
+	@Query("SELECT a FROM Activity a join fetch a.projectRole WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
 	List<Activity> getActivitiesByDay(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
 			@Param("userId")Integer userId);
 	
