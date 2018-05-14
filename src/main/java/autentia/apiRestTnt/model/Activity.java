@@ -25,7 +25,7 @@ import javax.persistence.*;
 public class Activity {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column
@@ -40,12 +40,24 @@ public class Activity {
 	@ManyToOne
 	@JoinColumn(name = "roleId")
 	private ProjectRole projectRole;
-	
+
 	@Column
 	private Boolean billable;
 	
 	@Column
 	private Integer userId;
+
+	public Activity(){
+
+	}
+
+	public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId) {
+		this.startDate = startDate;
+		this.duration = duration;
+		this.description = description;
+		this.billable = billable;
+		this.userId = userId;
+	}
 
 	public Integer getId() {
 		return id;

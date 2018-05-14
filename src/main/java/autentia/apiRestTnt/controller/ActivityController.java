@@ -18,6 +18,7 @@
 package autentia.apiRestTnt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import autentia.apiRestTnt.model.Activity;
@@ -41,7 +42,7 @@ public class ActivityController {
 		return activityService.getActivityById(activityId);
 	}
 
-	@PostMapping(value = "/activity")
+	@PostMapping(value = "/activity",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Activity addActivity(@RequestBody Activity activity) {
 		return activityService.saveActivity(activity);
 	}

@@ -40,7 +40,6 @@ public class Project {
 
 	@ManyToOne
 	@JoinColumn(name="organizationId")
-	@JsonManagedReference
     private Organization organization;
 
 	@OneToMany(mappedBy = "project")

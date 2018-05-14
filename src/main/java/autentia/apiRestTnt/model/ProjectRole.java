@@ -35,7 +35,6 @@ public class ProjectRole {
 
     @ManyToOne
     @JoinColumn(name = "projectId")
-    @JsonManagedReference
     private Project project;
 
     public Integer getId() {
