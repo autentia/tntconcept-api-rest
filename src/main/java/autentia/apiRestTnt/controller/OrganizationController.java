@@ -20,8 +20,10 @@ package autentia.apiRestTnt.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import autentia.apiRestTnt.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +46,11 @@ public class OrganizationController {
 	public List<Organization> getOrganizations(){
 		List<Organization> organizations = organizationService.getOrganizations();
 		return organizations;
+	}
+
+	@GetMapping("/organization/{id}/projects")
+	public List<Project> getOrganizationProjects(@PathVariable Integer id){
+		return organizationService.getProjectsByOrganizationId(id);
 	}
 
 }

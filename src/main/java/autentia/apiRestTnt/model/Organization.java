@@ -19,6 +19,7 @@ package autentia.apiRestTnt.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.List;
@@ -27,12 +28,16 @@ import javax.persistence.*;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",scope = Organization.class)
+@JsonIgnoreProperties(value= {"projects"})
 public class Organization {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	
+
+	@OneToMany(mappedBy = "organization")
+	private List<Project> projects;
+
 	@Column
 	private String name;
 	
@@ -48,4 +53,11 @@ public class Organization {
 		this.name = name;
 	}
 
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
 }

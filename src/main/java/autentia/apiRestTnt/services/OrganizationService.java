@@ -18,6 +18,7 @@
 package autentia.apiRestTnt.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import autentia.apiRestTnt.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,21 @@ public class OrganizationService {
 		this.organizationRepository = organizationRepository;
 	}
 
-//	public Organization getOrganizationById(Integer organizationId) {
-//		return organizationRepository.findOne(organizationId);
-//	}
+	public Optional<Organization> getOrganizationById(Integer organizationId) {
+		return organizationRepository.findById(organizationId);
+	}
+
+	@Transactional
+	public List<Project> getProjectsByOrganizationId(Integer organizationId) {
+		Organization organization = getOrganizationById(organizationId)
+			.orElseThrow(() -> new IllegalArgumentException(("The requested organizationId ["+organizationId+"] does not exist.")));
+		return initializeLazyProjects(organization);
+	}
+
+	private List<Project> initializeLazyProjects(Organization organization) {
+		organization.getProjects().size();
+		return organization.getProjects();
+	}
 
 	public List<Organization> getOrganizations(){
 		return organizationRepository.findAll();
