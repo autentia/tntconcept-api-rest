@@ -24,7 +24,6 @@ import javax.persistence.*;
 
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = ProjectRole.class)
 public class ProjectRole {
 
     @Id
@@ -36,6 +35,7 @@ public class ProjectRole {
 
     @ManyToOne
     @JoinColumn(name = "projectId")
+    @JsonManagedReference
     private Project project;
 
     public Integer getId() {

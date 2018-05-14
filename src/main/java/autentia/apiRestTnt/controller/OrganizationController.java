@@ -44,8 +44,7 @@ public class OrganizationController {
 
 	@GetMapping("/organizations")
 	public List<Organization> getOrganizations(){
-		List<Organization> organizations = organizationService.getOrganizations();
-		return organizations;
+		return organizationService.getOrganizations();
 	}
 
 	@GetMapping("/organization/{id}/projects")

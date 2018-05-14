@@ -26,8 +26,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Project")
-@JsonIdentityInfo(
-		generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Project.class)
 public class Project {
 	
 	@Id
@@ -42,7 +40,12 @@ public class Project {
 
 	@ManyToOne
 	@JoinColumn(name="organizationId")
+	@JsonManagedReference
     private Organization organization;
+
+	@OneToMany(mappedBy = "project")
+	@JsonBackReference
+	private List<ProjectRole> projectRoles;
 
     public void setName(String name) {
     	this.name = name;
@@ -72,4 +75,11 @@ public class Project {
 		this.organization = organization;
 	}
 
+	public List<ProjectRole> getProjectRoles() {
+		return projectRoles;
+	}
+
+	public void setProjectRoles(List<ProjectRole> projectRoles) {
+		this.projectRoles = projectRoles;
+	}
 }

@@ -17,6 +17,7 @@
 
 package autentia.apiRestTnt.controller;
 
+import autentia.apiRestTnt.model.ProjectRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import autentia.apiRestTnt.model.Project;
 import autentia.apiRestTnt.services.ProjectService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -41,6 +44,11 @@ public class ProjectController {
 	@GetMapping("/project/{projectId}")
 	public Project getProjectById(@PathVariable("projectId") Integer projectId) {
 		return projectService.getProjectById(projectId);
+	}
+
+	@GetMapping("/project/{projectId}/roles")
+	public List<ProjectRole> getProjectRoles(@PathVariable("projectId") Integer projectId) {
+		return projectService.getProjectRolesByProjectId(projectId);
 	}
 
 }

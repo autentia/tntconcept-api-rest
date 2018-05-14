@@ -18,12 +18,15 @@
 
 package autentia.apiRestTnt.services;
 
+import autentia.apiRestTnt.model.ProjectRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import autentia.apiRestTnt.model.Project;
 import autentia.apiRestTnt.repository.ProjectRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -39,6 +42,17 @@ public class ProjectService {
 	public Project getProjectById(Integer projectId) {
 		return projectRepository.findById(projectId)
 				.orElseThrow(()->new IllegalArgumentException("The requested projectId ["+projectId+"] does not exist."));
+	}
+
+	@Transactional
+	public List<ProjectRole> getProjectRolesByProjectId(Integer projectId) {
+		Project project = getProjectById(projectId);
+		return initializeLazyProjects(project);
+	}
+
+	private List<ProjectRole> initializeLazyProjects(Project project) {
+		project.getProjectRoles().size();
+		return project.getProjectRoles();
 	}
 
 	public Project getProjectByName(String name) {

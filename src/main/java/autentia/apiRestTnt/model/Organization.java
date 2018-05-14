@@ -27,7 +27,6 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id",scope = Organization.class)
 @JsonIgnoreProperties(value= {"projects"})
 public class Organization {
 	
@@ -36,6 +35,7 @@ public class Organization {
 	private Integer id;
 
 	@OneToMany(mappedBy = "organization")
+	@JsonBackReference
 	private List<Project> projects;
 
 	@Column
