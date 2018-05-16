@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import autentia.apiRestTnt.model.Activity;
 import autentia.apiRestTnt.repository.ActivityRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ActivityService {
@@ -49,8 +50,10 @@ public class ActivityService {
 	public List<Activity> getActivities(){
 		return activityRepository.findAll();
 	}
-	
+
+	@Transactional
 	public Activity saveActivity(Activity activity) {
+
 		return activityRepository.save(activity);
 	}
 	

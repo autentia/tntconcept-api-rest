@@ -17,6 +17,8 @@
 
 package autentia.apiRestTnt.controller;
 
+import autentia.apiRestTnt.model.ProjectRole;
+import autentia.apiRestTnt.services.ProjectRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,16 +26,20 @@ import org.springframework.web.bind.annotation.*;
 import autentia.apiRestTnt.model.Activity;
 import autentia.apiRestTnt.services.ActivityService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class ActivityController {
 
 	private ActivityService activityService;
+	private ProjectRoleService projectRoleService;
 
 	@Autowired
-	public ActivityController(ActivityService activityService) {
+	public ActivityController(ActivityService activityService, ProjectRoleService projectRoleService) {
 		super();
 		this.activityService = activityService;
+		this.projectRoleService = projectRoleService;
 	}
 
 	//Controlar que la actividad corresponde con el usuario
@@ -43,7 +49,13 @@ public class ActivityController {
 	}
 
 	@PostMapping(value = "/activity",consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Activity addActivity(@RequestBody Activity activity) {
+	public Activity addActivity(Integer roleId,@Valid @RequestBody Activity activity) {
+		ProjectRole projectRole = projectRoleService.getProjectRoleById(roleId);
+		System.out.println("roleId = [" + roleId + "], activity = [" + activity + "]");
+		System.out.println("projectRole = " + projectRole.getId());
+		activity.setProjectRole(projectRole);
+		System.out.println("activity = " + activity.getDuration());
+
 		return activityService.saveActivity(activity);
 	}
 

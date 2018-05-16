@@ -21,6 +21,7 @@ package autentia.apiRestTnt.model;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity

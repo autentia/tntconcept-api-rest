@@ -17,6 +17,7 @@
 
 package autentia.apiRestTnt;
 
+import autentia.apiRestTnt.services.ProjectRoleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,10 @@ public class ActivityRestControllerTestIT {
 	private ActivityRepository activityRepository;
 	
 	private final ActivityService activityService = new ActivityService(activityRepository);
+	private final ProjectRoleService projectRoleService = new ProjectRoleService((null));
 	 
 	@Autowired
-	private final ActivityController activityController = new ActivityController(activityService);
+	private final ActivityController activityController = new ActivityController(activityService,projectRoleService);
 	
 	@Test
 	public void shouldReturnActivityDetails() {
@@ -73,7 +75,7 @@ public class ActivityRestControllerTestIT {
 		activityToSave.setDescription("Test");
 		activityToSave.setDuration(60);
 
-		Activity savedActivity = activityController.addActivity(activityToSave);
+		Activity savedActivity = activityController.addActivity(1,activityToSave);
 
 		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity",activityToSave,
 				Activity.class).getBody();

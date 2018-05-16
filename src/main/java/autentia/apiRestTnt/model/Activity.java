@@ -17,7 +17,14 @@
 
 package autentia.apiRestTnt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -37,26 +44,40 @@ public class Activity {
 	@Column
 	private String description;
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name = "roleId")
 	private ProjectRole projectRole;
 
 	@Column
-	private Boolean billable;
-	
-	@Column
 	private Integer userId;
+
+	@Column
+	private Boolean billable;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "insertDate")
+	@CreationTimestamp
+	@JsonIgnore
+	private Date insertDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "updateDate")
+	@UpdateTimestamp
+	@JsonIgnore
+	private Date updateDate;
+
 
 	public Activity(){
 
 	}
 
-	public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId) {
+	public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId, ProjectRole projectRole) {
 		this.startDate = startDate;
 		this.duration = duration;
 		this.description = description;
 		this.billable = billable;
 		this.userId = userId;
+		this.projectRole = projectRole;
 	}
 
 	public Integer getId() {
@@ -109,5 +130,41 @@ public class Activity {
 
 	public void setProjectRole(ProjectRole projectRole) {
 		this.projectRole = projectRole;
+	}
+
+	public Date getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Activity activity = (Activity) o;
+		return Objects.equals(id, activity.id) &&
+				Objects.equals(startDate, activity.startDate) &&
+				Objects.equals(duration, activity.duration) &&
+				Objects.equals(description, activity.description) &&
+				Objects.equals(projectRole, activity.projectRole) &&
+				Objects.equals(userId, activity.userId) &&
+				Objects.equals(billable, activity.billable);
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(id, startDate, duration, description, projectRole, userId, billable);
 	}
 }

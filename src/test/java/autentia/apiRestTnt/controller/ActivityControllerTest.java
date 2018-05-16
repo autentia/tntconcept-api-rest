@@ -20,8 +20,11 @@ package autentia.apiRestTnt.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
+import autentia.apiRestTnt.services.ProjectRoleService;
+import autentia.apiRestTnt.services.ProjectService;
 import org.junit.Test;
 
 import autentia.apiRestTnt.model.Activity;
@@ -30,8 +33,9 @@ import autentia.apiRestTnt.services.ActivityService;
 public class ActivityControllerTest {
 
 	private final ActivityService activityService = mock(ActivityService.class);
+	private final ProjectRoleService projectRoleService = mock(ProjectRoleService.class);
 
-	private final ActivityController activityController = new ActivityController(activityService);
+	private final ActivityController activityController = new ActivityController(activityService,projectRoleService);
 
 
 	@Test
@@ -40,7 +44,7 @@ public class ActivityControllerTest {
 		final Activity savedActivity = mock(Activity.class);
 		when(activityService.saveActivity(activityToSave)).thenReturn(savedActivity);
 
-		final Activity result = activityController.addActivity(activityToSave);
+		final Activity result = activityController.addActivity(1,activityToSave);
 
 		assertThat(result, is(savedActivity));
 	}
