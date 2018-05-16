@@ -36,6 +36,4 @@ public interface ActivityRepository extends JpaRepository<Activity,Integer> {
 	Integer calculateHours(@Param("startDay")Date startDay,@Param("endDay") Date endDay,
 			@Param("userId") Integer userId);
 
-	@Query("DELETE FROM Activity a WHERE a.id = :id")
-	void deleteById(@Param("id") Integer id);
 }
