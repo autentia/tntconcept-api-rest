@@ -51,16 +51,16 @@ public class ActivityController {
 	@PostMapping(value = "/activity",consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Activity addActivity(Integer roleId,@Valid @RequestBody Activity activity) {
 		ProjectRole projectRole = projectRoleService.getProjectRoleById(roleId);
-		System.out.println("roleId = [" + roleId + "], activity = [" + activity + "]");
-		System.out.println("projectRole = " + projectRole.getId());
 		activity.setProjectRole(projectRole);
-		System.out.println("activity = " + activity.getDuration());
 
 		return activityService.saveActivity(activity);
 	}
 
-	@PutMapping(value = "/activity")
-	public Activity editActivity(@RequestBody Activity activity){
+	@PutMapping(value = "/activity",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Activity editActivity(Integer roleId,@RequestBody Activity activity){
+		ProjectRole projectRole = projectRoleService.getProjectRoleById(roleId);
+		activity.setProjectRole(projectRole);
+
 		return activityService.saveActivity(activity);
 	}
 

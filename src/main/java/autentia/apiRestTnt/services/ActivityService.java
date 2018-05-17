@@ -53,7 +53,6 @@ public class ActivityService {
 
 	@Transactional
 	public Activity saveActivity(Activity activity) {
-
 		return activityRepository.save(activity);
 	}
 	

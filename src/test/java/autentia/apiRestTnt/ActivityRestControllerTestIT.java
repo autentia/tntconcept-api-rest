@@ -77,7 +77,7 @@ public class ActivityRestControllerTestIT {
 
 		Activity savedActivity = activityController.addActivity(1,activityToSave);
 
-		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity",activityToSave,
+		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity?roleId=1",activityToSave,
 				Activity.class).getBody();
 		
 		assertEquals(result.getBillable(),activityToSave.getBillable());
@@ -90,19 +90,21 @@ public class ActivityRestControllerTestIT {
 		Activity activityToEdit = activityController.getActivity(11);
 		activityToEdit.setDescription("test");
 
-		Activity editedActivity = activityController.editActivity(activityToEdit);
+		Activity editedActivity = activityController.editActivity(1,activityToEdit);
 
 		assertEquals(editedActivity.getDescription(),editedActivity.getDescription());
 		assertEquals(editedActivity.getBillable(),editedActivity.getBillable());
 	}
 
-	@Test(expected = InvalidDataAccessApiUsageException.class)
-	public void shouldThrowExceptionAfterDeleting() throws InvalidDataAccessApiUsageException {
+	public void shouldBeNullAfterDeleting() {
 		final Integer id = 11;
 
 		activityController.deleteActivity(id);
 
 		restTemplate.delete(getBaseUrl() + "/api/activity/{activityId}",Activity.class,id);
+
+		assertNull(activityService.getActivityById(11));
+
 	}
 	
 	private String getBaseUrl() {
