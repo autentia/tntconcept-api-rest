@@ -45,7 +45,6 @@ public class ActivityControllerTest {
 		when(activityService.saveActivity(activityToSave)).thenReturn(savedActivity);
 
 		final Activity result = activityController.addActivity(1,activityToSave);
-
 		assertThat(result, is(savedActivity));
 	}
 	

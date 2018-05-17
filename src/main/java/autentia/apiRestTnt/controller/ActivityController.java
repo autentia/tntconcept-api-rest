@@ -19,13 +19,16 @@ package autentia.apiRestTnt.controller;
 
 import autentia.apiRestTnt.model.ProjectRole;
 import autentia.apiRestTnt.services.ProjectRoleService;
+import autentia.apiRestTnt.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import autentia.apiRestTnt.model.Activity;
 import autentia.apiRestTnt.services.ActivityService;
 
+import javax.naming.AuthenticationException;
 import javax.validation.Valid;
 
 @RestController
@@ -36,16 +39,24 @@ public class ActivityController {
 	private ProjectRoleService projectRoleService;
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	public ActivityController(ActivityService activityService, ProjectRoleService projectRoleService) {
 		super();
 		this.activityService = activityService;
 		this.projectRoleService = projectRoleService;
 	}
 
-	//Controlar que la actividad corresponde con el usuario
 	@GetMapping(value="/activity/{activityId}")
 	public Activity getActivity(@PathVariable("activityId") Integer activityId) {
-		return activityService.getActivityById(activityId);
+
+		Activity activity = activityService.getActivityById(activityId);
+		if (!activity.getUserId().equals(userService.getUserByLogin().getId())){
+			throw new AccessDeniedException("Activity of other user");
+		}
+
+		return activity;
 	}
 
 	@PostMapping(value = "/activity",consumes = MediaType.APPLICATION_JSON_VALUE)

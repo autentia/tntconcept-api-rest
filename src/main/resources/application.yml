@@ -2,7 +2,7 @@ server:
   port: 8080
 
 spring:
-
+  banner.image.location: classpath:banner.txt
   profiles:
     active: prod
 

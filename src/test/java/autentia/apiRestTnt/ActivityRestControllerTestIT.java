@@ -26,6 +26,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +69,15 @@ public class ActivityRestControllerTestIT {
 		assertEquals(activity.getBillable(), result.getBillable());
 		assertEquals(activity.getDuration().intValue(), result.getDuration().intValue());
 	}
+
+	@Test
+	public void shouldThrowAccessDenied() {
+		final Integer id = 11;
+		TestRestTemplate restTemplateWithoutAccess = new TestRestTemplate("iperez","holahola");
+
+		ResponseEntity<Activity> activityEntity = restTemplateWithoutAccess.getForEntity(getBaseUrl() + "/api/activity/{activityId}", Activity.class,id);
+		assertEquals(HttpStatus.FORBIDDEN, activityEntity.getStatusCode());
+	}
 	
 	@Test
 	@Transactional
@@ -96,16 +108,17 @@ public class ActivityRestControllerTestIT {
 		assertEquals(editedActivity.getBillable(),editedActivity.getBillable());
 	}
 
-	public void shouldBeNullAfterDeleting() {
+	@Test(expected = NullPointerException.class)
+	public void shouldBeNullAfterDeleting() throws NullPointerException {
 		final Integer id = 11;
-
-		activityController.deleteActivity(id);
 
 		restTemplate.delete(getBaseUrl() + "/api/activity/{activityId}",Activity.class,id);
 
-		assertNull(activityService.getActivityById(11));
+		activityService.getActivityById(11);
 
 	}
+
+
 	
 	private String getBaseUrl() {
         return "http://localhost:" + port;
