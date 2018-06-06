@@ -23,8 +23,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
+import autentia.apiRestTnt.model.User;
 import autentia.apiRestTnt.services.ProjectRoleService;
 import autentia.apiRestTnt.services.ProjectService;
+import autentia.apiRestTnt.services.UserService;
 import org.junit.Test;
 
 import autentia.apiRestTnt.model.Activity;
@@ -35,7 +37,9 @@ public class ActivityControllerTest {
 	private final ActivityService activityService = mock(ActivityService.class);
 	private final ProjectRoleService projectRoleService = mock(ProjectRoleService.class);
 
-	private final ActivityController activityController = new ActivityController(activityService,projectRoleService);
+	private final UserService userService = mock(UserService.class);
+
+	private final ActivityController activityController = new ActivityController(activityService,projectRoleService, userService);
 
 
 	@Test
@@ -51,10 +55,15 @@ public class ActivityControllerTest {
 	@Test
 	public void getActivityShouldReturnActivityFromService() {
 		final Activity activityToReturn = mock(Activity.class);
-		final Activity returnedActivity = mock(Activity.class);
-		when(activityService.getActivityById(activityToReturn.getId())).thenReturn(returnedActivity);
-		
-		final Activity result = activityController.getActivity(activityToReturn.getId());
-		assertThat(result, is(returnedActivity));
+		final User userToReturn = mock(User.class);
+		when(userToReturn.getId()).thenReturn(1);
+		when(activityToReturn.getUserId()).thenReturn(1);
+		when(userService.getUserByLogin()).thenReturn(userToReturn);
+		when(userService.getUserByLogin().getId()).thenReturn(1);
+		when(activityService.getActivityById(2)).thenReturn(activityToReturn);
+
+
+		final Activity result = activityController.getActivity(2);
+		assertThat(result, is(activityToReturn));
 	}
 }

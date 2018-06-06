@@ -37,15 +37,14 @@ public class ActivityController {
 
 	private ActivityService activityService;
 	private ProjectRoleService projectRoleService;
-
-	@Autowired
 	private UserService userService;
 
 	@Autowired
-	public ActivityController(ActivityService activityService, ProjectRoleService projectRoleService) {
+	public ActivityController(ActivityService activityService, ProjectRoleService projectRoleService, UserService userService) {
 		super();
 		this.activityService = activityService;
 		this.projectRoleService = projectRoleService;
+		this.userService = userService;
 	}
 
 	@GetMapping(value="/activity/{activityId}")

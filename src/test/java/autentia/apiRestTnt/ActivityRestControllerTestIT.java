@@ -18,6 +18,7 @@
 package autentia.apiRestTnt;
 
 import autentia.apiRestTnt.services.ProjectRoleService;
+import autentia.apiRestTnt.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,27 +48,26 @@ public class ActivityRestControllerTestIT {
 	private int port;
 	
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
-	
+
+	@Autowired
 	private ActivityRepository activityRepository;
-	
-	private final ActivityService activityService = new ActivityService(activityRepository);
+	@Autowired
+	private  ActivityService activityService;
+
+	private final UserService userService = new UserService(null);
 	private final ProjectRoleService projectRoleService = new ProjectRoleService((null));
 	 
 	@Autowired
-	private final ActivityController activityController = new ActivityController(activityService,projectRoleService);
+	private final ActivityController activityController = new ActivityController(activityService,projectRoleService,userService);
 	
 	@Test
 	public void shouldReturnActivityDetails() {
-		final Integer id = 1;
+		final Integer id = 12;
 
-		Activity activity = activityController.getActivity(id);
 		final Activity result = restTemplate.getForEntity(getBaseUrl() + "/api/activity/{activityId}",
 				Activity.class,id).getBody();
 
-		assertSame(activity.getId(), result.getId());
-		assertEquals(activity.getDescription(), result.getDescription());
-		assertEquals(activity.getBillable(), result.getBillable());
-		assertEquals(activity.getDuration().intValue(), result.getDuration().intValue());
+		assertSame(12, result.getId());
 	}
 
 	@Test
@@ -87,35 +87,36 @@ public class ActivityRestControllerTestIT {
 		activityToSave.setDescription("Test");
 		activityToSave.setDuration(60);
 
-		Activity savedActivity = activityController.addActivity(1,activityToSave);
-
 		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity?roleId=1",activityToSave,
 				Activity.class).getBody();
 		
 		assertEquals(result.getBillable(),activityToSave.getBillable());
 		assertEquals(result.getDescription(),activityToSave.getDescription());
 		assertEquals(result.getDuration(),activityToSave.getDuration());
+
+		assertNotNull(activityService.getActivityById(result.getId()));
 	}
 
 	@Test
 	public void shouldHaveEqualDescriptionAfterEditing() {
-		Activity activityToEdit = activityController.getActivity(11);
+		Activity activityToEdit = activityService.getActivityById(11);
 		activityToEdit.setDescription("test");
 
-		Activity editedActivity = activityController.editActivity(1,activityToEdit);
+		activityService.saveActivity(activityToEdit);
 
-		assertEquals(editedActivity.getDescription(),editedActivity.getDescription());
-		assertEquals(editedActivity.getBillable(),editedActivity.getBillable());
+		Activity editedActivity = activityController.editActivity(6,activityToEdit);
+
+		assertEquals(editedActivity.getDescription(),"test");
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void shouldBeNullAfterDeleting() throws NullPointerException {
+	@Test(expected = IllegalArgumentException.class)
+	@Transactional
+	public void shouldBeNullAfterDeleting() {
 		final Integer id = 11;
 
-		restTemplate.delete(getBaseUrl() + "/api/activity/{activityId}",Activity.class,id);
+		restTemplate.delete(getBaseUrl() + "/api/activity/"+id);
 
 		activityService.getActivityById(11);
-
 	}
 
 
