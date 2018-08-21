@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ActivityService {
 
-	ActivityRepository activityRepository;
+	private ActivityRepository activityRepository;
 	
 	@Autowired
 	public ActivityService(ActivityRepository activityRepository) {
