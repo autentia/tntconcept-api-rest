@@ -84,11 +84,11 @@ public class ActivityServiceTest {
 	
 	@Test
 	public void calculateHoursShouldReturnWorkedHoursByUserByDayFromRepository() {
-		final Integer workedHours = 10;
+		final Double workedHours = 10.0;
 		
 		when(activityRepository.calculateHours(startDay, endDay, userId)).thenReturn(workedHours);
 		
-		final Integer result = activityService.calculateHours(startDay, endDay, userId);
+		final Double result = activityService.calculateHours(startDay, endDay, userId);
 		assertThat(result,is(workedHours));
 	}
 	

@@ -56,7 +56,7 @@ public class ActivityService {
 		return activityRepository.save(activity);
 	}
 	
-	public Integer calculateHours(Date startDay, Date endDay, Integer userId) {
+	public Double calculateHours(Date startDay, Date endDay, Integer userId) {
 		return activityRepository.calculateHours(startDay, endDay, userId);
 	}
 

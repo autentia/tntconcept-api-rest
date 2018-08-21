@@ -93,15 +93,15 @@ public class ActivityRepositoryTestIT {
 		final Date startDay = format.parse("2018-02-08");
 		final Date endDay = format.parse("2018-02-09");
 		final Integer userId = 1;
-		Integer workedHours = 0;
+		Double workedHours = 0.0;
 		
 		List<Activity> activitiesByDay = activityRepository.getActivitiesByDay(startDay, endDay, userId);
 		for (Activity activity: activitiesByDay) {
 			workedHours += activity.getDuration()/60;
 		}
-		Integer result = activityRepository.calculateHours(startDay, endDay, userId);
+		Double result = activityRepository.calculateHours(startDay, endDay, userId)/60;
 
-		assertSame(workedHours, result);
+		assertEquals(workedHours, result);
 	}
 	
 	@Test

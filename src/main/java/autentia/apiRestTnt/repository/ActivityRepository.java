@@ -32,8 +32,8 @@ public interface ActivityRepository extends JpaRepository<Activity,Integer> {
 	List<Activity> getActivitiesByDay(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
 			@Param("userId")Integer userId);
 	
-	@Query("SELECT SUM(a.duration/60) FROM Activity a WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
-	Integer calculateHours(@Param("startDay")Date startDay,@Param("endDay") Date endDay,
+	@Query("SELECT SUM(a.duration) FROM Activity a WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
+	Double calculateHours(@Param("startDay")Date startDay,@Param("endDay") Date endDay,
 			@Param("userId") Integer userId);
 
 }

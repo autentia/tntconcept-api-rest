@@ -90,7 +90,7 @@ public class ActivitiesDayRestControllerTestIT {
 		final ActivitiesDay[] result = response.getBody();
 
 
-		assertSame(result[0].getTotal_hours(), activitiesDay.get(0).getTotal_hours());
+		assertEquals(result[0].getTotal_hours(), activitiesDay.get(0).getTotal_hours());
 		
 		assertEquals(result.length,activitiesDay.size());
 	}
@@ -116,7 +116,7 @@ public class ActivitiesDayRestControllerTestIT {
 		
 		final ActivitiesDay result = response.getBody();
 
-		assertSame(result.getTotal_hours(), activitiesDay.getTotal_hours());
+		assertEquals(result.getTotal_hours(), activitiesDay.getTotal_hours());
 		assertEquals(result.getActivities().size(),activitiesDay.getActivities().size());
 		
 	}
