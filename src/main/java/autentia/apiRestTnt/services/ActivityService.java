@@ -60,6 +60,10 @@ public class ActivityService {
 		return activityRepository.calculateHours(startDay, endDay, userId);
 	}
 
+	public List<Date> datesWithActivities(Date startDate, Date endDate, Integer userId) {
+		return activityRepository.datesWithActivities(startDate, endDate, userId);
+	}
+
 	public void deleteActivityById(Integer id){
 		activityRepository.deleteById(id);
 	}
