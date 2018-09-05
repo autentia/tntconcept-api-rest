@@ -11,6 +11,7 @@ package autentia.apiRestTnt.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,10 +26,10 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 			@Param("userId") Integer userId);
 
 	@Query("SELECT SUM(a.duration) FROM Activity a WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
-	Double calculateHours(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
+	Optional<Long> calculateHours(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
 			@Param("userId") Integer userId);
 
-	@Query("SELECT DISTINCT date(a.startDate) as Date FROM Activity a WHERE a.userId= :userId AND (a.startDate BETWEEN :startDate AND :endDate)")
+	@Query(value = "SELECT DISTINCT date(a.startDate) as Date FROM Activity a WHERE a.userId= :userId AND (a.startDate BETWEEN :startDate AND :endDate)", nativeQuery = true)
 	List<Date> datesWithActivities(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
 			@Param("userId") Integer userId);
 }

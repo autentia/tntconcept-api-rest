@@ -9,10 +9,13 @@
 
 package autentia.apiRestTnt.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,8 +100,8 @@ public class ActivitiesDayController {
 		return activityService.calculateHours(startDay, endDay, userId);
 	}
 
-	@GetMapping("/getImputedDates")
-	public List<Date> getImputedDates(
+	@GetMapping("/imputedDays")
+	public List<Date> imputedDays(
 			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
 			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
 			@RequestParam("userId") Integer userId){

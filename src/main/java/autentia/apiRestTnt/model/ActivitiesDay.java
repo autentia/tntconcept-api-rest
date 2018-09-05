@@ -25,7 +25,7 @@ public class ActivitiesDay {
 	
 	private Date date;
 	
-	private Double total_hours;
+	private Long total_hours;
 	
 	private List<Activity> activities;
 
@@ -37,11 +37,11 @@ public class ActivitiesDay {
 		this.date = date;
 	}
 
-	public Double getTotal_hours() {
+	public Long getTotal_hours() {
 		return total_hours;
 	}
 
-	public void setTotal_hours(Double total_hours) {
+	public void setTotal_hours(Long total_hours) {
 		this.total_hours = total_hours;
 	}
 

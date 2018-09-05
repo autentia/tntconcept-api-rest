@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ActivityService {
 
 	private ActivityRepository activityRepository;
-	
+
 	@Autowired
 	public ActivityService(ActivityRepository activityRepository) {
 		super();
@@ -42,11 +42,11 @@ public class ActivityService {
 		return activityRepository.findById(activityId)
 				.orElseThrow(() -> new IllegalArgumentException(("The requested activityId ["+activityId+"] does not exist.")));
 	}
-	
+
 	public List<Activity> getActivitiesByDay(Date startDay, Date endDay,Integer userId) {
 		return activityRepository.getActivitiesByDay(startDay,endDay, userId);
 	}
-	
+
 	public List<Activity> getActivities(){
 		return activityRepository.findAll();
 	}
@@ -55,9 +55,9 @@ public class ActivityService {
 	public Activity saveActivity(Activity activity) {
 		return activityRepository.save(activity);
 	}
-	
-	public Double calculateHours(Date startDay, Date endDay, Integer userId) {
-		return activityRepository.calculateHours(startDay, endDay, userId);
+
+	public Long calculateHours(Date startDay, Date endDay, Integer userId) {
+		return activityRepository.calculateHours(startDay, endDay, userId).orElse(0L);
 	}
 
 	public List<Date> datesWithActivities(Date startDate, Date endDate, Integer userId) {

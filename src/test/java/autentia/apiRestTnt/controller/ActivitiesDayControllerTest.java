@@ -59,7 +59,7 @@ public class ActivitiesDayControllerTest {
 	
 	@Test
 	public void getActivitiesByDayShouldReturnActivitiesDay() {
-		Double workedHours = 10.0;
+		Long workedHours = 10L;
 		List<Activity> activities = Arrays.asList(mock(Activity.class));
 		User userAuthenticated = mock(User.class);
 		
@@ -80,7 +80,7 @@ public class ActivitiesDayControllerTest {
 	
 	@Test
 	public void getActivitiesByDatesShouldReturnActivitiesDayBetweenTwoDates() {
-		Double workedHours = 10.0;
+		Long workedHours = 10L;
 		List<Activity> activities = Arrays.asList(mock(Activity.class));
 		User userAuthenticated = mock(User.class);
 		
