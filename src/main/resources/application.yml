@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: @activeProfile@
+    active: dev
   banner.image.location: classpath:banner.txt
 
   jpa:
