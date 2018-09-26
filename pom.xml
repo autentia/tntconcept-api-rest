@@ -218,6 +218,11 @@
 			<name>Autentia Repository</name>
 			<url>${autentia.mvn.distribution}</url>
 		</repository>
+		<snapshotRepository>
+			<id>autentia-repository-snapshots</id>
+			<name>Autentia snapshots repository</name>
+			<url>${autentia.mvn.snapshots}</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 
