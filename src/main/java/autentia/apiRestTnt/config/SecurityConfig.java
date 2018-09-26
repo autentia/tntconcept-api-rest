@@ -36,7 +36,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableEncryptableProperties
-@Profile("prod")
+@Profile("!test")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("${spring.ldap.urls}")
@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/api/*").authenticated();
+		http.authorizeRequests().antMatchers("/api/*","/actuator/*").authenticated();
 		http.httpBasic().and().logout();
 		http.cors();
 		http.csrf().disable();

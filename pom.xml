@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>autentia</groupId>
-    <artifactId>apiRestTnt</artifactId>
+    <groupId>com.autentia.tnt</groupId>
+    <artifactId>tntconcept-api-rest</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>apiRestTnt</name>
+    <name>tntconcept-api-rest</name>
     <description>Independent API Rest for TNTConcept</description>
 
 
@@ -47,6 +47,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Mysql -->
@@ -185,6 +189,32 @@
             </plugin>
         </plugins>
     </build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<activeProfile>dev</activeProfile>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>pre</id>
+			<properties>
+				<activeProfile>pre</activeProfile>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+				<activeProfile>prod</activeProfile>
+			</properties>
+		</profile>
+	</profiles>
 
 
 </project>
