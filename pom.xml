@@ -206,9 +206,18 @@
 	            <artifactId>maven-release-plugin</artifactId>
 	            <version>2.5.3</version>
 	        </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <configuration>
+                    <server>${tomcat.server.name}</server>
+                    <url>${tomcat.server.url}</url>
+                    <path>/tntconcept-api-rest</path>
+                    <update>true</update>
+                </configuration>
+            </plugin> 
         </plugins>
     </build>
-
 
 	<scm>
 		<connection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</connection>
@@ -229,6 +238,5 @@
 			<url>${autentia.mvn.snapshots}</url>
 		</snapshotRepository>
 	</distributionManagement>
-
 
 </project>
