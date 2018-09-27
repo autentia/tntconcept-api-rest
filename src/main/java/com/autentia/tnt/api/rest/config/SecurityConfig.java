@@ -45,6 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.ldap.userDnPatterns}")
     private String userDnPatterns;
 
+    @Value("${spring.ldap.username:}")
+    private String ldapUsername;
+
+    @Value("${spring.ldap.password:}")
+	private String ldapPassword;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/api/*","/actuator/*").authenticated();
@@ -60,6 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.userDnPatterns(userDnPatterns)
 				.contextSource()
                     .url(ldapUrl)
+                    .managerDn(ldapUsername)
+                    .managerPassword(ldapPassword)
                 ;
 
 	}
