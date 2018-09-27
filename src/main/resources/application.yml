@@ -9,7 +9,9 @@ spring:
   jpa:
     generate-ddl: false
     show-sql: true
+    database: mysql
     hibernate:
+      dialect: org.hibernate.dialect.MySQLDialect
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
