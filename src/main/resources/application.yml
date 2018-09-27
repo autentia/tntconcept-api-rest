@@ -6,33 +6,25 @@ server:
     min-response-size: 1024
 
 spring:
-  banner.image.location: classpath:banner.txt
   profiles:
-    active: prod
-
-  ldap:
-     urls: ldap://localhost:1389/dc=autentia,dc=com
-     username: cn=admin,dc=autentia,dc=com
-     password: ENC(/lGLLt6QlgxJzV+noEDEYZTNjAFf2Jkb)
+    active: dev
+  banner.image.location: classpath:banner.txt
 
   jpa:
     generate-ddl: false
     show-sql: true
+    database: mysql
     hibernate:
+      dialect: org.hibernate.dialect.MySQLDialect
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: false
-      
-  datasource:
-    name: myDataSource
-    url: jdbc:mysql://localhost:13307/tntconcept?autoReconnect=true&useSSL=false
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
 
   jackson:
     default-property-inclusion: non_null
+
+management.endpoints.enabled-by-default: true
 
 jasypt:
    encryptor:

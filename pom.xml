@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>autentia</groupId>
-    <artifactId>apiRestTnt</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <groupId>com.autentia.tnt</groupId>
+    <artifactId>tntconcept-api-rest</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <packaging>war</packaging>
 
-    <name>apiRestTnt</name>
+    <name>tntconcept-api-rest</name>
     <description>Independent API Rest for TNTConcept</description>
 
 
@@ -16,24 +15,16 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.1.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-
-        <jacoco.version>0.7.6.201602180812</jacoco.version>
-        <jacoco.outputDir>${project.build.directory}</jacoco.outputDir>
-
-        <jacoco.utreportpath>${project.build.directory}/jacoco</jacoco.utreportpath>
-        <jacoco.utreportfile>${jacoco.utreportpath}/jacoco.exec</jacoco.utreportfile>
-
-        <jacoco.itreportpath>${project.build.directory}/jacoco</jacoco.itreportpath>
-        <jacoco.itreportfile>${jacoco.itreportpath}/jacoco-it.exec</jacoco.itreportfile>
-
-    </properties>
+        <skip.unit.tests>false</skip.unit.tests>
+        <skip.integration.tests>false</skip.integration.tests>
+	</properties>
 
     <dependencies>
         <dependency>
@@ -47,6 +38,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- Mysql -->
@@ -98,25 +93,34 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
+                <version>0.7.5.201505241946</version>
                 <executions>
+                    <!--
+                        Prepares the property pointing to the JaCoCo runtime agent which
+                        is passed as VM argument when Maven the Surefire plugin is executed.
+                    -->
                     <execution>
                         <id>pre-unit-test</id>
-                        <phase>process-test-classes</phase>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/jacoco.exec</destFile>
+                            <!--
+                                Sets the name of the property containing the settings
+                                for JaCoCo runtime agent.
+                            -->
                             <propertyName>surefireArgLine</propertyName>
-                            <destFile>${jacoco.utreportfile}</destFile>
-                            <append>true</append>
                         </configuration>
                     </execution>
+                    <!--
+                        Ensures that the code coverage report for unit tests is created after
+                        unit tests have been run.
+                    -->
                     <execution>
                         <id>post-unit-test</id>
                         <phase>test</phase>
@@ -124,22 +128,33 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${jacoco.utreportpath}</outputDirectory>
-                            <dataFile>${jacoco.utreportfile}</dataFile>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                         </configuration>
                     </execution>
+
                     <execution>
                         <id>pre-integration-test</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>prepare-agent-integration</goal>
+                            <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/jacoco-it.exec</destFile>
+                            <!--
+                                Sets the name of the property containing the settings
+                                for JaCoCo runtime agent.
+                            -->
                             <propertyName>failsafeArgLine</propertyName>
-                            <destFile>${jacoco.itreportfile}</destFile>
-                            <append>true</append>
                         </configuration>
                     </execution>
+                    <!--
+                        Ensures that the code coverage report for integration tests after
+                        integration tests have been run.
+                    -->
                     <execution>
                         <id>post-integration-test</id>
                         <phase>post-integration-test</phase>
@@ -147,8 +162,10 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${jacoco.itreportpath}</outputDirectory>
-                            <dataFile>${jacoco.itreportfile}</dataFile>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${project.build.directory}/jacoco-it.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -159,6 +176,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <argLine>${surefireArgLine}</argLine>
+                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
+                    <skipTests>${skip.unit.tests}</skipTests>
                     <excludes>
                         <exclude>**/*IT.java</exclude>
                     </excludes>
@@ -177,14 +196,39 @@
                         </goals>
                         <configuration>
                             <argLine>${failsafeArgLine}</argLine>
-                            <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
-                            <skipTests>false</skipTests>
+                            <skipTests>${skip.integration.tests}</skipTests>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-release-plugin</artifactId>
+	            <version>2.5.3</version>
+	        </plugin>
         </plugins>
     </build>
+
+
+	<scm>
+		<connection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</connection>
+		<developerConnection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</developerConnection>
+		<url>https://github.com/autentia/tntconcept-api-rest/</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>autentia-repository</id>
+			<name>Autentia Repository</name>
+			<url>${autentia.mvn.distribution}</url>
+		</repository>
+		<snapshotRepository>
+			<id>autentia-repository-snapshots</id>
+			<name>Autentia snapshots repository</name>
+			<url>${autentia.mvn.snapshots}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 
 </project>
