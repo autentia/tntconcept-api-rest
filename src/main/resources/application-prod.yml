@@ -1,13 +1,12 @@
 spring:
   ldap:
-     urls: ldap://localhost:1389/dc=autentia,dc=com
-     username: cn=admin,dc=autentia,dc=com
-     password: ENC(/lGLLt6QlgxJzV+noEDEYZTNjAFf2Jkb)
+     urls: ldap://ldap:389/dc=autentia,dc=com
+     userDnPatterns: uid={0},ou=People
 
   datasource:
     name: myDataSource
-    url: jdbc:mysql://localhost:13307/tntconcept?autoReconnect=true&useSSL=false
-    username: root
-    password: root
+    url: jdbc:mysql://localhost::3306/tntconcept?autoReconnect=true
+    username: tntconcept
+    password: ENC(4jPJQUQdNgS/Hj2RMxdRTqcXm0bFyNfz)
     driver-class-name: com.mysql.jdbc.Driver
 

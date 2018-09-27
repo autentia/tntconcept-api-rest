@@ -42,11 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${spring.ldap.urls}")
 	private String ldapUrl;
 
-	@Value("${spring.ldap.username}")
-	private String ldapUsername;
-
-	@Value("${spring.ldap.password}")
-	private String ldapPassword;
+    @Value("${spring.ldap.userDnPatterns}")
+    private String userDnPatterns;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -60,13 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
      	auth
 				.ldapAuthentication()
-				.userDnPatterns("uid={0},ou=users")
-				.groupSearchBase("ou=groups")
-				.groupSearchFilter("member={0}")
+				.userDnPatterns(userDnPatterns)
 				.contextSource()
-					.url(ldapUrl)
-					.managerDn(ldapUsername)
-					.managerPassword(ldapPassword);
+                    .url(ldapUrl)
+                ;
+
 	}
 
 	@Bean
