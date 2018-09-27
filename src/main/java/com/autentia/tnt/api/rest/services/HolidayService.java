@@ -1,7 +1,7 @@
-package autentia.apiRestTnt.services;
+package com.autentia.tnt.api.rest.services;
 
-import autentia.apiRestTnt.model.Holiday;
-import autentia.apiRestTnt.repository.HolidayRepository;
+import com.autentia.tnt.api.rest.model.Holiday;
+import com.autentia.tnt.api.rest.repository.HolidayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

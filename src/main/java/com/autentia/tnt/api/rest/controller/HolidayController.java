@@ -1,7 +1,7 @@
-package autentia.apiRestTnt.controller;
+package com.autentia.tnt.api.rest.controller;
 
-import autentia.apiRestTnt.model.Holiday;
-import autentia.apiRestTnt.services.HolidayService;
+import com.autentia.tnt.api.rest.model.Holiday;
+import com.autentia.tnt.api.rest.services.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

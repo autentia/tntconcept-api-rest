@@ -1,7 +1,7 @@
-package autentia.apiRestTnt.repository;
+package com.autentia.tnt.api.rest.repository;
 
 
-import autentia.apiRestTnt.model.RequestHoliday;
+import com.autentia.tnt.api.rest.model.RequestHoliday;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

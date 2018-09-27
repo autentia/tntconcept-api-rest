@@ -1,10 +1,10 @@
-package autentia.apiRestTnt;
+package java.com.autentia.tnt.api.rest;
 
-import autentia.apiRestTnt.controller.HolidayController;
-import autentia.apiRestTnt.model.Holiday;
-import autentia.apiRestTnt.repository.HolidayRepository;
-import autentia.apiRestTnt.services.HolidayService;
-import autentia.apiRestTnt.services.ProjectService;
+import com.autentia.tnt.api.rest.controller.HolidayController;
+import com.autentia.tnt.api.rest.model.Holiday;
+import com.autentia.tnt.api.rest.repository.HolidayRepository;
+import com.autentia.tnt.api.rest.services.HolidayService;
+import com.autentia.tnt.api.rest.services.ProjectService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

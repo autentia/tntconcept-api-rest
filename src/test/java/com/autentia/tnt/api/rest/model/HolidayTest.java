@@ -1,4 +1,4 @@
-package autentia.apiRestTnt.model;
+package com.autentia.tnt.api.rest.model;
 
 import org.junit.Before;
 import org.junit.Test;
