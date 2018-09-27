@@ -2,11 +2,13 @@
 .classpath
 .project
 .settings/
+.metadata
 
 # Intellij
 .idea/
 *.iml
 *.iws
+**/*.iml
 
 # Mac
 .DS_Store
