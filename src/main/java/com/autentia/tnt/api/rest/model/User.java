@@ -17,6 +17,8 @@
 
 package com.autentia.tnt.api.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +36,21 @@ public class User {
 	private String login;
 	
 	@Column
+	@JsonIgnore
 	private String password;
+
+	@Column
+	private String name;
+
+	public User(){
+
+	}
+
+	public User(String login, String password, String name) {
+		this.login = login;
+		this.password = password;
+		this.name = name;
+	}
 
 	public Integer getId() {
 		return id;
@@ -55,7 +71,20 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", login='" + login + '\'' +
+				'}';
+	}
 }

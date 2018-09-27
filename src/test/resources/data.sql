@@ -96,3 +96,10 @@ INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`bill
   (11,1,'2018-02-08 09:00:00',60,'Descripción',1,6);
 INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (12,1,'2018-02-08 10:00:00',120,'Descripciónsfdg',1,6);
+
+INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (216,'San Isidro','2018-05-15 00:00:00',14,5,'2017-11-29 12:50:51','2017-11-29 12:50:51');
+INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (217,'Ascensión de la Virgen','2018-08-15 00:00:00',14,5,'2017-11-29 12:51:47','2017-11-29 12:51:47');
+INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (218,'Fiesta Nacional de España','2018-10-12 00:00:00',14,5,'2017-11-29 12:52:12','2017-11-29 12:52:33');
+INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (195,'Traslado San José','2017-03-20 00:00:00',14,5,'2016-11-02 13:56:51','2017-01-11 13:57:43');
+INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (196,'Jueves Santo','2017-04-13 00:00:00',14,5,'2016-11-02 13:57:08','2016-11-02 13:57:08');
+INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (197,'Viernes Santo','2017-04-14 00:00:00',14,5,'2016-11-02 13:57:21','2016-11-02 13:57:21');
