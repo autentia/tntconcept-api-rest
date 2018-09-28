@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.autentia.tnt.api.rest.services.ProjectRoleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.autentia.tnt.api.rest.controller.ActivitiesDayController;
-import com.autentia.tnt.api.rest.model.ActivitiesDay;
+import com.autentia.tnt.api.rest.model.DTO.ActivitiesDay;
 import com.autentia.tnt.api.rest.repository.ActivityRepository;
 import com.autentia.tnt.api.rest.repository.UserRepository;
 import com.autentia.tnt.api.rest.services.ActivityService;
@@ -58,11 +59,12 @@ public class ActivitiesDayRestControllerTestIT {
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
 
 	private ActivityRepository activityRepository;
+	private ProjectRoleService projectRoleService;
 
 	private UserRepository userRepository;
 	
 	private final UserService userService = new UserService(userRepository);
-	private final ActivityService activityService = new ActivityService(activityRepository);
+	private final ActivityService activityService = new ActivityService(activityRepository, projectRoleService);
 
 	@Autowired
 	private final ActivitiesDayController activitiesDayController = new ActivitiesDayController(activityService,userService);

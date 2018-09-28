@@ -36,8 +36,9 @@ import com.autentia.tnt.api.rest.repository.ActivityRepository;
 
 public class ActivityServiceTest {
 	private final ActivityRepository activityRepository = mock(ActivityRepository.class);
+	private final ProjectRoleService projectRoleService = mock(ProjectRoleService.class);
 
-	private final ActivityService activityService = new ActivityService(activityRepository);
+	private final ActivityService activityService = new ActivityService(activityRepository, projectRoleService);
 	
 	private Date startDay;
 	private Date endDay;

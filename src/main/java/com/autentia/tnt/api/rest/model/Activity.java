@@ -17,6 +17,7 @@
 
 package com.autentia.tnt.api.rest.model;
 
+import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -78,8 +79,13 @@ public class Activity {
 		this.projectRole = projectRole;
 	}
 
+
 	public Integer getId() {
 		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Date getStartDate() {

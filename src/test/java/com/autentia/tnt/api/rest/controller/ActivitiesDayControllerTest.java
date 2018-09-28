@@ -34,7 +34,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.autentia.tnt.api.rest.model.ActivitiesDay;
+import com.autentia.tnt.api.rest.model.DTO.ActivitiesDay;
 import com.autentia.tnt.api.rest.model.Activity;
 import com.autentia.tnt.api.rest.model.User;
 import com.autentia.tnt.api.rest.services.ActivityService;

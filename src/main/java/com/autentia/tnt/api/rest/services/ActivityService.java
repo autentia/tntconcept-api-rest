@@ -20,6 +20,8 @@ package com.autentia.tnt.api.rest.services;
 import java.util.Date;
 import java.util.List;
 
+import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
+import com.autentia.tnt.api.rest.model.ProjectRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +33,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ActivityService {
 
 	private ActivityRepository activityRepository;
+	private ProjectRoleService projectRoleService;
 
 	@Autowired
-	public ActivityService(ActivityRepository activityRepository) {
+	public ActivityService(ActivityRepository activityRepository, ProjectRoleService projectRoleService) {
 		super();
 		this.activityRepository = activityRepository;
+		this.projectRoleService = projectRoleService;
 	}
 
 	public Activity getActivityById(Integer activityId) {
@@ -56,6 +60,12 @@ public class ActivityService {
 		return activityRepository.save(activity);
 	}
 
+	@Transactional
+	public Activity saveActivity(ActivityDTO activityDTO, Integer userID) {
+		Activity activityToSave = activityDTOtoActivity(activityDTO, userID);
+		return activityRepository.save(activityToSave);
+	}
+
 	public Long calculateHours(Date startDay, Date endDay, Integer userId) {
 		return activityRepository.calculateHours(startDay, endDay, userId).orElse(0L);
 	}
@@ -66,5 +76,20 @@ public class ActivityService {
 
 	public void deleteActivityById(Integer id){
 		activityRepository.deleteById(id);
+	}
+
+	private Activity activityDTOtoActivity(ActivityDTO activityDTO, Integer userID) {
+		Activity activity = new Activity();
+		activity.setId(activityDTO.getId());
+		activity.setStartDate(activityDTO.getStartDate());
+		activity.setDuration(activityDTO.getDuration());
+		activity.setDescription(activityDTO.getDescription());
+		activity.setBillable(activityDTO.getBillable());
+
+		ProjectRole projectRole = projectRoleService.getProjectRoleById(activityDTO.getRoleId());
+		activity.setUserId(userID);
+		activity.setProjectRole(projectRole);
+
+		return activity;
 	}
 }

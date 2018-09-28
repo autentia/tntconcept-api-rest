@@ -1,10 +1,11 @@
 package com.autentia.tnt.api.rest.controller;
 
 import com.autentia.tnt.api.rest.model.RequestHoliday;
+import com.autentia.tnt.api.rest.model.User;
 import com.autentia.tnt.api.rest.services.RequestHolidayService;
+import com.autentia.tnt.api.rest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,14 +15,17 @@ import java.util.List;
 public class RequestHolidayController {
 
     private RequestHolidayService requestHolidayService;
+    private UserService userService;
 
     @Autowired
-    public RequestHolidayController(RequestHolidayService requestHolidayService) {
+    public RequestHolidayController(RequestHolidayService requestHolidayService, UserService userService) {
         this.requestHolidayService = requestHolidayService;
+        this.userService = userService;
     }
 
     @RequestMapping("/vacations")
-    public List<RequestHoliday> getVacationsByUserId(@RequestParam("userId") Integer userId) {
-        return requestHolidayService.getVacationsByUserId(userId );
+    public List<RequestHoliday> getVacationsByUserId() {
+        User user = userService.getUserByLogin();
+        return requestHolidayService.getVacationsByUserId(user.getId());
     }
 }

@@ -9,13 +9,9 @@
 
 package com.autentia.tnt.api.rest.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.autentia.tnt.api.rest.model.ActivitiesDay;
+import com.autentia.tnt.api.rest.model.DTO.ActivitiesDay;
 import com.autentia.tnt.api.rest.model.User;
 import com.autentia.tnt.api.rest.services.ActivityService;
 import com.autentia.tnt.api.rest.services.UserService;
@@ -92,21 +88,21 @@ public class ActivitiesDayController {
 	@GetMapping("/activitiesTime")
 	public double getActivitiesTime(
 			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
-			@RequestParam("userId") Integer userId) {
+			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate) {
 
+		User user = userService.getUserByLogin();
 		Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
-		return activityService.calculateHours(startDay, endDay, userId);
+		return activityService.calculateHours(startDay, endDay, user.getId());
 	}
 
 	@GetMapping("/imputedDays")
 	public List<Date> imputedDays(
 			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
-			@RequestParam("userId") Integer userId){
+			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate){
+		User user = userService.getUserByLogin();
 		Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
-		return activityService.datesWithActivities(startDay, endDay, userId);
+		return activityService.datesWithActivities(startDay, endDay, user.getId());
 	}
 }

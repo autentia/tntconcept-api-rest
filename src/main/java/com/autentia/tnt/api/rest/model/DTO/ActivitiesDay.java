@@ -16,7 +16,9 @@
  */
 
 
-package com.autentia.tnt.api.rest.model;
+package com.autentia.tnt.api.rest.model.DTO;
+
+import com.autentia.tnt.api.rest.model.Activity;
 
 import java.util.Date;
 import java.util.List;

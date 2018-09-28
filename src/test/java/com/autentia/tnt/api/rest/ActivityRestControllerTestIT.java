@@ -17,6 +17,7 @@
 
 package com.autentia.tnt.api.rest;
 
+import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
 import com.autentia.tnt.api.rest.services.ProjectRoleService;
 import com.autentia.tnt.api.rest.services.UserService;
 import org.junit.Test;
@@ -53,10 +54,9 @@ public class ActivityRestControllerTestIT {
 	private ActivityService activityService;
 
 	private final UserService userService = new UserService(null);
-	private final ProjectRoleService projectRoleService = new ProjectRoleService((null));
-	 
+
 	@Autowired
-	private final ActivityController activityController = new ActivityController(activityService,projectRoleService,userService);
+	private final ActivityController activityController = new ActivityController(activityService,userService);
 	
 	@Test
 	public void shouldReturnActivityDetails() {
@@ -80,31 +80,39 @@ public class ActivityRestControllerTestIT {
 	@Test
 	@Transactional
 	public void shouldReturnActivityAfterSaving() {
-		Activity activityToSave = new Activity();
-		activityToSave.setBillable(true);
-		activityToSave.setDescription("Test");
-		activityToSave.setDuration(60);
+		ActivityDTO activityDTOtoSave = new ActivityDTO();
+		activityDTOtoSave.setBillable(true);
+		activityDTOtoSave.setDescription("Test");
+		activityDTOtoSave.setDuration(60);
+		activityDTOtoSave.setRoleId(1);
 
-		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity?roleId=1",activityToSave,
+		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity",activityDTOtoSave,
 				Activity.class).getBody();
 		
-		assertEquals(result.getBillable(),activityToSave.getBillable());
-		assertEquals(result.getDescription(),activityToSave.getDescription());
-		assertEquals(result.getDuration(),activityToSave.getDuration());
+		assertEquals(result.getBillable(),activityDTOtoSave.getBillable());
+		assertEquals(result.getDescription(),activityDTOtoSave.getDescription());
+		assertEquals(result.getDuration(),activityDTOtoSave.getDuration());
 
 		assertNotNull(activityService.getActivityById(result.getId()));
 	}
 
 	@Test
 	public void shouldHaveEqualDescriptionAfterEditing() {
-		Activity activityToEdit = activityService.getActivityById(11);
-		activityToEdit.setDescription("test");
+		ActivityDTO activityDTOtoEdit = new ActivityDTO();
+		activityDTOtoEdit.setId(11);
+		activityDTOtoEdit.setBillable(true);
+		activityDTOtoEdit.setDescription("test");
+		activityDTOtoEdit.setDuration(60);
+		activityDTOtoEdit.setRoleId(1);
 
-		activityService.saveActivity(activityToEdit);
+		final Activity result = restTemplate.postForEntity(getBaseUrl() + "/api/activity",activityDTOtoEdit,
+				Activity.class).getBody();
 
-		Activity editedActivity = activityController.editActivity(6,activityToEdit);
 
-		assertEquals(editedActivity.getDescription(),"test");
+		assertEquals(result.getBillable(),activityDTOtoEdit.getBillable());
+		assertEquals(result.getDescription(),activityDTOtoEdit.getDescription());
+		assertEquals(result.getDuration(),activityDTOtoEdit.getDuration());
+
 	}
 
 	@Test(expected = IllegalArgumentException.class)

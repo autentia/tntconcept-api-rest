@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.autentia.tnt.api.rest.model;
+package com.autentia.tnt.api.rest.model.DTO;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.autentia.tnt.api.rest.model.Activity;
+import com.autentia.tnt.api.rest.model.DTO.ActivitiesDay;
 import org.junit.Before;
 import org.junit.Test;
 
