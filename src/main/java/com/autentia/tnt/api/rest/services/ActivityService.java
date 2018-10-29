@@ -1,18 +1,10 @@
 /**
- * TNTConcept Easy Enterprise Management by Autentia Real Bussiness Solution S.L.
- * Copyright (C) 2007 Autentia Real Bussiness Solution S.L.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TNTConcept Easy Enterprise Management by Autentia Real Bussiness Solution S.L. Copyright (C) 2007 Autentia Real Bussiness
+ * Solution S.L. This program is free software: you can redistribute it and/or modify it under the terms of the GNU General
+ * Public License as published by the Free Software Foundation, either version 3 of the License. This program is distributed
+ * in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of
+ * the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.autentia.tnt.api.rest.services;
@@ -33,48 +25,55 @@ import org.springframework.transaction.annotation.Transactional;
 public class ActivityService {
 
 	private ActivityRepository activityRepository;
+
 	private ProjectRoleService projectRoleService;
 
+	private UserService userService;
+
 	@Autowired
-	public ActivityService(ActivityRepository activityRepository, ProjectRoleService projectRoleService) {
+	public ActivityService(ActivityRepository activityRepository, ProjectRoleService projectRoleService,
+			UserService userService) {
 		super();
 		this.activityRepository = activityRepository;
 		this.projectRoleService = projectRoleService;
+		this.userService = userService;
 	}
 
 	public Activity getActivityById(Integer activityId) {
-		return activityRepository.findById(activityId)
-				.orElseThrow(() -> new IllegalArgumentException(("The requested activityId ["+activityId+"] does not exist.")));
+		return activityRepository.findById(activityId).orElseThrow(
+				() -> new IllegalArgumentException(("The requested activityId [" + activityId + "] does not exist.")));
 	}
 
-	public List<Activity> getActivitiesByDay(Date startDay, Date endDay,Integer userId) {
-		return activityRepository.getActivitiesByDay(startDay,endDay, userId);
+	public List<Activity> getActivitiesByDay(Date startDay, Date endDay, Integer userId) {
+		return activityRepository.getActivitiesByDay(startDay, endDay, userId);
 	}
 
-	public List<Activity> getActivities(){
+	public List<Activity> getActivities() {
 		return activityRepository.findAll();
 	}
 
 	@Transactional
 	public Activity saveActivity(Activity activity) {
+		activity.setDepartmentId(userService.getUserByLogin().getDepartmentId());
 		return activityRepository.save(activity);
 	}
 
 	@Transactional
-	public Activity saveActivity(ActivityDTO activityDTO, Integer userID) {
-		Activity activityToSave = activityDTOtoActivity(activityDTO, userID);
+	public Activity saveActivity(ActivityDTO activityDTO) {
+		Activity activityToSave = activityDTOtoActivity(activityDTO, userService.getUserByLogin().getId());
+		activityToSave.setDepartmentId(userService.getUserByLogin().getDepartmentId());
 		return activityRepository.save(activityToSave);
 	}
 
-	public Long calculateHours(Date startDay, Date endDay, Integer userId) {
-		return activityRepository.calculateHours(startDay, endDay, userId).orElse(0L);
+	public Long calculateHours(Date startDay, Date endDay) {
+		return activityRepository.calculateHours(startDay, endDay, userService.getUserByLogin().getId()).orElse(0L);
 	}
 
 	public List<Date> datesWithActivities(Date startDate, Date endDate, Integer userId) {
 		return activityRepository.datesWithActivities(startDate, endDate, userId);
 	}
 
-	public void deleteActivityById(Integer id){
+	public void deleteActivityById(Integer id) {
 		activityRepository.deleteById(id);
 	}
 

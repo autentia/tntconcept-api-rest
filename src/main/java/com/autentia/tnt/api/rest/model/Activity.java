@@ -53,6 +53,9 @@ public class Activity {
 	@Column
 	private Boolean billable;
 
+	@Column
+	private Integer departmentId;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "insertDate")
 	@CreationTimestamp
@@ -70,13 +73,14 @@ public class Activity {
 
 	}
 
-	public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId, ProjectRole projectRole) {
+	public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId, ProjectRole projectRole, Integer departmentId) {
 		this.startDate = startDate;
 		this.duration = duration;
 		this.description = description;
 		this.billable = billable;
 		this.userId = userId;
 		this.projectRole = projectRole;
+		this.departmentId = departmentId;
 	}
 
 
@@ -134,6 +138,14 @@ public class Activity {
 
 	public void setProjectRole(ProjectRole projectRole) {
 		this.projectRole = projectRole;
+	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	public Date getInsertDate() {

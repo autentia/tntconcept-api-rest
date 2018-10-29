@@ -40,16 +40,20 @@ public class User {
 	private String password;
 
 	@Column
+	private Integer departmentId;
+
+	@Column
 	private String name;
 
 	public User(){
 
 	}
 
-	public User(String login, String password, String name) {
+	public User(String login, String password, String name, Integer departmentId) {
 		this.login = login;
 		this.password = password;
 		this.name = name;
+		this.departmentId = departmentId;
 	}
 
 	public Integer getId() {
@@ -80,7 +84,15 @@ public class User {
 		this.name = name;
 	}
 
-	@Override
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        departmentId = departmentId;
+    }
+
+    @Override
 	public String toString() {
 		return "User{" +
 				"id=" + id +

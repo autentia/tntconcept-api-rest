@@ -18,6 +18,7 @@
 package com.autentia.tnt.api.rest.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,6 +44,13 @@ public class UserService {
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();
 		String login = userDetails.getUsername();
 		return userRepository.getUserByLogin(login);
+	}
+
+	public void checkAuthorizationById(Integer idToCompare) {
+		Integer currentUserId = getUserByLogin().getId();
+		if (!currentUserId.equals(idToCompare)) {
+			throw new AccessDeniedException("You don't have authorization");
+		}
 	}
 
 }

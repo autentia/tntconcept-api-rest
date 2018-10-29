@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.autentia.tnt.api.rest.model.User;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,8 +38,9 @@ import com.autentia.tnt.api.rest.repository.ActivityRepository;
 public class ActivityServiceTest {
 	private final ActivityRepository activityRepository = mock(ActivityRepository.class);
 	private final ProjectRoleService projectRoleService = mock(ProjectRoleService.class);
+	private final UserService userService = mock(UserService.class);
 
-	private final ActivityService activityService = new ActivityService(activityRepository, projectRoleService);
+	private final ActivityService activityService = new ActivityService(activityRepository, projectRoleService, userService);
 	
 	private Date startDay;
 	private Date endDay;
@@ -66,7 +68,10 @@ public class ActivityServiceTest {
 	public void addActivityShouldReturnActivityAfterSaving() {
 		final Activity activityToSave = mock(Activity.class);
 		final Activity savedActivity = mock(Activity.class);
+		final User mockUser = mock(User.class);
 		when(activityRepository.save(activityToSave)).thenReturn(savedActivity);
+		when(userService.getUserByLogin()).thenReturn(mockUser);
+		when(mockUser.getDepartmentId()).thenReturn(1);
 
 		final Activity result = activityService.saveActivity(activityToSave);
 

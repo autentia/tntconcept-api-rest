@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import com.autentia.tnt.api.rest.model.ProjectRole;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,7 +67,7 @@ public class ActivitiesDayControllerTest {
 		ActivitiesDay returnedActivitiesDay = new ActivitiesDay();
 		
 		
-		when(activityService.calculateHours(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(workedHours);
+		when(activityService.calculateHours(any(Date.class), any(Date.class))).thenReturn(workedHours);
 		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
 		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
 		
@@ -81,10 +82,10 @@ public class ActivitiesDayControllerTest {
 	@Test
 	public void getActivitiesByDatesShouldReturnActivitiesDayBetweenTwoDates() {
 		Long workedHours = 10L;
-		List<Activity> activities = Arrays.asList(mock(Activity.class));
+		List<Activity> activities = Arrays.asList(new Activity(new Date(), 60, "Test", false, 1, new ProjectRole(), 1));
 		User userAuthenticated = mock(User.class);
 		
-		when(activityService.calculateHours(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(workedHours);
+		when(activityService.calculateHours(any(Date.class), any(Date.class))).thenReturn(workedHours);
 		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
 		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
 		

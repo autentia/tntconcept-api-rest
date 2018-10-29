@@ -95,7 +95,7 @@ public class ActivitiesDayController {
 		Date startDay = Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date endDay = Date.from(date.plusDays(1).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-		activitiesDay.setTotal_hours(activityService.calculateHours(startDay, endDay, user.getId()));
+		activitiesDay.setTotal_hours(activityService.calculateHours(startDay, endDay));
 		activitiesDay.setActivities(activityService.getActivitiesByDay(startDay, endDay, user.getId()));
 
 		return activitiesDay;
@@ -109,7 +109,7 @@ public class ActivitiesDayController {
 		User user = userService.getUserByLogin();
 		Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
-		return activityService.calculateHours(startDay, endDay, user.getId());
+		return activityService.calculateHours(startDay, endDay);
 	}
 
 	@GetMapping("/imputedDays")

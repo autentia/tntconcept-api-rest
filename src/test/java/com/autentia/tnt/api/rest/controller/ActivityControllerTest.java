@@ -48,7 +48,7 @@ public class ActivityControllerTest {
 		when(userToReturn.getId()).thenReturn(1);
 		when(userService.getUserByLogin()).thenReturn(userToReturn);
 		when(userService.getUserByLogin().getId()).thenReturn(1);
-		when(activityService.saveActivity(activityDTOToSave, 1)).thenReturn(savedActivity);
+		when(activityService.saveActivity(activityDTOToSave)).thenReturn(savedActivity);
 
 		final Activity result = activityController.addActivity(activityDTOToSave);
 		assertThat(result, is(savedActivity));

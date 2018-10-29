@@ -64,7 +64,7 @@ public class ActivitiesDayRestControllerTestIT {
 	private UserRepository userRepository;
 	
 	private final UserService userService = new UserService(userRepository);
-	private final ActivityService activityService = new ActivityService(activityRepository, projectRoleService);
+	private final ActivityService activityService = new ActivityService(activityRepository, projectRoleService, userService);
 
 	@Autowired
 	private final ActivitiesDayController activitiesDayController = new ActivitiesDayController(activityService,userService);
@@ -86,7 +86,7 @@ public class ActivitiesDayRestControllerTestIT {
 
 		List<ActivitiesDay> activitiesDay = activitiesDayController.getActivitiesByDates(startDate.toLocalDate(), endDate.toLocalDate());
 
-		final ResponseEntity<ActivitiesDay[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/activitiesByDates?startDate=2018-02-08T00:00:00&endDate=2018-02-09T00:00:00",
+		final ResponseEntity<ActivitiesDay[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/activities?startDate=2018-02-08&endDate=2018-02-09",
 				ActivitiesDay[].class);
 
 		final ActivitiesDay[] result = response.getBody();
