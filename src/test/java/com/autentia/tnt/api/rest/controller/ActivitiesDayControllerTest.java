@@ -88,7 +88,7 @@ public class ActivitiesDayControllerTest {
 		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
 		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
 		
-		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay,endDay);
+		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate());
 		
 		assertTrue(result.size() == 2);
 	}

@@ -9,13 +9,16 @@
 
 package com.autentia.tnt.api.rest.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.autentia.tnt.api.rest.model.Activity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -44,26 +47,39 @@ public class ActivitiesDayController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/activitiesByDates")
+	@GetMapping("/activities")
 	public List<ActivitiesDay> getActivitiesByDates(
-			@RequestParam(name = "startDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam(name = "endDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate) {
-
+			@RequestParam(name = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+			@RequestParam(name = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+		User user = userService.getUserByLogin();
+		Date parsedStartDate = Date.from(startDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		Date parsedFinalDate = Date.from(endDate.plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		final List<Activity> activities = activityService.getActivitiesByDay(parsedStartDate, parsedFinalDate, user.getId());
 		List<ActivitiesDay> activitiesDayList = new ArrayList<>();
-		LocalDateTime localDateTimeIncrement = startDate;
+		LocalDate dateIncrement = startDate;
+		while((startDate.isEqual(dateIncrement)) || (endDate.isAfter(dateIncrement))
+				|| (endDate.isEqual(dateIncrement))) {
 
-		while ((startDate.isEqual(localDateTimeIncrement)) || (endDate.isAfter(localDateTimeIncrement))
-				|| (endDate.isEqual(localDateTimeIncrement))) {
+			LocalDate finalDateIncrement = dateIncrement;
+			List<Activity> activitiesByDateIncrement =
+					activities.stream()
+							.filter(activity -> activity.getStartDate().getDate() == finalDateIncrement.getDayOfMonth())
+							.collect(Collectors.toList());
 
-			ActivitiesDay activitiesDay = getActivitiesByDay(localDateTimeIncrement);
-
-			if (activitiesDay.getTotal_hours() != null) {
-				activitiesDayList.add(activitiesDay);
+			ActivitiesDay activitiesDay = new ActivitiesDay();
+			activitiesDay.setDate(Date.from(finalDateIncrement.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+			activitiesDay.setActivities(activitiesByDateIncrement);
+			if (activitiesByDateIncrement.isEmpty()){
+				activitiesDay.setTotal_hours(0L);
+			} else {
+				Long totalMinutes = activitiesByDateIncrement.stream().mapToLong(Activity::getDuration).sum();
+				activitiesDay.setTotal_hours(totalMinutes);
 			}
 
-			localDateTimeIncrement = localDateTimeIncrement.plusDays(1);
-		}
+			activitiesDayList.add(activitiesDay);
 
+			dateIncrement = dateIncrement.plusDays(1);
+		}
 		return activitiesDayList;
 	}
 
