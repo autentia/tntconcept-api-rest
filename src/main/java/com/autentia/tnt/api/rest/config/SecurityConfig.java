@@ -19,6 +19,7 @@ package com.autentia.tnt.api.rest.config;
 
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,10 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.ldap.password:}")
 	private String ldapPassword;
 
+    @Autowired
+	private Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/api/*","/actuator/*").authenticated();
-		http.httpBasic().and().logout();
+		http.httpBasic().authenticationEntryPoint(http401UnauthorizedEntryPoint).and().logout();
 		http.cors();
 		http.csrf().disable();
 	}
