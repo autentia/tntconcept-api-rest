@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.autentia.tnt</groupId>
@@ -15,7 +16,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.1.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
@@ -24,7 +25,7 @@
         <java.version>1.8</java.version>
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>false</skip.integration.tests>
-	</properties>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -55,6 +56,15 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-ldap</artifactId>
         </dependency>
+
+        <!-- Spring Security 0Auth JWT -->
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>2.0.0.RELEASE</version>
+        </dependency>
+
+
         <!-- Apache Directory Server -->
         <dependency>
             <groupId>org.apache.directory.server</groupId>
@@ -201,11 +211,11 @@
                     </execution>
                 </executions>
             </plugin>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-release-plugin</artifactId>
-	            <version>2.5.3</version>
-	        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>tomcat-maven-plugin</artifactId>
@@ -215,28 +225,28 @@
                     <path>/tntconcept-api-rest</path>
                     <update>true</update>
                 </configuration>
-            </plugin> 
+            </plugin>
         </plugins>
     </build>
 
-	<scm>
-		<connection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</connection>
-		<developerConnection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</developerConnection>
-		<url>https://github.com/autentia/tntconcept-api-rest/</url>
-		<tag>HEAD</tag>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</connection>
+        <developerConnection>scm:git:git@github.com:autentia/tntconcept-api-rest.git</developerConnection>
+        <url>https://github.com/autentia/tntconcept-api-rest/</url>
+        <tag>HEAD</tag>
+    </scm>
 
-	<distributionManagement>
-		<repository>
-			<id>autentia-repository</id>
-			<name>Autentia Repository</name>
-			<url>${autentia.mvn.distribution}</url>
-		</repository>
-		<snapshotRepository>
-			<id>autentia-repository-snapshots</id>
-			<name>Autentia snapshots repository</name>
-			<url>${autentia.mvn.snapshots}</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>autentia-repository</id>
+            <name>Autentia Repository</name>
+            <url>${autentia.mvn.distribution}</url>
+        </repository>
+        <snapshotRepository>
+            <id>autentia-repository-snapshots</id>
+            <name>Autentia snapshots repository</name>
+            <url>${autentia.mvn.snapshots}</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
