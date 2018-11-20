@@ -56,7 +56,7 @@ public class OrganizationService {
 	}
 
 	public List<Organization> getOrganizations(){
-		return organizationRepository.findAll();
+		return organizationRepository.getOrganizationWithOpenProjects();
 	}
 
 	public Organization getOrganizationByName(String name) {

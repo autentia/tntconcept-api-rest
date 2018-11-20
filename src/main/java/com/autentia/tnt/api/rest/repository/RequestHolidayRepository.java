@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface RequestHolidayRepository extends JpaRepository<RequestHoliday, Long> {
 
-    @Query("SELECT a from RequestHoliday a WHERE a.userId = :userId AND a.state = 'ACCEPTED'")
+    @Query("SELECT a from RequestHoliday a WHERE a.userId = :userId AND (a.state = 'ACCEPT' or  a.state = 'PENDING')")
     List<RequestHoliday> vacationsByUserId(@Param("userId") Integer userId);
 }
