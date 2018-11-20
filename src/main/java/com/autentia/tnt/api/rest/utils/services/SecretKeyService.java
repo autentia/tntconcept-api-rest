@@ -1,4 +1,4 @@
-package com.autentia.tnt.api.rest.services;
+package com.autentia.tnt.api.rest.utils.services;
 
 
 import org.apache.commons.codec.binary.Base64;

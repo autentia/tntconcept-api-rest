@@ -53,16 +53,6 @@ public class ActivityServiceTest {
 		this.endDay = format.parse("2018-02-09");
 		userId = 1;
 	}
-	
-	@Test
-	public void getActivitiesShouldReturnActivitiesFromRepository() {
-		final List<Activity> activities = Arrays.asList(mock(Activity.class));
-		when(activityRepository.findAll()).thenReturn(activities);
-
-		final List<Activity> result = activityService.getActivities();
-
-		assertThat(result, is(activities));
-	}
 
 	@Test
 	public void addActivityShouldReturnActivityAfterSaving() {
@@ -70,10 +60,10 @@ public class ActivityServiceTest {
 		final Activity savedActivity = mock(Activity.class);
 		final User mockUser = mock(User.class);
 		when(activityRepository.save(activityToSave)).thenReturn(savedActivity);
-		when(userService.getUserByLogin()).thenReturn(mockUser);
+		when(userService.getUserByLogin("")).thenReturn(mockUser);
 		when(mockUser.getDepartmentId()).thenReturn(1);
 
-		final Activity result = activityService.saveActivity(activityToSave);
+		final Activity result = activityService.saveActivityToUser(activityToSave, null);
 
 		assertThat(result, is(savedActivity));
 	}
@@ -104,7 +94,7 @@ public class ActivityServiceTest {
 		
 		when(activityRepository.getActivitiesByDay(startDay, endDay, userId)).thenReturn(activities);
 		
-		final List<Activity> result = activityService.getActivitiesByDay(startDay, endDay, userId);
+		final List<Activity> result = activityService.getActivitiesByDateRange(startDay, endDay, userId);
 		assertThat(result,is(activities));
 	}
 

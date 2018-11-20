@@ -15,17 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.autentia.tnt.api.rest.config;
+package com.autentia.tnt.api.rest.config.security;
 
 
+import com.autentia.tnt.api.rest.config.UnauthorizedEntryPointConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -63,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint;
+    private UnauthorizedEntryPointConfig unauthorizedEntryPointConfig;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -80,13 +79,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors();
-        http.csrf().disable();
-        //http.authorizeRequests().anyRequest().authenticated();
-        //http.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.POST).permitAll();
-
+        http.
+                antMatcher("/**").
+                authorizeRequests().antMatchers(authUrl).permitAll().
+                anyRequest().authenticated().
+                and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+                and().cors().
+                and().csrf().disable()
+        ;
     }
 
     @Override

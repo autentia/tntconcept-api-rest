@@ -11,69 +11,60 @@ package com.autentia.tnt.api.rest.controller;
 
 import com.autentia.tnt.api.rest.model.Activity;
 import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
-import com.autentia.tnt.api.rest.model.ProjectRole;
 import com.autentia.tnt.api.rest.model.User;
 import com.autentia.tnt.api.rest.services.ActivityService;
-import com.autentia.tnt.api.rest.services.ProjectRoleService;
 import com.autentia.tnt.api.rest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
 public class ActivityController {
 
-	private ActivityService activityService;
+    private ActivityService activityService;
+    private UserService userService;
 
-	private UserService userService;
+    @Autowired
+    public ActivityController(ActivityService activityService, UserService userService) {
+        super();
+        this.activityService = activityService;
+        this.userService = userService;
+    }
 
-	@Autowired
-	public ActivityController(ActivityService activityService, UserService userService) {
-		super();
-		this.activityService = activityService;
-		this.userService = userService;
-	}
+    @GetMapping(value = "/activity/{activityId}")
+    public Activity getActivity(@PathVariable("activityId") Integer activityId, Principal principal) {
+        Activity activity = activityService.getActivityById(activityId);
+        return activity;
+    }
 
-	@GetMapping(value = "/activity/{activityId}")
-	public Activity getActivity(@PathVariable("activityId") Integer activityId) {
+    @PostMapping(value = "/activity", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Activity addActivity(@Valid @RequestBody ActivityDTO activityDTO, Principal principal) {
+        User user = userService.getUserByLogin(principal.getName());
 
-		Activity activity = activityService.getActivityById(activityId);
-		userService.checkAuthorizationById(activity.getUserId());
+        return activityService.saveActivityToUser(activityDTO, user);
+    }
 
-		return activity;
-	}
+    @PutMapping(value = "/activity", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Activity editActivity(@RequestBody ActivityDTO activityDTO, Principal principal) {
+        User user = userService.getUserByLogin(principal.getName());
+        return activityService.saveActivityToUser(activityDTO, user);
+    }
 
-	@PostMapping(value = "/activity", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Activity addActivity( @Valid @RequestBody ActivityDTO activityDTO) {
-		return activityService.saveActivity(activityDTO);
-	}
-
-	@PutMapping(value = "/activity", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Activity editActivity(@RequestBody ActivityDTO activityDTO) {
-		return activityService.saveActivity(activityDTO);
-	}
-
-	@DeleteMapping(value = "/activity/{activityId}")
-	public void deleteActivity(@PathVariable("activityId") Integer activityId) {
-
-		Activity activity = activityService.getActivityById(activityId);
-		userService.checkAuthorizationById(activity.getUserId());
-
-		activityService.deleteActivityById(activityId);
-	}
+    @DeleteMapping(value = "/activity/{activityId}")
+    public void deleteActivity(@PathVariable("activityId") Integer activityId, Principal principal) {
+        Activity activity = activityService.getActivityById(activityId);
+        activityService.deleteActivityById(activityId);
+    }
 
 }

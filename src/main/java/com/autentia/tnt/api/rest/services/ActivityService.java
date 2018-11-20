@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
 import com.autentia.tnt.api.rest.model.ProjectRole;
+import com.autentia.tnt.api.rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,29 +45,25 @@ public class ActivityService {
 				() -> new IllegalArgumentException(("The requested activityId [" + activityId + "] does not exist.")));
 	}
 
-	public List<Activity> getActivitiesByDay(Date startDay, Date endDay, Integer userId) {
+	public List<Activity> getActivitiesByDateRange(Date startDay, Date endDay, Integer userId) {
 		return activityRepository.getActivitiesByDay(startDay, endDay, userId);
 	}
 
-	public List<Activity> getActivities() {
-		return activityRepository.findAll();
-	}
-
 	@Transactional
-	public Activity saveActivity(Activity activity) {
-		activity.setDepartmentId(userService.getUserByLogin().getDepartmentId());
+	public Activity saveActivityToUser(Activity activity, User user) {
+		activity.setDepartmentId(user.getDepartmentId());
 		return activityRepository.save(activity);
 	}
 
 	@Transactional
-	public Activity saveActivity(ActivityDTO activityDTO) {
-		Activity activityToSave = activityDTOtoActivity(activityDTO, userService.getUserByLogin().getId());
-		activityToSave.setDepartmentId(userService.getUserByLogin().getDepartmentId());
+	public Activity saveActivityToUser(ActivityDTO activityDTO, User user) {
+		Activity activityToSave = activityDTOtoActivity(activityDTO, user.getId());
+		activityToSave.setDepartmentId(user.getDepartmentId());
 		return activityRepository.save(activityToSave);
 	}
 
-	public Long calculateHours(Date startDay, Date endDay) {
-		return activityRepository.calculateHours(startDay, endDay, userService.getUserByLogin().getId()).orElse(0L);
+	public Long calculateTotalUserHoursBetweenDays(Date startDay, Date endDay, User user) {
+		return activityRepository.calculateHours(startDay, endDay, user.getId()).orElse(0L);
 	}
 
 	public List<Date> datesWithActivities(Date startDate, Date endDate, Integer userId) {

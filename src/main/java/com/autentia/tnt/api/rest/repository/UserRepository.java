@@ -18,6 +18,7 @@
 package com.autentia.tnt.api.rest.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.stereotype.Repository;
 
 import com.autentia.tnt.api.rest.model.User;

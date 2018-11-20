@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -84,7 +85,7 @@ public class ActivitiesDayRestControllerTestIT {
 		when(auth.getPrincipal()).thenReturn(userDetails);
 		when(userDetails.getUsername()).thenReturn(login);
 
-		List<ActivitiesDay> activitiesDay = activitiesDayController.getActivitiesByDates(startDate.toLocalDate(), endDate.toLocalDate());
+		List<ActivitiesDay> activitiesDay = activitiesDayController.getActivitiesByDates(startDate.toLocalDate(), endDate.toLocalDate(), null);
 
 		final ResponseEntity<ActivitiesDay[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/activities?startDate=2018-02-08&endDate=2018-02-09",
 				ActivitiesDay[].class);
@@ -111,7 +112,7 @@ public class ActivitiesDayRestControllerTestIT {
 		when(auth.getPrincipal()).thenReturn(userDetails);
 		when(userDetails.getUsername()).thenReturn(login);
 		
-		ActivitiesDay activitiesDay = activitiesDayController.getActivitiesByDay(date);
+		ActivitiesDay activitiesDay = activitiesDayController.getActivitiesByDay(date, mock(Principal.class));
 		
 		final ResponseEntity<ActivitiesDay> response = restTemplate.getForEntity(getBaseUrl() + "/api/activitiesByDay?date=2018-02-08T00:00",
 				ActivitiesDay.class);

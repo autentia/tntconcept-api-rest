@@ -67,15 +67,15 @@ public class ActivitiesDayControllerTest {
 		ActivitiesDay returnedActivitiesDay = new ActivitiesDay();
 		
 		
-		when(activityService.calculateHours(any(Date.class), any(Date.class))).thenReturn(workedHours);
-		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
-		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
+		when(activityService.calculateTotalUserHoursBetweenDays(any(Date.class), any(Date.class), userService.getUserByLogin(""))).thenReturn(workedHours);
+		when(activityService.getActivitiesByDateRange(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
+		when(userService.getUserByLogin("")).thenReturn(userAuthenticated);
 		
 		returnedActivitiesDay.setActivities(activities);
 		returnedActivitiesDay.setTotal_hours(workedHours);
 		returnedActivitiesDay.setDate(Date.from(startDay.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
-		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay);
+		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay, null);
 		assertThat(result,is(returnedActivitiesDay)); 		 
 	}
 	
@@ -85,11 +85,11 @@ public class ActivitiesDayControllerTest {
 		List<Activity> activities = Arrays.asList(new Activity(new Date(), 60, "Test", false, 1, new ProjectRole(), 1));
 		User userAuthenticated = mock(User.class);
 		
-		when(activityService.calculateHours(any(Date.class), any(Date.class))).thenReturn(workedHours);
-		when(activityService.getActivitiesByDay(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
-		when(userService.getUserByLogin()).thenReturn(userAuthenticated);
+		when(activityService.calculateTotalUserHoursBetweenDays(any(Date.class), any(Date.class), any(User.class))).thenReturn(workedHours);
+		when(activityService.getActivitiesByDateRange(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
+		when(userService.getUserByLogin("")).thenReturn(userAuthenticated);
 		
-		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate());
+		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate(), null);
 		
 		assertTrue(result.size() == 2);
 	}

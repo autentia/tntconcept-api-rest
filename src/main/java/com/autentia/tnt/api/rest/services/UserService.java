@@ -22,6 +22,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 
 import com.autentia.tnt.api.rest.model.User;
@@ -29,8 +30,6 @@ import com.autentia.tnt.api.rest.repository.UserRepository;
 
 @Service
 public class UserService {
-	
-	
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -39,18 +38,7 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public User getUserByLogin() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = (UserDetails) auth.getPrincipal();
-		String login = userDetails.getUsername();
+	public User getUserByLogin(String login) {
 		return userRepository.getUserByLogin(login);
 	}
-
-	public void checkAuthorizationById(Integer idToCompare) {
-		Integer currentUserId = getUserByLogin().getId();
-		if (!currentUserId.equals(idToCompare)) {
-			throw new AccessDeniedException("You don't have authorization");
-		}
-	}
-
 }

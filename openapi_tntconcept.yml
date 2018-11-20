@@ -52,7 +52,7 @@ paths:
       description: >-
         Returns all the imputations of a user on that day of the ActivitiesDay
         object
-      operationId: getActivitiesByDay
+      operationId: getActivitiesByDateRange
       parameters:
         - name: date
           in: query

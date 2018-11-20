@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class Http401UnauthorizedEntryPoint implements AuthenticationEntryPoint {
+public class UnauthorizedEntryPointConfig implements AuthenticationEntryPoint {
 
-    private final Logger log = LoggerFactory.getLogger(Http401UnauthorizedEntryPoint.class);
+    private final Logger log = LoggerFactory.getLogger(UnauthorizedEntryPointConfig.class);
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-
         log.debug("Pre-authenticated entry point called. Rejecting access");
         httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
     }

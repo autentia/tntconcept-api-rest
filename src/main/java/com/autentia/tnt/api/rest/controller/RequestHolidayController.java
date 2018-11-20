@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,8 +25,8 @@ public class RequestHolidayController {
     }
 
     @RequestMapping("/vacations")
-    public List<RequestHoliday> getVacationsByUserId() {
-        User user = userService.getUserByLogin();
+    public List<RequestHoliday> getVacationsByUserId(Principal principal) {
+        User user = userService.getUserByLogin(principal.getName());
         return requestHolidayService.getVacationsByUserId(user.getId());
     }
 }

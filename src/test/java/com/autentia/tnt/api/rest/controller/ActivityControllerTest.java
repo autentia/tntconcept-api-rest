@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
 import com.autentia.tnt.api.rest.model.User;
-import com.autentia.tnt.api.rest.services.ProjectRoleService;
 import com.autentia.tnt.api.rest.services.UserService;
 import org.junit.Test;
 
@@ -46,11 +45,11 @@ public class ActivityControllerTest {
 		final Activity savedActivity = mock(Activity.class);
 		final User userToReturn = mock(User.class);
 		when(userToReturn.getId()).thenReturn(1);
-		when(userService.getUserByLogin()).thenReturn(userToReturn);
-		when(userService.getUserByLogin().getId()).thenReturn(1);
-		when(activityService.saveActivity(activityDTOToSave)).thenReturn(savedActivity);
+		when(userService.getUserByLogin("")).thenReturn(userToReturn);
+		when(userService.getUserByLogin("").getId()).thenReturn(1);
+		when(activityService.saveActivityToUser(activityDTOToSave, userToReturn)).thenReturn(savedActivity);
 
-		final Activity result = activityController.addActivity(activityDTOToSave);
+		final Activity result = activityController.addActivity(activityDTOToSave, null);
 		assertThat(result, is(savedActivity));
 	}
 	
@@ -60,12 +59,12 @@ public class ActivityControllerTest {
 		final User userToReturn = mock(User.class);
 		when(userToReturn.getId()).thenReturn(1);
 		when(activityToReturn.getUserId()).thenReturn(1);
-		when(userService.getUserByLogin()).thenReturn(userToReturn);
-		when(userService.getUserByLogin().getId()).thenReturn(1);
+		when(userService.getUserByLogin("")).thenReturn(userToReturn);
+		when(userService.getUserByLogin("").getId()).thenReturn(1);
 		when(activityService.getActivityById(2)).thenReturn(activityToReturn);
 
 
-		final Activity result = activityController.getActivity(2);
+		final Activity result = activityController.getActivity(2, null);
 		assertThat(result, is(activityToReturn));
 	}
 }
