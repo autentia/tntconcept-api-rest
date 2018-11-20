@@ -18,7 +18,7 @@
 package com.autentia.tnt.api.rest;
 
 import com.autentia.tnt.api.rest.model.DTO.ActivityDTO;
-import com.autentia.tnt.api.rest.services.ProjectRoleService;
+import com.autentia.tnt.api.rest.repository.UserRepository;
 import com.autentia.tnt.api.rest.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +36,8 @@ import com.autentia.tnt.api.rest.controller.ActivityController;
 import com.autentia.tnt.api.rest.model.Activity;
 import com.autentia.tnt.api.rest.repository.ActivityRepository;
 import com.autentia.tnt.api.rest.services.ActivityService;
+import static org.mockito.Mockito.mock;
+
 
 import static org.junit.Assert.*;
 
@@ -53,7 +55,7 @@ public class ActivityRestControllerTestIT {
 	@Autowired
 	private ActivityService activityService;
 
-	private final UserService userService = new UserService(null);
+	private final UserService userService = new UserService(mock(UserRepository.class));
 
 	@Autowired
 	private final ActivityController activityController = new ActivityController(activityService,userService);

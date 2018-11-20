@@ -30,6 +30,8 @@ import org.junit.Test;
 import com.autentia.tnt.api.rest.model.Activity;
 import com.autentia.tnt.api.rest.services.ActivityService;
 
+import java.security.Principal;
+
 public class ActivityControllerTest {
 
 	private final ActivityService activityService = mock(ActivityService.class);
@@ -49,7 +51,7 @@ public class ActivityControllerTest {
 		when(userService.getUserByLogin("").getId()).thenReturn(1);
 		when(activityService.saveActivityToUser(activityDTOToSave, userToReturn)).thenReturn(savedActivity);
 
-		final Activity result = activityController.addActivity(activityDTOToSave, null);
+		final Activity result = activityController.addActivity(activityDTOToSave, mock(Principal.class));
 		assertThat(result, is(savedActivity));
 	}
 	
@@ -64,7 +66,7 @@ public class ActivityControllerTest {
 		when(activityService.getActivityById(2)).thenReturn(activityToReturn);
 
 
-		final Activity result = activityController.getActivity(2, null);
+		final Activity result = activityController.getActivity(2, mock(Principal.class));
 		assertThat(result, is(activityToReturn));
 	}
 }

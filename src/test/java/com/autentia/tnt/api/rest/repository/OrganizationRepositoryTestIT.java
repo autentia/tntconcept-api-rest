@@ -1,16 +1,16 @@
 /**
  * TNTConcept Easy Enterprise Management by Autentia Real Bussiness Solution S.L.
  * Copyright (C) 2007 Autentia Real Bussiness Solution S.L.
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,61 +37,60 @@ import com.autentia.tnt.api.rest.model.Organization;
 @DataJpaTest
 @Transactional
 public class OrganizationRepositoryTestIT {
-	
-	@Autowired
-	private OrganizationRepository organizationRepository;
-	
-	@Test
-	public void findOneShouldReturnOrganizationFromDB() {
-		final Integer id = 1;
-		
-		Organization organizationSearched = organizationRepository.findById(id).get();
-		
-		assertTrue(organizationSearched.getId() == 1);
-	}
-	
-	@Test
-	public void saveShouldReturnOrganizationAfterSaving() {
-		Organization organizationToSave = new Organization();
-		organizationToSave.setName("Indefinida");
-		
-		Organization savedOrganization = organizationRepository.save(organizationToSave);
-		
-		assertEquals(savedOrganization,organizationToSave);
-	}
-	
-	@Test
-	public void deleteShouldDeleteOrganizationFromDB() {
-		final String name = "Indefinida";
-		
-		Organization organizationToDelete = organizationRepository.findByName(name);
-		
-		organizationRepository.delete(organizationToDelete);
-		
-		Organization result = organizationRepository.findByName(name);
-		
-		assertEquals(result,null);
-	}
-	
-	@Test 
-	public void findAllShouldReturnAllOrganizationsFromDB() {
-		final String name = "Indefinida";
-		
-		Organization organizationToCompare = organizationRepository.findByName(name);
-		List<Organization> allOrganizations = organizationRepository.findAll();
-		
-		assertTrue(allOrganizations.contains(organizationToCompare));
-	}
-	
-	@Test
-	public void findByNameShouldReturnOrganizationFromDB() {
-		final String name = "Nuestra empresa";
-		
-		Organization organizationSearched = organizationRepository.findByName(name);
-		
-		assertEquals(organizationSearched.getName(),"Nuestra empresa");
-	}
-	
-	
+
+    @Autowired
+    private OrganizationRepository organizationRepository;
+
+    @Test
+    public void findOneShouldReturnOrganizationFromDB() {
+        final Integer id = 1;
+
+        Organization organizationSearched = organizationRepository.findById(id).get();
+
+        assertTrue(organizationSearched.getId() == 1);
+    }
+
+    @Test
+    public void saveShouldReturnOrganizationAfterSaving() {
+        Organization organizationToSave = new Organization();
+        organizationToSave.setName("Indefinida");
+
+        Organization savedOrganization = organizationRepository.save(organizationToSave);
+
+        assertEquals(savedOrganization, organizationToSave);
+    }
+
+    @Test
+    public void deleteShouldDeleteOrganizationFromDB() {
+        final String name = "Indefinida";
+
+        Organization organizationToDelete = organizationRepository.findByName(name);
+
+        organizationRepository.delete(organizationToDelete);
+
+        Organization result = organizationRepository.findByName(name);
+
+        assertEquals(result, null);
+    }
+
+    @Test
+    public void findAllShouldReturnAllOrganizationsFromDB() {
+        final String name = "Indefinida";
+
+        Organization organizationToCompare = organizationRepository.findByName(name);
+        List<Organization> allOrganizations = organizationRepository.findAll();
+
+        assertTrue(allOrganizations.contains(organizationToCompare));
+    }
+
+    @Test
+    public void findByNameShouldReturnOrganizationFromDB() {
+        final String name = "Nuestra empresa";
+
+        Organization organizationSearched = organizationRepository.findByName(name);
+
+        assertEquals(organizationSearched.getName(), "Nuestra empresa");
+    }
+
 
 }

@@ -21,6 +21,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -63,7 +64,7 @@ public class ActivityServiceTest {
 		when(userService.getUserByLogin("")).thenReturn(mockUser);
 		when(mockUser.getDepartmentId()).thenReturn(1);
 
-		final Activity result = activityService.saveActivityToUser(activityToSave, null);
+		final Activity result = activityService.saveActivityToUser(activityToSave, mockUser);
 
 		assertThat(result, is(savedActivity));
 	}

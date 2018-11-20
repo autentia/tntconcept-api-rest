@@ -41,7 +41,7 @@ public class HolidayRestControllerTestIT {
 
         List<Holiday> holidayList = holidayController.getHolidaysPerYear(year);
 
-        final ResponseEntity<Holiday[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/holidays?year="+year,
+        final ResponseEntity<Holiday[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/holidays?year=" + year,
                 Holiday[].class);
 
         final Holiday[] result = response.getBody();

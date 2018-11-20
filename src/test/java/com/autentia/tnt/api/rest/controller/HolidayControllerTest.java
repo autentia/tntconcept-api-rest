@@ -25,6 +25,6 @@ public class HolidayControllerTest {
         when(holidayService.getHolidaysPerYear(year)).thenReturn(holidaysToReturn);
 
         final List<Holiday> result = holidayController.getHolidaysPerYear(year);
-        assertThat(result,is(holidaysToReturn));
+        assertThat(result, is(holidaysToReturn));
     }
 }

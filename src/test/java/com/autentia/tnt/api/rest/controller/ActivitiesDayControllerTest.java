@@ -24,6 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -75,7 +76,7 @@ public class ActivitiesDayControllerTest {
 		returnedActivitiesDay.setTotal_hours(workedHours);
 		returnedActivitiesDay.setDate(Date.from(startDay.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
-		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay, null);
+		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay, mock(Principal.class));
 		assertThat(result,is(returnedActivitiesDay)); 		 
 	}
 	
@@ -89,7 +90,7 @@ public class ActivitiesDayControllerTest {
 		when(activityService.getActivitiesByDateRange(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
 		when(userService.getUserByLogin("")).thenReturn(userAuthenticated);
 		
-		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate(), null);
+		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate(), mock(Principal.class));
 		
 		assertTrue(result.size() == 2);
 	}

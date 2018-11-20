@@ -1,6 +1,5 @@
 package com.autentia.tnt.api.rest.config.security;
 
-import com.autentia.tnt.api.rest.config.jwt.CustomTokenEnhancer;
 import com.autentia.tnt.api.rest.utils.services.SecretKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,10 +84,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-    @Autowired
-    private CustomTokenEnhancer customTokenEnhancer;
-
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -137,8 +132,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     public DefaultTokenServices defaultTokenServices() {
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, accessTokenConverter()));
 
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setClientDetailsService(clientDetailsService);

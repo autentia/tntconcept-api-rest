@@ -85,7 +85,7 @@ public class ActivitiesDayRestControllerTestIT {
 		when(auth.getPrincipal()).thenReturn(userDetails);
 		when(userDetails.getUsername()).thenReturn(login);
 
-		List<ActivitiesDay> activitiesDay = activitiesDayController.getActivitiesByDates(startDate.toLocalDate(), endDate.toLocalDate(), null);
+		List<ActivitiesDay> activitiesDay = activitiesDayController.getActivitiesByDates(startDate.toLocalDate(), endDate.toLocalDate(), mock(Principal.class));
 
 		final ResponseEntity<ActivitiesDay[]> response = restTemplate.getForEntity(getBaseUrl() + "/api/activities?startDate=2018-02-08&endDate=2018-02-09",
 				ActivitiesDay[].class);
