@@ -16,6 +16,7 @@ import com.autentia.tnt.api.rest.services.ActivityService;
 import com.autentia.tnt.api.rest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
+//@PreAuthorize("#oauth2.hasScope('tnt')")
 public class ActivityController {
 
     private ActivityService activityService;

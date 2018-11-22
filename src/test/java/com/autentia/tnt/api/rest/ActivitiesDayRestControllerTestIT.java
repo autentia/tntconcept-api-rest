@@ -81,6 +81,7 @@ public class ActivitiesDayRestControllerTestIT {
 		final String login = "admin";
 		SecurityContextHolder.setContext(secContext);
 
+
 		when(secContext.getAuthentication()).thenReturn(auth);
 		when(auth.getPrincipal()).thenReturn(userDetails);
 		when(userDetails.getUsername()).thenReturn(login);

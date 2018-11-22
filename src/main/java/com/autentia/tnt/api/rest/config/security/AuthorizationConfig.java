@@ -1,5 +1,6 @@
 package com.autentia.tnt.api.rest.config.security;
 
+import com.autentia.tnt.api.rest.config.jwt.enhancers.CustomTokenEnhancer;
 import com.autentia.tnt.api.rest.utils.services.SecretKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,6 @@ import java.util.Arrays;
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationConfig.class);
 
-
     @Value("${client.name}")
     private String clientName;
 
@@ -74,9 +74,14 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Value("${spring.ldap.group-search-filter}")
     private String ldapGroupSearchFilter;
 
+    @Value("${security.jwt.access-validity-seconds}")
+    private int accessTokenValiditySeconds;
+
+    @Value("${security.jwt.refresh-validity-seconds}")
+    private int refreshTokenValiditySeconds;
+
     @Autowired
     private SecretKeyService keyProvider;
-
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -84,26 +89,28 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
+    @Autowired
+    private CustomTokenEnhancer customTokenEnhancer;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient(clientName)
                 .secret(clientSecret)
-                .accessTokenValiditySeconds(36000)
-                .refreshTokenValiditySeconds(36000)
+                .accessTokenValiditySeconds(accessTokenValiditySeconds)
+                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes(clientScope).autoApprove(true);
     }
 
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer configurer) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer configurer) {
         configurer.authenticationManager(authenticationManager).tokenServices(defaultTokenServices()).userDetailsService(ldapUserDetailsManager());
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer)
-            throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
 
@@ -132,6 +139,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     public DefaultTokenServices defaultTokenServices() {
         final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, accessTokenConverter()));
 
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setClientDetailsService(clientDetailsService);
