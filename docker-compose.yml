@@ -8,19 +8,16 @@ services:
     - "13307:3306"
    environment:
      MYSQL_ROOT_PASSWORD: root
+     
   openldap:
-    image: osixia/openldap:1.2.0
+    build: ./docker-data/openldap
+    image: autentia/openldap
     ports:
-    - "1636:636"
-    - "1389:389"
+      - 389:389
     environment:
-      LDAP_ORGANISATION: "autentia organization"
-      LDAP_DOMAIN: "autentia.com"
-      LDAP_ADMIN_PASSWORD: "adminadmin"
-  openldap-seed:
-    image: osixia/openldap:1.2.0
-    volumes:
-      - ./docker-data/openldap-seed:/ldif_files
-    links:
-      - openldap
-    entrypoint: sh -c '/ldif_files/importData.sh'
+      - SLAPD_DOMAIN=autentia.com
+      - SLAPD_PASSWORD=adminadmin
+      - SLAPD_CONFIG_PASSWORD=config
+      - SLAPD_ADDITIONAL_SCHEMAS=ppolicy
+      - SLAPD_ADDITIONAL_MODULES=ppolicy
+    container_name: autentia-ldap
