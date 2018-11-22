@@ -18,11 +18,17 @@
 package com.autentia.tnt.api.rest.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.autentia.tnt.api.rest.model.Organization;
 
+import java.util.List;
+
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organization,Integer> {
 	Organization findByName(String name);
+
+	@Query(value = "select * from Organization o where o.id in (select p.organizationId from Project p where p.open=1)", nativeQuery = true)
+	List<Organization> getOrganizationWithOpenProjects();
 }

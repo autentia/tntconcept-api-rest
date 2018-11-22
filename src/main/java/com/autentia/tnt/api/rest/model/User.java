@@ -24,6 +24,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Entity
 public class User {
@@ -44,6 +47,25 @@ public class User {
 
 	@Column
 	private String name;
+
+	@Column
+	private String photo;
+
+	@Column
+	private String genre;
+
+	@Column
+	private Integer dayDuration;
+
+	@Column
+	private Date startDate;
+
+	@Column
+	private String email;
+
+	@ManyToOne
+	@JoinColumn(name = "categoryId")
+	private UserCategory userCategory;
 
 	public User(){
 
@@ -92,7 +114,55 @@ public class User {
         departmentId = departmentId;
     }
 
-    @Override
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public Integer getDayDuration() {
+		return dayDuration;
+	}
+
+	public void setDayDuration(Integer dayDuration) {
+		this.dayDuration = dayDuration;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public UserCategory getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(UserCategory userCategory) {
+		this.userCategory = userCategory;
+	}
+
+	@Override
 	public String toString() {
 		return "User{" +
 				"id=" + id +

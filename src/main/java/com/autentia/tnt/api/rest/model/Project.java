@@ -38,6 +38,9 @@ public class Project {
 	@Column
     private Boolean open;
 
+	@Column
+	private Boolean billable;
+
 	@ManyToOne
 	@JoinColumn(name="organizationId")
     private Organization organization;
@@ -80,5 +83,13 @@ public class Project {
 
 	public void setProjectRoles(List<ProjectRole> projectRoles) {
 		this.projectRoles = projectRoles;
+	}
+
+	public Boolean getBillable() {
+		return billable;
+	}
+
+	public void setBillable(Boolean billable) {
+		this.billable = billable;
 	}
 }
