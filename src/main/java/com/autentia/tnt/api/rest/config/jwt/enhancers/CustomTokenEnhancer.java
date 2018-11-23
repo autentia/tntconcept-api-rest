@@ -4,7 +4,6 @@ import com.autentia.tnt.api.rest.model.User;
 import com.autentia.tnt.api.rest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.ldap.userdetails.LdapUserDetails;
-import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -26,9 +25,16 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         Map<String, Object> additionalInfo = new HashMap<>();
+        User user;
+        String userLogin;
 
-        User user = userService.getUserByLogin(((LdapUserDetails) authentication.getPrincipal()).getUsername());
+        if (authentication instanceof LdapUserDetails) {
+            userLogin = ((LdapUserDetails) authentication.getPrincipal()).getUsername();
+        } else {
+            userLogin = authentication.getPrincipal().toString();
+        }
 
+        user = userService.getUserByLogin(userLogin);
         additionalInfo.put("user", user);
 
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(
