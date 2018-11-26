@@ -2085,6 +2085,10 @@ INSERT INTO `User` (`id`, `login`, `password`, `roleId`, `active`, `name`, `nif`
 VALUES
 	(1,'admin','dd94709528bb1c83d08f3088d4043f4742891f4f',1,1,'Administrador',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL,'2018-04-20',1,NULL,NULL,NULL,NULL,0,NULL,NULL,0.00,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,480,1,NULL,NULL);
 
+INSERT INTO `User` (`id`, `login`, `password`, `roleId`, `active`, `name`, `nif`, `birthDate`, `academicQualification`, `phone`, `mobile`, `street`, `city`, `postalCode`, `provinceId`, `married`, `childrenNumber`, `drivenLicenseType`, `vehicleType`, `licensePlate`, `startDate`, `categoryId`, `socialSecurityNumber`, `bank`, `account`, `travelAvailability`, `workingInClient`, `email`, `genre`, `salary`, `salaryExtras`, `documentCategoryId`, `securityCard`, `healthInsurance`, `notes`, `photo`, `endTestPeriodDate`, `endContractDate`, `departmentId`, `contractTypeId`, `contractObservations`, `insertDate`, `updateDate`, `dayDuration`, `agreementId`, `agreementYearDuration`, `passwordExpireDate`)
+VALUES
+	(2,'test','dd94709528bb1c83d08f3088d4043f4742891f4f',3,1,'User Testing',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL,'2018-04-20',1,NULL,NULL,NULL,NULL,0,NULL,NULL,0.00,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,480,1,NULL,NULL);
+
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 

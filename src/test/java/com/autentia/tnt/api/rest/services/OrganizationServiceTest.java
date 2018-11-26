@@ -40,7 +40,7 @@ public class OrganizationServiceTest {
 	public void getOrganizationsShouldReturnOrganizationsFromRepository() {
 		final List<Organization> organizations = Arrays.asList(mock(Organization.class));
 		
-		when(organizationRepository.findAll()).thenReturn(organizations);
+		when(organizationRepository.getOrganizationWithOpenProjects()).thenReturn(organizations);
 		
 		final List<Organization> result = organizationService.getOrganizations();
 		

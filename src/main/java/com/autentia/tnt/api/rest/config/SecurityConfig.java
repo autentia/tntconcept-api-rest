@@ -46,12 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.ldap.userDnPatterns}")
     private String userDnPatterns;
 
-    @Value("${spring.ldap.username:}")
-    private String ldapUsername;
-
-    @Value("${spring.ldap.password:}")
-	private String ldapPassword;
-
     @Autowired
 	private Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint;
 
@@ -69,10 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.ldapAuthentication()
 				.userDnPatterns(userDnPatterns)
 				.contextSource()
-                    .url(ldapUrl)
-                    .managerDn(ldapUsername)
-                    .managerPassword(ldapPassword)
-                ;
+                    .url(ldapUrl);
 
 	}
 
