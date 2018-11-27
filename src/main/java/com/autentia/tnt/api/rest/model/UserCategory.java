@@ -11,13 +11,13 @@ import javax.persistence.Id;
 public class UserCategory {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column
     private String name;
 
-    public UserCategory(){
+    public UserCategory() {
 
     }
 

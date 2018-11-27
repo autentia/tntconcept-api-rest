@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.TimeZone;
 
 @Configuration
-public class JacksonConfig  {
+public class JacksonConfig {
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {

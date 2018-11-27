@@ -25,67 +25,67 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ActivityService {
 
-	private ActivityRepository activityRepository;
+    private ActivityRepository activityRepository;
 
-	private ProjectRoleService projectRoleService;
+    private ProjectRoleService projectRoleService;
 
-	private UserService userService;
+    private UserService userService;
 
-	@Autowired
-	public ActivityService(ActivityRepository activityRepository, ProjectRoleService projectRoleService,
-			UserService userService) {
-		super();
-		this.activityRepository = activityRepository;
-		this.projectRoleService = projectRoleService;
-		this.userService = userService;
-	}
+    @Autowired
+    public ActivityService(ActivityRepository activityRepository, ProjectRoleService projectRoleService,
+                           UserService userService) {
+        super();
+        this.activityRepository = activityRepository;
+        this.projectRoleService = projectRoleService;
+        this.userService = userService;
+    }
 
-	public Activity getActivityById(Integer activityId) {
-		return activityRepository.findById(activityId).orElseThrow(
-				() -> new IllegalArgumentException(("The requested activityId [" + activityId + "] does not exist.")));
-	}
+    public Activity getActivityById(Integer activityId) {
+        return activityRepository.findById(activityId).orElseThrow(
+                () -> new IllegalArgumentException(("The requested activityId [" + activityId + "] does not exist.")));
+    }
 
-	public List<Activity> getActivitiesByDateRange(Date startDay, Date endDay, Integer userId) {
-		return activityRepository.getActivitiesByDay(startDay, endDay, userId);
-	}
+    public List<Activity> getActivitiesByDateRange(Date startDay, Date endDay, Integer userId) {
+        return activityRepository.getActivitiesByDay(startDay, endDay, userId);
+    }
 
-	@Transactional
-	public Activity saveActivityToUser(Activity activity, User user) {
-		activity.setDepartmentId(user.getDepartmentId());
-		return activityRepository.save(activity);
-	}
+    @Transactional
+    public Activity saveActivityToUser(Activity activity, User user) {
+        activity.setDepartmentId(user.getDepartmentId());
+        return activityRepository.save(activity);
+    }
 
-	@Transactional
-	public Activity saveActivityToUser(ActivityDTO activityDTO, User user) {
-		Activity activityToSave = activityDTOtoActivity(activityDTO, user.getId());
-		activityToSave.setDepartmentId(user.getDepartmentId());
-		return activityRepository.save(activityToSave);
-	}
+    @Transactional
+    public Activity saveActivityToUser(ActivityDTO activityDTO, User user) {
+        Activity activityToSave = activityDTOtoActivity(activityDTO, user.getId());
+        activityToSave.setDepartmentId(user.getDepartmentId());
+        return activityRepository.save(activityToSave);
+    }
 
-	public Long calculateTotalUserHoursBetweenDays(Date startDay, Date endDay, User user) {
-		return activityRepository.calculateHours(startDay, endDay, user.getId()).orElse(0L);
-	}
+    public Long calculateTotalUserHoursBetweenDays(Date startDay, Date endDay, User user) {
+        return activityRepository.calculateHours(startDay, endDay, user.getId()).orElse(0L);
+    }
 
-	public List<Date> datesWithActivities(Date startDate, Date endDate, Integer userId) {
-		return activityRepository.datesWithActivities(startDate, endDate, userId);
-	}
+    public List<Date> datesWithActivities(Date startDate, Date endDate, Integer userId) {
+        return activityRepository.datesWithActivities(startDate, endDate, userId);
+    }
 
-	public void deleteActivityById(Integer id) {
-		activityRepository.deleteById(id);
-	}
+    public void deleteActivityById(Integer id) {
+        activityRepository.deleteById(id);
+    }
 
-	private Activity activityDTOtoActivity(ActivityDTO activityDTO, Integer userID) {
-		Activity activity = new Activity();
-		activity.setId(activityDTO.getId());
-		activity.setStartDate(activityDTO.getStartDate());
-		activity.setDuration(activityDTO.getDuration());
-		activity.setDescription(activityDTO.getDescription());
-		activity.setBillable(activityDTO.getBillable());
+    private Activity activityDTOtoActivity(ActivityDTO activityDTO, Integer userID) {
+        Activity activity = new Activity();
+        activity.setId(activityDTO.getId());
+        activity.setStartDate(activityDTO.getStartDate());
+        activity.setDuration(activityDTO.getDuration());
+        activity.setDescription(activityDTO.getDescription());
+        activity.setBillable(activityDTO.getBillable());
 
-		ProjectRole projectRole = projectRoleService.getProjectRoleById(activityDTO.getRoleId());
-		activity.setUserId(userID);
-		activity.setProjectRole(projectRole);
+        ProjectRole projectRole = projectRoleService.getProjectRoleById(activityDTO.getRoleId());
+        activity.setUserId(userID);
+        activity.setProjectRole(projectRole);
 
-		return activity;
-	}
+        return activity;
+    }
 }

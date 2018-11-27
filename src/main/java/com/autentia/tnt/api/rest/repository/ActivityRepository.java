@@ -21,15 +21,15 @@ import com.autentia.tnt.api.rest.model.Activity;
 
 public interface ActivityRepository extends JpaRepository<Activity, Integer> {
 
-	@Query("SELECT a FROM Activity a join fetch a.projectRole WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
-	List<Activity> getActivitiesByDay(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
-			@Param("userId") Integer userId);
+    @Query("SELECT a FROM Activity a join fetch a.projectRole WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
+    List<Activity> getActivitiesByDay(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
+                                      @Param("userId") Integer userId);
 
-	@Query("SELECT SUM(a.duration) FROM Activity a WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
-	Optional<Long> calculateHours(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
-			@Param("userId") Integer userId);
+    @Query("SELECT SUM(a.duration) FROM Activity a WHERE a.userId= :userId AND a.startDate BETWEEN :startDay AND :endDay")
+    Optional<Long> calculateHours(@Param("startDay") Date startDay, @Param("endDay") Date endDay,
+                                  @Param("userId") Integer userId);
 
-	@Query(value = "SELECT DISTINCT date(a.startDate) as Date FROM Activity a WHERE a.userId= :userId AND (a.startDate BETWEEN :startDate AND :endDate)", nativeQuery = true)
-	List<Date> datesWithActivities(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
-			@Param("userId") Integer userId);
+    @Query(value = "SELECT DISTINCT date(a.startDate) as Date FROM Activity a WHERE a.userId= :userId AND (a.startDate BETWEEN :startDate AND :endDate)", nativeQuery = true)
+    List<Date> datesWithActivities(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
+                                   @Param("userId") Integer userId);
 }

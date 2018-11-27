@@ -31,7 +31,6 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
-//@PreAuthorize("#oauth2.hasScope('tnt')")
 public class ActivityController {
 
     private ActivityService activityService;

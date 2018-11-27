@@ -10,6 +10,6 @@ import java.util.List;
 public interface HolidayRepository extends JpaRepository<Holiday, Long> {
 
     @Query("SELECT h FROM Holiday h WHERE YEAR(h.date)= :year")
-    List<Holiday> getHolidaysPerYear(@Param("year")Integer year);
+    List<Holiday> getHolidaysPerYear(@Param("year") Integer year);
 
 }

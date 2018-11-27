@@ -18,7 +18,7 @@ public class HolidayService {
         this.holidayRepository = holidayRepository;
     }
 
-    public List<Holiday> getHolidaysPerYear(Integer year){
+    public List<Holiday> getHolidaysPerYear(Integer year) {
         return holidayRepository.getHolidaysPerYear(year);
     }
 

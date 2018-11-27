@@ -37,93 +37,93 @@ import com.autentia.tnt.api.rest.services.UserService;
 @RequestMapping("/api")
 public class ActivitiesDayController {
 
-	private ActivityService activityService;
+    private ActivityService activityService;
 
-	private UserService userService;
+    private UserService userService;
 
-	@Autowired
-	public ActivitiesDayController(ActivityService activityService, UserService userService) {
-		super();
-		this.activityService = activityService;
-		this.userService = userService;
-	}
+    @Autowired
+    public ActivitiesDayController(ActivityService activityService, UserService userService) {
+        super();
+        this.activityService = activityService;
+        this.userService = userService;
+    }
 
-	@GetMapping("/activities")
-	public List<ActivitiesDay> getActivitiesByDates(
-			@RequestParam(name = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-			@RequestParam(name = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
-			Principal principal) {
-		User user = userService.getUserByLogin(principal.getName());
-		Date parsedStartDate = Date.from(startDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-		Date parsedFinalDate = Date.from(endDate.plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-		final List<Activity> activities = activityService.getActivitiesByDateRange(parsedStartDate, parsedFinalDate, user.getId());
-		List<ActivitiesDay> activitiesDayList = new ArrayList<>();
-		LocalDate dateIncrement = startDate;
-		while((startDate.isEqual(dateIncrement)) || (endDate.isAfter(dateIncrement))
-				|| (endDate.isEqual(dateIncrement))) {
+    @GetMapping("/activities")
+    public List<ActivitiesDay> getActivitiesByDates(
+            @RequestParam(name = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam(name = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            Principal principal) {
+        User user = userService.getUserByLogin(principal.getName());
+        Date parsedStartDate = Date.from(startDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        Date parsedFinalDate = Date.from(endDate.plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        final List<Activity> activities = activityService.getActivitiesByDateRange(parsedStartDate, parsedFinalDate, user.getId());
+        List<ActivitiesDay> activitiesDayList = new ArrayList<>();
+        LocalDate dateIncrement = startDate;
+        while ((startDate.isEqual(dateIncrement)) || (endDate.isAfter(dateIncrement))
+                || (endDate.isEqual(dateIncrement))) {
 
-			LocalDate finalDateIncrement = dateIncrement;
-			List<Activity> activitiesByDateIncrement =
-					activities.stream()
-							.filter(activity -> activity.getStartDate().getDate() == finalDateIncrement.getDayOfMonth())
-							.collect(Collectors.toList());
+            LocalDate finalDateIncrement = dateIncrement;
+            List<Activity> activitiesByDateIncrement =
+                    activities.stream()
+                            .filter(activity -> activity.getStartDate().getDate() == finalDateIncrement.getDayOfMonth())
+                            .collect(Collectors.toList());
 
-			ActivitiesDay activitiesDay = new ActivitiesDay();
-			activitiesDay.setDate(Date.from(finalDateIncrement.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-			activitiesDay.setActivities(activitiesByDateIncrement);
-			if (activitiesByDateIncrement.isEmpty()){
-				activitiesDay.setTotal_hours(0L);
-			} else {
-				Long totalMinutes = activitiesByDateIncrement.stream().mapToLong(Activity::getDuration).sum();
-				activitiesDay.setTotal_hours(totalMinutes);
-			}
+            ActivitiesDay activitiesDay = new ActivitiesDay();
+            activitiesDay.setDate(Date.from(finalDateIncrement.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            activitiesDay.setActivities(activitiesByDateIncrement);
+            if (activitiesByDateIncrement.isEmpty()) {
+                activitiesDay.setTotal_hours(0L);
+            } else {
+                Long totalMinutes = activitiesByDateIncrement.stream().mapToLong(Activity::getDuration).sum();
+                activitiesDay.setTotal_hours(totalMinutes);
+            }
 
-			activitiesDayList.add(activitiesDay);
+            activitiesDayList.add(activitiesDay);
 
-			dateIncrement = dateIncrement.plusDays(1);
-		}
-		return activitiesDayList;
-	}
+            dateIncrement = dateIncrement.plusDays(1);
+        }
+        return activitiesDayList;
+    }
 
-	@GetMapping("/activitiesByDay")
-	public ActivitiesDay getActivitiesByDay(
-			@RequestParam(name = "date", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime date,
-			Principal principal) {
+    @GetMapping("/activitiesByDay")
+    public ActivitiesDay getActivitiesByDay(
+            @RequestParam(name = "date", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime date,
+            Principal principal) {
 
-		ActivitiesDay activitiesDay = new ActivitiesDay();
-		User user = userService.getUserByLogin(principal.getName());
+        ActivitiesDay activitiesDay = new ActivitiesDay();
+        User user = userService.getUserByLogin(principal.getName());
 
-		activitiesDay.setDate(Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        activitiesDay.setDate(Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-		Date startDay = Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Date endDay = Date.from(date.plusDays(1).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date startDay = Date.from(date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDay = Date.from(date.plusDays(1).toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-		activitiesDay.setTotal_hours(activityService.calculateTotalUserHoursBetweenDays(startDay, endDay, user));
-		activitiesDay.setActivities(activityService.getActivitiesByDateRange(startDay, endDay, user.getId()));
+        activitiesDay.setTotal_hours(activityService.calculateTotalUserHoursBetweenDays(startDay, endDay, user));
+        activitiesDay.setActivities(activityService.getActivitiesByDateRange(startDay, endDay, user.getId()));
 
-		return activitiesDay;
-	}
+        return activitiesDay;
+    }
 
-	@GetMapping("/activitiesTime")
-	public double getActivitiesTime(
-			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
-			Principal principal) {
+    @GetMapping("/activitiesTime")
+    public double getActivitiesTime(
+            @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
+            Principal principal) {
 
-		User user = userService.getUserByLogin(principal.getName());
-		Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
-		return activityService.calculateTotalUserHoursBetweenDays(startDay, endDay, user);
-	}
+        User user = userService.getUserByLogin(principal.getName());
+        Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
+        return activityService.calculateTotalUserHoursBetweenDays(startDay, endDay, user);
+    }
 
-	@GetMapping("/imputedDays")
-	public List<Date> imputedDays(
-			@RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
-			@RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
-			Principal principal){
-		User user = userService.getUserByLogin(principal.getName());
-		Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
-		return activityService.datesWithActivities(startDay, endDay, user.getId());
-	}
+    @GetMapping("/imputedDays")
+    public List<Date> imputedDays(
+            @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
+            Principal principal) {
+        User user = userService.getUserByLogin(principal.getName());
+        Date startDay = Date.from(startDate.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDay = Date.from(endDate.toLocalDate().atTime(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant());
+        return activityService.datesWithActivities(startDay, endDay, user.getId());
+    }
 }

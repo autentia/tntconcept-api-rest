@@ -58,9 +58,5 @@ public class ProjectService {
 	public Project getProjectByName(String name) {
 		return projectRepository.findByName(name);
 	}
-	
-//	public List<Project> getOpenProjectsByOrganization(Integer organizationId){
-//		return projectRepository.getOpenProjectsByOrganization(organizationId);
-//	}
 
 }

@@ -18,7 +18,7 @@ import java.util.Objects;
 public class RequestHoliday {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
     @Column
     private Long id;
@@ -63,7 +63,7 @@ public class RequestHoliday {
     @JsonIgnore
     private Date updateDate;
 
-    public RequestHoliday(){
+    public RequestHoliday() {
 
     }
 

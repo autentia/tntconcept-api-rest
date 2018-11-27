@@ -1,16 +1,16 @@
 /**
  * TNTConcept Easy Enterprise Management by Autentia Real Bussiness Solution S.L.
  * Copyright (C) 2007 Autentia Real Bussiness Solution S.L.
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,158 +29,158 @@ import javax.persistence.*;
 
 @Entity
 public class Activity {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column
-	private Date startDate;
-	
-	@Column
-	private Integer duration;
-	
-	@Column
-	private String description;
 
-	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name = "roleId")
-	private ProjectRole projectRole;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Column
-	private Integer userId;
+    @Column
+    private Date startDate;
 
-	@Column
-	private Boolean billable;
+    @Column
+    private Integer duration;
 
-	@Column
-	private Integer departmentId;
+    @Column
+    private String description;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "insertDate")
-	@CreationTimestamp
-	@JsonIgnore
-	private Date insertDate;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "roleId")
+    private ProjectRole projectRole;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updateDate")
-	@UpdateTimestamp
-	@JsonIgnore
-	private Date updateDate;
+    @Column
+    private Integer userId;
 
+    @Column
+    private Boolean billable;
 
-	public Activity(){
+    @Column
+    private Integer departmentId;
 
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "insertDate")
+    @CreationTimestamp
+    @JsonIgnore
+    private Date insertDate;
 
-	public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId, ProjectRole projectRole, Integer departmentId) {
-		this.startDate = startDate;
-		this.duration = duration;
-		this.description = description;
-		this.billable = billable;
-		this.userId = userId;
-		this.projectRole = projectRole;
-		this.departmentId = departmentId;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updateDate")
+    @UpdateTimestamp
+    @JsonIgnore
+    private Date updateDate;
 
 
-	public Integer getId() {
-		return id;
-	}
+    public Activity() {
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Activity(Date startDate, Integer duration, String description, Boolean billable, Integer userId, ProjectRole projectRole, Integer departmentId) {
+        this.startDate = startDate;
+        this.duration = duration;
+        this.description = description;
+        this.billable = billable;
+        this.userId = userId;
+        this.projectRole = projectRole;
+        this.departmentId = departmentId;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
 
-	public Integer getDuration() {
-		return duration;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setDuration(Integer duration) {
-		this.duration = duration;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Boolean getBillable() {
-		return billable;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public void setBillable(Boolean billable) {
-		this.billable = billable;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public Integer getDuration() {
+        return duration;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Boolean getBillable() {
+        return billable;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setBillable(Boolean billable) {
+        this.billable = billable;
+    }
 
-	public ProjectRole getProjectRole() {
-		return projectRole;
-	}
+    public Integer getUserId() {
+        return userId;
+    }
 
-	public void setProjectRole(ProjectRole projectRole) {
-		this.projectRole = projectRole;
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-	public Integer getDepartmentId() {
-		return departmentId;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Date getInsertDate() {
-		return insertDate;
-	}
+    public ProjectRole getProjectRole() {
+        return projectRole;
+    }
 
-	public void setInsertDate(Date insertDate) {
-		this.insertDate = insertDate;
-	}
+    public void setProjectRole(ProjectRole projectRole) {
+        this.projectRole = projectRole;
+    }
 
-	public Date getUpdateDate() {
-		return updateDate;
-	}
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Activity activity = (Activity) o;
-		return Objects.equals(id, activity.id) &&
-				Objects.equals(startDate, activity.startDate) &&
-				Objects.equals(duration, activity.duration) &&
-				Objects.equals(description, activity.description) &&
-				Objects.equals(projectRole, activity.projectRole) &&
-				Objects.equals(userId, activity.userId) &&
-				Objects.equals(billable, activity.billable);
-	}
+    public Date getInsertDate() {
+        return insertDate;
+    }
 
-	@Override
-	public int hashCode() {
+    public void setInsertDate(Date insertDate) {
+        this.insertDate = insertDate;
+    }
 
-		return Objects.hash(id, startDate, duration, description, projectRole, userId, billable);
-	}
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Activity activity = (Activity) o;
+        return Objects.equals(id, activity.id) &&
+                Objects.equals(startDate, activity.startDate) &&
+                Objects.equals(duration, activity.duration) &&
+                Objects.equals(description, activity.description) &&
+                Objects.equals(projectRole, activity.projectRole) &&
+                Objects.equals(userId, activity.userId) &&
+                Objects.equals(billable, activity.billable);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, startDate, duration, description, projectRole, userId, billable);
+    }
 }

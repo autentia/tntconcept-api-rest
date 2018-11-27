@@ -64,15 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String authUrl;
 
 
-    @Autowired
-    private UnauthorizedEntryPointConfig unauthorizedEntryPointConfig;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    public BCryptPasswordEncoder passwordEncoder;
-
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
