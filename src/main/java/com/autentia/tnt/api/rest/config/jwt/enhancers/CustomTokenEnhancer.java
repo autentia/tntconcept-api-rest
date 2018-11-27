@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
@@ -31,7 +32,8 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         if (authentication instanceof LdapUserDetails) {
             userLogin = ((LdapUserDetails) authentication.getPrincipal()).getUsername();
         } else {
-            userLogin = authentication.getPrincipal().toString();
+            LinkedHashMap userDetails = (LinkedHashMap) authentication.getUserAuthentication().getDetails();
+            userLogin = userDetails.get("username").toString();
         }
 
         user = userService.getUserByLogin(userLogin);

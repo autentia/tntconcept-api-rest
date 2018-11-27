@@ -36,6 +36,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -87,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers(HttpMethod.OPTIONS).permitAll().
                 antMatchers(authUrl).permitAll().
                 and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-                and().csrf().disable();
+                and().csrf().disable().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 
     @Override
