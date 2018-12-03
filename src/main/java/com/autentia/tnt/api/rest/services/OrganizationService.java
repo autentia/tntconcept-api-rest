@@ -19,6 +19,7 @@ package com.autentia.tnt.api.rest.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.autentia.tnt.api.rest.model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,13 @@ public class OrganizationService {
 		Organization organization = getOrganizationById(organizationId)
 			.orElseThrow(() -> new IllegalArgumentException(("The requested organizationId ["+organizationId+"] does not exist.")));
 		return initializeLazyProjects(organization);
+	}
+
+	@Transactional
+	public List<Project> getOpenProjectsByOrganizationId(Integer organizationId) {
+		Organization organization = getOrganizationById(organizationId)
+				.orElseThrow(() -> new IllegalArgumentException(("The requested organizationId ["+organizationId+"] does not exist.")));
+		return organization.getProjects().stream().filter(Project::getOpen).collect(Collectors.toList());
 	}
 
 	private List<Project> initializeLazyProjects(Organization organization) {

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +65,7 @@ public class ActivitiesDayController {
 			List<Activity> activitiesByDateIncrement =
 					activities.stream()
 							.filter(activity -> activity.getStartDate().getDate() == finalDateIncrement.getDayOfMonth())
+							.sorted((Comparator.comparing(Activity::getStartDate)))
 							.collect(Collectors.toList());
 
 			ActivitiesDay activitiesDay = new ActivitiesDay();

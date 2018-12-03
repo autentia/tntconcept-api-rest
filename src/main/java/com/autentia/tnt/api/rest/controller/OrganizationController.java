@@ -48,7 +48,7 @@ public class OrganizationController {
 
 	@GetMapping("/organization/{id}/projects")
 	public List<Project> getOrganizationProjects(@PathVariable Integer id){
-		return organizationService.getProjectsByOrganizationId(id);
+		return organizationService.getOpenProjectsByOrganizationId(id);
 	}
 
 }
