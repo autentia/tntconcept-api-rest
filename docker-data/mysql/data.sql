@@ -1106,7 +1106,31 @@ CREATE TABLE `Holiday` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+LOCK TABLES `Holiday` WRITE;
+/*!40000 ALTER TABLE `Holiday` DISABLE KEYS */;
 
+INSERT INTO `Holiday` (`id`, `description`, `date`, `ownerId`, `departmentId`, `insertDate`, `updateDate`)
+VALUES
+	(210,'Epifania del Señor. Reyes','2018-01-06 00:00:00',14,5,'2017-11-29 12:48:27','2017-11-29 12:48:27'),
+	(211,'Año Nuevo ','2018-01-01 00:00:00',14,5,'2017-11-29 12:48:48','2017-11-29 12:48:48'),
+	(212,'Jueves Santo','2018-03-29 00:00:00',14,5,'2017-11-29 12:49:06','2017-11-29 12:49:06'),
+	(213,'Viernes Santo','2018-03-30 00:00:00',14,5,'2017-11-29 12:49:23','2017-11-29 12:49:23'),
+	(214,'Dia del Trabajador','2018-05-01 00:00:00',14,5,'2017-11-29 12:49:46','2018-04-03 16:46:26'),
+	(215,'Comunidad de Madrid','2018-05-02 00:00:00',14,5,'2017-11-29 12:50:31','2017-11-29 12:50:31'),
+	(216,'San Isidro','2018-05-15 00:00:00',14,5,'2017-11-29 12:50:51','2017-11-29 12:50:51'),
+	(217,'Ascensión de la Virgen','2018-08-15 00:00:00',14,5,'2017-11-29 12:51:47','2017-11-29 12:51:47'),
+	(218,'Fiesta Nacional de España','2018-10-12 00:00:00',14,5,'2017-11-29 12:52:12','2017-11-29 12:52:33'),
+	(219,'Todos los Santos','2018-11-01 00:00:00',14,5,'2017-11-29 12:52:56','2017-11-29 12:52:56'),
+	(220,'Día de la Almudena','2018-11-09 00:00:00',14,5,'2017-11-29 12:53:20','2017-11-29 12:53:20'),
+	(221,'Día de la Constitución','2018-12-06 00:00:00',14,5,'2017-11-29 12:53:43','2017-11-29 12:53:43'),
+	(222,'Inmaculada Concepcion','2018-12-08 00:00:00',14,5,'2018-01-31 08:56:18','2018-01-31 08:56:18'),
+	(223,'Navidad','2018-12-25 00:00:00',14,5,'2018-01-31 08:56:30','2018-01-31 08:56:30'),
+	(224,'Compensación horas','2018-12-07 00:00:00',14,5,'2018-01-31 08:56:54','2018-01-31 08:56:54'),
+	(225,'Compensación horas','2018-12-24 00:00:00',14,5,'2018-01-31 08:57:08','2018-01-31 08:57:08'),
+	(226,'Compensación horas','2018-12-31 00:00:00',14,5,'2018-01-31 08:57:24','2018-01-31 08:57:24');
+
+/*!40000 ALTER TABLE `Holiday` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Volcado de tabla Idea
 # ------------------------------------------------------------
@@ -1460,8 +1484,9 @@ LOCK TABLES `Organization` WRITE;
 
 INSERT INTO `Organization` (`id`, `organizationTypeId`, `organizationISOCategoryId`, `name`, `cif`, `phone`, `street`, `number`, `locator`, `postalCode`, `city`, `provinceId`, `state`, `country`, `fax`, `email`, `website`, `ftpsite`, `notes`, `ownerId`, `departmentId`, `insertDate`, `updateDate`, `evaluationCriteria`)
 VALUES
-	(1,2,1,'Nuestra empresa',NULL,NULL,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	(2,1,1,'Indefinida',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,'2018-04-20 15:37:14','2018-04-20 15:37:14',NULL);
+	(1,1,1,'Empresa 1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,28,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+	(2,1,1,'Empresa 2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,'2018-04-20 15:37:14','2018-04-20 15:37:14',NULL),
+	(3,2,1,'Autentia',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,1,'2018-04-20 15:37:14','2018-04-20 15:37:14',NULL);
 
 /*!40000 ALTER TABLE `Organization` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1714,11 +1739,11 @@ LOCK TABLES `Project` WRITE;
 
 INSERT INTO `Project` (`id`, `organizationId`, `startDate`, `endDate`, `open`, `name`, `description`, `ownerId`, `departmentId`, `insertDate`, `updateDate`, `billable`)
 VALUES
-	(1,1,'2018-04-20',NULL,1,'Vacaciones',NULL,NULL,NULL,NULL,NULL,1),
-	(2,1,'2018-04-20',NULL,1,'Permiso extraordinario',NULL,NULL,NULL,NULL,NULL,1),
-	(3,1,'2018-04-20',NULL,1,'Baja por enfermedad',NULL,NULL,NULL,NULL,NULL,1),
-	(4,1,'2018-04-20',NULL,1,'Auto-formación',NULL,NULL,NULL,NULL,NULL,1),
-	(5,1,'2018-04-20',NULL,1,'Histórico',NULL,NULL,NULL,NULL,NULL,1);
+	(1,1,'2018-04-20',NULL,1,'Indra Project',NULL,NULL,NULL,NULL,NULL,1),
+	(2,2,'2018-04-20',NULL,1,'Dashboard',NULL,NULL,NULL,NULL,NULL,1),
+	(3,3,'2018-04-20',NULL,1,'Teams',NULL,NULL,NULL,NULL,NULL,0),
+	(4,3,'2018-04-20',NULL,1,'TNT',NULL,NULL,NULL,NULL,NULL,0),
+	(5,1,'2018-04-20',NULL,0,'Closed Project',NULL,NULL,NULL,NULL,NULL,1);
 
 /*!40000 ALTER TABLE `Project` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1771,11 +1796,11 @@ LOCK TABLES `ProjectRole` WRITE;
 
 INSERT INTO `ProjectRole` (`id`, `projectId`, `name`, `costPerHour`, `expectedHours`, `ownerId`, `departmentId`, `insertDate`, `updateDate`)
 VALUES
-	(1,1,'Vacaciones',0.00,0,NULL,NULL,NULL,NULL),
-	(2,2,'Permiso extraordinario',0.00,0,NULL,NULL,NULL,NULL),
-	(3,3,'Baja por enfermedad',0.00,0,NULL,NULL,NULL,NULL),
-	(4,4,'Auto-formación',0.00,0,NULL,NULL,NULL,NULL),
-	(5,5,'Histórico',0.00,0,NULL,NULL,NULL,NULL);
+	(1,1,'Maquetador',0.00,0,NULL,NULL,NULL,NULL),
+	(2,2,'React',0.00,0,NULL,NULL,NULL,NULL),
+	(3,3,'Front-End',0.00,0,NULL,NULL,NULL,NULL),
+	(4,4,'Back-End',0.00,0,NULL,NULL,NULL,NULL),
+	(5,5,'Closed Role',0.00,0,NULL,NULL,NULL,NULL);
 
 /*!40000 ALTER TABLE `ProjectRole` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1906,7 +1931,16 @@ CREATE TABLE `RequestHoliday` (
   CONSTRAINT `fk_requestHoliday_userId` FOREIGN KEY (`userId`) REFERENCES `User` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+LOCK TABLES `RequestHoliday` WRITE;
+/*!40000 ALTER TABLE `RequestHoliday` DISABLE KEYS */;
 
+INSERT INTO `RequestHoliday` (`id`, `beginDate`, `finalDate`, `state`, `userId`, `observations`, `departmentId`, `insertDate`, `updateDate`, `userComment`, `chargeYear`)
+VALUES
+	(1,'2018-12-07 00:00:00','2018-12-10 00:00:00','ACCEPT',2,NULL,NULL,NULL,NULL,NULL,'2007-01-01'),
+	(2,'2018-10-31 00:00:00','2018-11-02 00:00:00','ACCEPT',2,NULL,NULL,NULL,NULL,NULL,'2007-01-01');
+
+/*!40000 ALTER TABLE `RequestHoliday` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Volcado de tabla Role
 # ------------------------------------------------------------
