@@ -1,16 +1,16 @@
 /**
  * TNTConcept Easy Enterprise Management by Autentia Real Bussiness Solution S.L.
  * Copyright (C) 2007 Autentia Real Bussiness Solution S.L.
- * <p>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- * <p>
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * <p>
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,23 +32,23 @@ import com.autentia.tnt.api.rest.services.OrganizationService;
 @RestController
 @RequestMapping("/api")
 public class OrganizationController {
+	
+	private OrganizationService organizationService;
 
-    private OrganizationService organizationService;
+	@Autowired
+	public OrganizationController(OrganizationService organizationService) {
+		super();
+		this.organizationService = organizationService;
+	}
 
-    @Autowired
-    public OrganizationController(OrganizationService organizationService) {
-        super();
-        this.organizationService = organizationService;
-    }
+	@GetMapping("/organizations")
+	public List<Organization> getOrganizations(){
+		return organizationService.getOrganizations();
+	}
 
-    @GetMapping("/organizations")
-    public List<Organization> getOrganizations() {
-        return organizationService.getOrganizations();
-    }
-
-    @GetMapping("/organization/{id}/projects")
-    public List<Project> getOrganizationProjects(@PathVariable Integer id) {
-        return organizationService.getProjectsByOrganizationId(id);
-    }
+	@GetMapping("/organization/{id}/projects")
+	public List<Project> getOrganizationProjects(@PathVariable Integer id){
+		return organizationService.getOpenProjectsByOrganizationId(id);
+	}
 
 }

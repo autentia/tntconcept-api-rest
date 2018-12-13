@@ -66,7 +66,7 @@ public class ActivityControllerTest {
 		when(activityService.getActivityById(2)).thenReturn(activityToReturn);
 
 
-		final Activity result = activityController.getActivity(2, mock(Principal.class));
+		final Activity result = activityController.getActivity(2);
 		assertThat(result, is(activityToReturn));
 	}
 }

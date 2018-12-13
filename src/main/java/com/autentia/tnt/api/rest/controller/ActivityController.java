@@ -44,9 +44,8 @@ public class ActivityController {
     }
 
     @GetMapping(value = "/activity/{activityId}")
-    public Activity getActivity(@PathVariable("activityId") Integer activityId, Principal principal) {
-        Activity activity = activityService.getActivityById(activityId);
-        return activity;
+    public Activity getActivity(@PathVariable("activityId") Integer activityId) {
+        return activityService.getActivityById(activityId);
     }
 
     @PostMapping(value = "/activity", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -63,8 +62,7 @@ public class ActivityController {
     }
 
     @DeleteMapping(value = "/activity/{activityId}")
-    public void deleteActivity(@PathVariable("activityId") Integer activityId, Principal principal) {
-        Activity activity = activityService.getActivityById(activityId);
+    public void deleteActivity(@PathVariable("activityId") Integer activityId) {
         activityService.deleteActivityById(activityId);
     }
 

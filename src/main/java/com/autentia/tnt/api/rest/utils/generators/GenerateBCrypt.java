@@ -7,6 +7,6 @@ public class GenerateBCrypt {
     public static void main(String[] args) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        System.out.println(bCryptPasswordEncoder.encode("tnt-mobile-angular-secret"));
+        System.out.println(bCryptPasswordEncoder.encode("passwordToEncrypt"));
     }
 }

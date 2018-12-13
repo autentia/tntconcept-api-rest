@@ -18,9 +18,7 @@
 package com.autentia.tnt.api.rest.config.security;
 
 
-import com.autentia.tnt.api.rest.config.UnauthorizedEntryPointConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +32,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -53,12 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.ldap.userDnPatterns}")
     private String userDnPatterns;
-
-    @Value("${spring.ldap.username}")
-    private String ldapUsername;
-
-    @Value("${spring.ldap.password}")
-    private String ldapPassword;
 
     @Value("${endpoints.auth.url}")
     private String authUrl;
@@ -89,8 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDnPatterns(userDnPatterns)
                 .contextSource()
                 .url(ldapUrl)
-                .managerDn(ldapUsername)
-                .managerPassword(ldapPassword)
         ;
     }
 

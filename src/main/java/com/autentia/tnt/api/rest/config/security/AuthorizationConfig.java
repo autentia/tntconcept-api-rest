@@ -62,9 +62,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Value("${spring.ldap.urls}")
     private String ldapUrl;
 
-    @Value("${spring.ldap.user-dn-patterns}")
-    private String ldapUserDnPatterns;
-
     @Value("${spring.ldap.user-search-base}")
     private String ldapUserSearchBase;
 
@@ -93,25 +90,30 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     private CustomTokenEnhancer customTokenEnhancer;
 
     @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()");
+    }
+
+    @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient(clientName)
                 .secret(clientSecret)
-                .accessTokenValiditySeconds(accessTokenValiditySeconds)
-                .refreshTokenValiditySeconds(refreshTokenValiditySeconds)
                 .authorizedGrantTypes("refresh_token", "password")
-                .scopes(clientScope).autoApprove(true);
+                .scopes(clientScope).autoApprove(true)
+                .accessTokenValiditySeconds(accessTokenValiditySeconds)
+                .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
     }
 
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer configurer) {
-        configurer.authenticationManager(authenticationManager).tokenServices(defaultTokenServices()).userDetailsService(ldapUserDetailsManager());
-    }
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        endpoints
+                .authenticationManager(authenticationManager)
+                .tokenServices(defaultTokenServices())
+                .userDetailsService(ldapUserDetailsManager());
     }
 
     @Bean

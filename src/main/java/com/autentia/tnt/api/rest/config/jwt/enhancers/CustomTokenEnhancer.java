@@ -16,7 +16,8 @@ import java.util.Map;
 
 @Component
 public class CustomTokenEnhancer implements TokenEnhancer {
-    UserService userService;
+
+    private UserService userService;
 
     @Autowired
     public CustomTokenEnhancer(UserService userService) {
@@ -25,7 +26,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        Map<String, Object> additionalInfo = new HashMap<>();
+        final Map<String, Object> additionalInfo = new HashMap<>();
         User user;
         String userLogin;
 
@@ -39,8 +40,8 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         user = userService.getUserByLogin(userLogin);
         additionalInfo.put("user", user);
 
-        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(
-                additionalInfo);
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+
         return accessToken;
     }
 }

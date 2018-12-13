@@ -29,15 +29,12 @@ public class ActivityService {
 
     private ProjectRoleService projectRoleService;
 
-    private UserService userService;
-
     @Autowired
     public ActivityService(ActivityRepository activityRepository, ProjectRoleService projectRoleService,
                            UserService userService) {
         super();
         this.activityRepository = activityRepository;
         this.projectRoleService = projectRoleService;
-        this.userService = userService;
     }
 
     public Activity getActivityById(Integer activityId) {
