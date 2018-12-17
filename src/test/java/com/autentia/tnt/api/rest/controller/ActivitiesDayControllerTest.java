@@ -17,10 +17,12 @@
 
 package com.autentia.tnt.api.rest.controller;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -66,17 +68,17 @@ public class ActivitiesDayControllerTest {
 		User userAuthenticated = mock(User.class);
 		
 		ActivitiesDay returnedActivitiesDay = new ActivitiesDay();
-		
-		
-		when(activityService.calculateTotalUserHoursBetweenDays(any(Date.class), any(Date.class), userService.getUserByLogin(""))).thenReturn(workedHours);
+
+
+		when(userService.getUserByLogin("admin")).thenReturn(userAuthenticated);
+		when(activityService.calculateTotalUserHoursBetweenDays(any(Date.class), any(Date.class), eq(userAuthenticated))).thenReturn(workedHours);
 		when(activityService.getActivitiesByDateRange(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
-		when(userService.getUserByLogin("")).thenReturn(userAuthenticated);
 		
 		returnedActivitiesDay.setActivities(activities);
 		returnedActivitiesDay.setTotal_hours(workedHours);
 		returnedActivitiesDay.setDate(Date.from(startDay.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		
-		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay, mock(Principal.class));
+		final ActivitiesDay result = activitiesDayController.getActivitiesByDay(startDay, () -> "admin");
 		assertThat(result,is(returnedActivitiesDay)); 		 
 	}
 	
@@ -85,12 +87,14 @@ public class ActivitiesDayControllerTest {
 		Long workedHours = 10L;
 		List<Activity> activities = Arrays.asList(new Activity(new Date(), 60, "Test", false, 1, new ProjectRole(), 1));
 		User userAuthenticated = mock(User.class);
-		
+
+		Principal principal = () -> "admin";
+
 		when(activityService.calculateTotalUserHoursBetweenDays(any(Date.class), any(Date.class), any(User.class))).thenReturn(workedHours);
 		when(activityService.getActivitiesByDateRange(any(Date.class), any(Date.class), any(Integer.class))).thenReturn(activities);
-		when(userService.getUserByLogin("")).thenReturn(userAuthenticated);
+		when(userService.getUserByLogin("admin")).thenReturn(userAuthenticated);
 		
-		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate(), mock(Principal.class));
+		final List<ActivitiesDay> result = activitiesDayController.getActivitiesByDates(startDay.toLocalDate(),endDay.toLocalDate(), principal);
 		
 		assertTrue(result.size() == 2);
 	}

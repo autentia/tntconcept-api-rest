@@ -6,6 +6,11 @@ spring:
     group-search-base: "ou=groups"
     group-search-filter: "(uniqueMember={0})"
 
+  security:
+    ignored: /**
+    basic:
+      enable: false
+
   profiles:
     active: test
 

@@ -27,8 +27,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @SpringBootApplication
 @EnableJpaRepositories
-@EnableAuthorizationServer
-@EnableResourceServer
 public class ApiRestTntApplication extends SpringBootServletInitializer{
 	
 	public static void main(String[] args) {

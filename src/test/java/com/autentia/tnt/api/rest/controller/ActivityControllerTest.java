@@ -46,12 +46,14 @@ public class ActivityControllerTest {
 		final ActivityDTO activityDTOToSave = mock(ActivityDTO.class);
 		final Activity savedActivity = mock(Activity.class);
 		final User userToReturn = mock(User.class);
+		final Principal principal =  mock(Principal.class);
 		when(userToReturn.getId()).thenReturn(1);
-		when(userService.getUserByLogin("")).thenReturn(userToReturn);
-		when(userService.getUserByLogin("").getId()).thenReturn(1);
+		when(userService.getUserByLogin("admin")).thenReturn(userToReturn);
+		when(userService.getUserByLogin("admin").getId()).thenReturn(1);
 		when(activityService.saveActivityToUser(activityDTOToSave, userToReturn)).thenReturn(savedActivity);
+		when(principal.getName()).thenReturn("admin");
 
-		final Activity result = activityController.addActivity(activityDTOToSave, mock(Principal.class));
+		final Activity result = activityController.addActivity(activityDTOToSave, principal);
 		assertThat(result, is(savedActivity));
 	}
 	

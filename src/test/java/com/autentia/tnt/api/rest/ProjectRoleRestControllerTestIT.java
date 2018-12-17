@@ -24,6 +24,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +37,8 @@ import com.autentia.tnt.api.rest.model.ProjectRole;
 import com.autentia.tnt.api.rest.repository.ProjectRoleRepository;
 import com.autentia.tnt.api.rest.services.ProjectRoleService;
 
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -42,26 +48,22 @@ public class ProjectRoleRestControllerTestIT {
     @Value("${local.server.port}")
     private int port;
 
-    private TestRestTemplate restTemplate = new TestRestTemplate("admin", "adminadmin");
-
-    private ProjectRoleRepository projectRoleRepository;
-
-    private final ProjectRoleService projectRoleService = new ProjectRoleService(projectRoleRepository);
-
     @Autowired
-    private final ProjectRoleController projectRoleController = new ProjectRoleController(projectRoleService);
+    private TestRestTemplate restTemplate;
 
     @Test
     public void shouldReturnProjectRoleDetails() {
-        final Integer id = 1;
-        ProjectRole projectRole = projectRoleController.getProjectRoleById(id);
-        final ResponseEntity<ProjectRole> response = restTemplate.getForEntity(getBaseUrl() + "/api/projectRole/{projectRoleId}",
-                ProjectRole.class, id);
+		final Integer id = 1;
 
-        final ProjectRole result = response.getBody();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, "Bearer xyz123");
 
-        assertSame(result.getId(), projectRole.getId());
-        assertEquals(result.getName(), projectRole.getName());
+		final ResponseEntity<ProjectRole> response = restTemplate.exchange(
+				getBaseUrl() + "/api/projectRole/{projectRoleId}", HttpMethod.GET, new HttpEntity<>(headers),
+				ProjectRole.class, id);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), any(ProjectRole.class));
     }
 
     private String getBaseUrl() {

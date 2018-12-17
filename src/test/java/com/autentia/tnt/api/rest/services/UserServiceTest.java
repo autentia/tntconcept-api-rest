@@ -51,7 +51,7 @@ public class UserServiceTest {
         when(userDetails.getUsername()).thenReturn(login);
         when(userRepository.getUserByLogin(login)).thenReturn(authenticatedUser);
 
-        User result = userService.getUserByLogin("");
+        User result = userService.getUserByLogin("iperez");
 
         assertThat(result, is(authenticatedUser));
 

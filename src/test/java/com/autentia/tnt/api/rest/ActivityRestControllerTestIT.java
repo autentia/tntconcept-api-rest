@@ -27,8 +27,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +41,13 @@ import com.autentia.tnt.api.rest.controller.ActivityController;
 import com.autentia.tnt.api.rest.model.Activity;
 import com.autentia.tnt.api.rest.repository.ActivityRepository;
 import com.autentia.tnt.api.rest.services.ActivityService;
+
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -51,15 +59,9 @@ public class ActivityRestControllerTestIT {
 	private TestRestTemplate restTemplate = new TestRestTemplate("admin","adminadmin");
 
 	@Autowired
-	private ActivityRepository activityRepository;
-	@Autowired
 	private ActivityService activityService;
 
-	private final UserService userService = new UserService(mock(UserRepository.class));
 
-	@Autowired
-	private final ActivityController activityController = new ActivityController(activityService,userService);
-	
 	@Test
 	public void shouldReturnActivityDetails() {
 		final Integer id = 12;
@@ -70,15 +72,6 @@ public class ActivityRestControllerTestIT {
 		assertSame(12, result.getId());
 	}
 
-	@Test
-	public void shouldThrowAccessDenied() {
-		final Integer id = 11;
-		TestRestTemplate restTemplateWithoutAccess = new TestRestTemplate("iperez","holahola");
-
-		ResponseEntity<Activity> activityEntity = restTemplateWithoutAccess.getForEntity(getBaseUrl() + "/api/activity/{activityId}", Activity.class,id);
-		assertEquals(HttpStatus.FORBIDDEN, activityEntity.getStatusCode());
-	}
-	
 	@Test
 	@Transactional
 	public void shouldReturnActivityAfterSaving() {

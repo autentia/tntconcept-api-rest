@@ -72,29 +72,29 @@ INSERT INTO `User` (`id`,`login`,`password`) VALUES
     (6,'aortiz','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
 
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (1,2,'2018-02-01 09:00:00',360,'Prueba',1,4);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (2,3,'2018-02-01 09:00:00',420,'Horas facturables',1,4);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (3,3,'2018-02-05 09:00:00',420,'Facturando....',1,6);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (4,3,'2018-01-31 09:00:00',240,'Estoy Facturando...',1,6);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (5,5,'2018-02-01 09:00:00',180,'.....',1,7);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (6,5,'2018-02-02 09:00:00',240,'$$$$$$',1,6);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (7,4,'2018-01-31 09:00:00',180,'.....',1,9);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (8,4,'2018-02-01 09:00:00',480,'Descripción',1,8);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (9,3,'2018-01-30 09:00:00',300,'NO FACTURABLE',0,4);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (10,1,'2018-02-01 09:00:00',60,'Descripciónasd',0,6);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (11,1,'2018-02-08 09:00:00',60,'Descripción',1,6);
-INSERT INTO `Activity` (`id`,`userId`,`hiringDate`,`duration`,`description`,`billable`,`roleId`) VALUES
+INSERT INTO `Activity` (`id`,`userId`,`startDate`,`duration`,`description`,`billable`,`roleId`) VALUES
   (12,1,'2018-02-08 10:00:00',120,'Descripciónsfdg',1,6);
 
 INSERT INTO `Holiday` (`id`,`description`,`date`,`ownerId`,`departmentId`,`insertDate`,`updateDate`) VALUES (216,'San Isidro','2018-05-15 00:00:00',14,5,'2017-11-29 12:50:51','2017-11-29 12:50:51');
