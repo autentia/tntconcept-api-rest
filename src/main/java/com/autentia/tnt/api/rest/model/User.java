@@ -57,8 +57,8 @@ public class User {
     @Column
     private Integer dayDuration;
 
-    @Column
-    private Date startDate;
+    @Column(name = "startDate")
+    private Date hiringDate;
 
     @Column
     private String email;
@@ -138,12 +138,12 @@ public class User {
         this.dayDuration = dayDuration;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getHiringDate() {
+        return hiringDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setHiringDate(Date hiringDate) {
+        this.hiringDate = hiringDate;
     }
 
     public String getEmail() {

@@ -1,4 +1,11 @@
 spring:
+  ldap:
+    urls: ldap://localhost:389/dc=autentia,dc=com
+    userDnPatterns: uid={0},ou=People
+    user-search-base: "ou=users"
+    group-search-base: "ou=groups"
+    group-search-filter: "(uniqueMember={0})"
+
   profiles:
     active: test
 
@@ -18,8 +25,8 @@ spring:
     initialization-mode: always
 
 client:
-  name: tnt-mobile-angular
-  secret: $2a$10$BzrGxgoEmz3xPJyOes6mWuQmr3j69psUCRJhkz1T0tbJxbELj7PIm #tnt-mobile-angular-secret
+  name: tnt-client
+  secret: $2a$10$WntnffJ68Rji4Jb34kSH6ugcx2RcZsdQVg1Y60J4swrPawrgIVkCy
   scope: tnt
 
 keystore:
@@ -33,6 +40,8 @@ security:
     key:
       public: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWoW2SvYNqVzV7VOhkK4kPpjj+M3QGXA4WcmIY5auXAd4aZ/CDJHLGoLaK+6ey9JsACo8A4yBRuTVVg9SAMqctEmYXvplxx3pSaguYylv70wawOR6N2DGulZe5fWRyrn5aM0rULlBlTrk0bmDIJiQduPO0JpcGpfwLkluPuND23wIDAQAB
       private: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJahbZK9g2pXNXtU6GQriQ+mOP4zdAZcDhZyYhjlq5cB3hpn8IMkcsagtor7p7L0mwAKjwDjIFG5NVWD1IAypy0SZhe+mXHHelJqC5jKW/vTBrA5Ho3YMa6Vl7l9ZHKuflozStQuUGVOuTRuYMgmJB2487Qmlwal/AuSW4+40PbfAgMBAAECgYAequkjKiB6Yx0JaiUSV+bE3+PUpWcm8FER8uHUDdacnQ26NJU8LgyMMiZYL5paDgEMxhmNZbCr0thv+7IlE6sDaI8jEM/y8YUFAqLzgmCYNCacnzVF89eE38xBtKlJnZM+/+bNNJ/gBILs0iBDqBIRFG00HNVvRkp3HqbRIkBvmQJBAP39tqG+s/L8gv7TlldRUmSVe3SCrb9TNTySiquGZvs5QXW0ZkZB3b8agTkkxj91rtJUcpgqnpR641XKRmvucjUCQQCX0m2Vq0K5HRU+XMlYY+KcYJN+QWjuHQavgjV/hVLr8sIS/Rx4975KoLo1u0rIWn29zs7cdkQecOEmXtS+VydDAkEAv8XwPoHqBv6HvfZuXnGFf3Kqa1c77ujZmmmfEFGDsg4SEdhrHIMg9ekCRu4wTbwCisa+W4xafgunWKBIubepPQJASOL+Nzd0HfjHZRwYkbXKaja3OIrgfEg1GHdThbgVGi9+Wq1nSO/vTFajbv5OpadD7KbnitHAXDjm7oviaMrgjwJAEd1gCWIKjyZ1tAfwIm07TRYSvEOV+zwONJMyFJ49gTgzOut6UZz10lHBVxhpwc1bFuez66EGQi/hWUPfxdpsSw==
+    access-validity-seconds: 60
+    refresh-validity-seconds: 86400
 
 endpoints:
   auth:

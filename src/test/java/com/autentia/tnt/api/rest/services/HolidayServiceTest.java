@@ -4,6 +4,7 @@ import com.autentia.tnt.api.rest.model.Holiday;
 import com.autentia.tnt.api.rest.repository.HolidayRepository;
 import org.junit.Test;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +24,7 @@ public class HolidayServiceTest {
         final List<Holiday> holidaysToReturn = Arrays.asList(mock(Holiday.class));
         when(holidayRepository.getHolidaysPerYear(2018)).thenReturn(holidaysToReturn);
 
-        final List<Holiday> result = holidayService.getHolidaysPerYear(2018);
+        final List<Holiday> result = holidayRepository.getHolidaysPerYear(2018);
         assertThat(result, is(equalTo(holidaysToReturn)));
     }
 }

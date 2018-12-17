@@ -183,7 +183,7 @@ DROP TABLE IF EXISTS `Activity`;
 CREATE TABLE `Activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
-  `startDate` datetime DEFAULT '2000-01-01 00:00:00',
+  `hiringDate` datetime DEFAULT '2000-01-01 00:00:00',
   `duration` int(11) NOT NULL COMMENT 'Duración en minutos',
   `description` varchar(2048) COLLATE utf8_spanish_ci DEFAULT NULL,
   `billable` tinyint(1) NOT NULL DEFAULT '1',
@@ -201,7 +201,7 @@ CREATE TABLE `Activity` (
 LOCK TABLES `Activity` WRITE;
 /*!40000 ALTER TABLE `Activity` DISABLE KEYS */;
 
-INSERT INTO `Activity` (`id`, `userId`, `startDate`, `duration`, `description`, `billable`, `roleId`, `departmentId`, `insertDate`, `updateDate`)
+INSERT INTO `Activity` (`id`, `userId`, `hiringDate`, `duration`, `description`, `billable`, `roleId`, `departmentId`, `insertDate`, `updateDate`)
 VALUES
 	(1,1,'2018-04-18 09:00:00',60,'Actividad de prueba 2',0,4,1,'2018-04-20 18:37:20','2018-04-20 18:37:44'),
 	(2,1,'2018-04-17 09:00:00',60,'Actividad de prueba ',1,3,1,'2018-04-20 18:37:40','2018-04-20 18:37:57');
@@ -1009,7 +1009,7 @@ CREATE TABLE `ExternalActivity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) COLLATE utf8_spanish_ci DEFAULT NULL,
   `category` varchar(256) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `startDate` datetime NOT NULL,
+  `hiringDate` datetime NOT NULL,
   `endDate` datetime NOT NULL,
   `location` varchar(256) COLLATE utf8_spanish_ci DEFAULT NULL,
   `organizer` varchar(256) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -1281,7 +1281,7 @@ CREATE TABLE `Objective` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `projectId` int(11) NOT NULL,
-  `startDate` date NOT NULL,
+  `hiringDate` date NOT NULL,
   `endDate` date DEFAULT NULL,
   `state` varchar(16) COLLATE utf8_spanish_ci DEFAULT NULL,
   `name` varchar(512) COLLATE utf8_spanish_ci NOT NULL,
@@ -1307,7 +1307,7 @@ CREATE TABLE `Occupation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `projectId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
-  `startDate` date NOT NULL,
+  `hiringDate` date NOT NULL,
   `endDate` date NOT NULL,
   `description` varchar(1024) COLLATE utf8_spanish_ci DEFAULT NULL,
   `duration` int(11) NOT NULL COMMENT 'Duración en minutos',
@@ -1719,7 +1719,7 @@ DROP TABLE IF EXISTS `Project`;
 CREATE TABLE `Project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `organizationId` int(11) NOT NULL,
-  `startDate` date NOT NULL,
+  `hiringDate` date NOT NULL,
   `endDate` date DEFAULT NULL,
   `open` tinyint(1) DEFAULT '0',
   `name` varchar(128) COLLATE utf8_spanish_ci NOT NULL,
@@ -1737,7 +1737,7 @@ CREATE TABLE `Project` (
 LOCK TABLES `Project` WRITE;
 /*!40000 ALTER TABLE `Project` DISABLE KEYS */;
 
-INSERT INTO `Project` (`id`, `organizationId`, `startDate`, `endDate`, `open`, `name`, `description`, `ownerId`, `departmentId`, `insertDate`, `updateDate`, `billable`)
+INSERT INTO `Project` (`id`, `organizationId`, `hiringDate`, `endDate`, `open`, `name`, `description`, `ownerId`, `departmentId`, `insertDate`, `updateDate`, `billable`)
 VALUES
 	(1,1,'2018-04-20',NULL,1,'Indra Project',NULL,NULL,NULL,NULL,NULL,1),
 	(2,2,'2018-04-20',NULL,1,'Dashboard',NULL,NULL,NULL,NULL,NULL,1),
@@ -2068,7 +2068,7 @@ CREATE TABLE `User` (
   `drivenLicenseType` varchar(10) COLLATE utf8_spanish_ci DEFAULT NULL,
   `vehicleType` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL,
   `licensePlate` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `startDate` date NOT NULL COMMENT 'fecha de alta en la empresa',
+  `hiringDate` date NOT NULL COMMENT 'fecha de alta en la empresa',
   `categoryId` int(11) NOT NULL,
   `socialSecurityNumber` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `bank` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -2115,11 +2115,11 @@ CREATE TABLE `User` (
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
 
-INSERT INTO `User` (`id`, `login`, `password`, `roleId`, `active`, `name`, `nif`, `birthDate`, `academicQualification`, `phone`, `mobile`, `street`, `city`, `postalCode`, `provinceId`, `married`, `childrenNumber`, `drivenLicenseType`, `vehicleType`, `licensePlate`, `startDate`, `categoryId`, `socialSecurityNumber`, `bank`, `account`, `travelAvailability`, `workingInClient`, `email`, `genre`, `salary`, `salaryExtras`, `documentCategoryId`, `securityCard`, `healthInsurance`, `notes`, `photo`, `endTestPeriodDate`, `endContractDate`, `departmentId`, `contractTypeId`, `contractObservations`, `insertDate`, `updateDate`, `dayDuration`, `agreementId`, `agreementYearDuration`, `passwordExpireDate`)
+INSERT INTO `User` (`id`, `login`, `password`, `roleId`, `active`, `name`, `nif`, `birthDate`, `academicQualification`, `phone`, `mobile`, `street`, `city`, `postalCode`, `provinceId`, `married`, `childrenNumber`, `drivenLicenseType`, `vehicleType`, `licensePlate`, `hiringDate`, `categoryId`, `socialSecurityNumber`, `bank`, `account`, `travelAvailability`, `workingInClient`, `email`, `genre`, `salary`, `salaryExtras`, `documentCategoryId`, `securityCard`, `healthInsurance`, `notes`, `photo`, `endTestPeriodDate`, `endContractDate`, `departmentId`, `contractTypeId`, `contractObservations`, `insertDate`, `updateDate`, `dayDuration`, `agreementId`, `agreementYearDuration`, `passwordExpireDate`)
 VALUES
 	(1,'admin','dd94709528bb1c83d08f3088d4043f4742891f4f',1,1,'Administrador',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL,'2018-04-20',1,NULL,NULL,NULL,NULL,0,NULL,NULL,0.00,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,480,1,NULL,NULL);
 
-INSERT INTO `User` (`id`, `login`, `password`, `roleId`, `active`, `name`, `nif`, `birthDate`, `academicQualification`, `phone`, `mobile`, `street`, `city`, `postalCode`, `provinceId`, `married`, `childrenNumber`, `drivenLicenseType`, `vehicleType`, `licensePlate`, `startDate`, `categoryId`, `socialSecurityNumber`, `bank`, `account`, `travelAvailability`, `workingInClient`, `email`, `genre`, `salary`, `salaryExtras`, `documentCategoryId`, `securityCard`, `healthInsurance`, `notes`, `photo`, `endTestPeriodDate`, `endContractDate`, `departmentId`, `contractTypeId`, `contractObservations`, `insertDate`, `updateDate`, `dayDuration`, `agreementId`, `agreementYearDuration`, `passwordExpireDate`)
+INSERT INTO `User` (`id`, `login`, `password`, `roleId`, `active`, `name`, `nif`, `birthDate`, `academicQualification`, `phone`, `mobile`, `street`, `city`, `postalCode`, `provinceId`, `married`, `childrenNumber`, `drivenLicenseType`, `vehicleType`, `licensePlate`, `hiringDate`, `categoryId`, `socialSecurityNumber`, `bank`, `account`, `travelAvailability`, `workingInClient`, `email`, `genre`, `salary`, `salaryExtras`, `documentCategoryId`, `securityCard`, `healthInsurance`, `notes`, `photo`, `endTestPeriodDate`, `endContractDate`, `departmentId`, `contractTypeId`, `contractObservations`, `insertDate`, `updateDate`, `dayDuration`, `agreementId`, `agreementYearDuration`, `passwordExpireDate`)
 VALUES
 	(2,'test','dd94709528bb1c83d08f3088d4043f4742891f4f',3,1,'User Testing',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,NULL,NULL,NULL,'2018-04-20',1,NULL,NULL,NULL,NULL,0,NULL,NULL,0.00,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,480,1,NULL,NULL);
 
