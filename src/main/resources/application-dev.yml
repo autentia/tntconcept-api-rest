@@ -33,8 +33,3 @@ security:
     access-validity-seconds: 60
     refresh-validity-seconds: 86400
 
-
-
-endpoints:
-  auth:
-    url: /oauth/**

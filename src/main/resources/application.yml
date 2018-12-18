@@ -29,3 +29,7 @@ jasypt:
      algorithm: PBEWithMD5AndDES
      password: ${JASYPT_ENCRYPTOR_PASSWORD:}
 
+
+endpoints:
+  auth:
+    url: /oauth/**

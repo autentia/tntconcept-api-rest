@@ -10,3 +10,21 @@ spring:
     password: ENC(4jPJQUQdNgS/Hj2RMxdRTqcXm0bFyNfz)
     driver-class-name: com.mysql.jdbc.Driver
 
+client:
+  name: tnt-client
+  secret: $2a$10$WntnffJ68Rji4Jb34kSH6ugcx2RcZsdQVg1Y60J4swrPawrgIVkCy
+  scope: tnt
+
+keystore:
+  name: tnt
+  pass: tnt
+key:
+  name: tnt
+  pass: tnt
+security:
+  jwt:
+    key:
+      public: ENC(Nl6egHnxDoo4fcBp/fQfS0RE5AzcH9UaOhxzH7hn4S5zQ9BSYerbrnev6TbGf+F7oT7d5m/V6hkvXPW+RcvmrwSF1CMQUFNqZLWe9ZsTDtFheS3Sn0oq2QYCiWw89AMAHvLMesrMNw6T1dCDBReEELjNfs55kjXLIl2jiN7ArxDH6e3+DjTF4pwmIFdk3ukFXz9JjKtwjJmxLeMC3uC9h1LlD99ScP0cFnL6949hWIE176o/cDCA3UZcO9ipWOVDSWCv+4YM/igin9yHq0XzOfN9fJTXuXEUGH0WG4MKgF37eWEv1/71TQ==)
+      private: ENC(c9T1FHNJfz/Go5R+HrA4HnZ8lYDyG2wd9p/3hI2DQ0IlgL5IJJym5yJVekkVr/F4Du25SA8vaNVDuQaz8daechXEZxg2Y2SLqM0thIfkftTEbTZ27Sl/ZiHzaTDfQkawaL4AneHwl1kUI45MTRkWFYFOcPy3xmZfHnAAPlRduGfsYJc0M/B83sQFatQBLwJigkpNTKd4bjBlDl+5Iny3p1e4AR0sU4ICBg1DLRXComzdc+pTdmQF7RFBfymoLYyLoI9FTKbszRTXTofBipApP0MytxblP1jcrzucCOKA77F2BRgC/qlUYDA4dn0d7Ze/rHp6K7g7TtldBRC9zbl+0CctMpVoSLN1S6dQTZ6a01n6TIFo3NZ7gxyiasJfMQ6+dXARKVED4Z2ApPYSpcfjqrUSixslfEruP77gw+RKuHIE1XCa88z9tc5TuV7W2fodZQId7ADUgammhPvtBBe68+PnUbNB+1inw2i/N7WM7eNMEU+wUXEvgF+XFddP+RsWyxkGuKsss45n2qjpIYSEDiJufQh64UnRq2JvhmWokvivPjmjumfqvm7C7GCj/+AszDxOaTPWK6pwl3962nT8grXnlrm7MaCu5r5U24Bz7/3tWXfkzaLBdWTCfYHDmfHinT07143bs3wGmpfpbz94HG3jQSx+k2aZSKx7zNFjgaeHqb/PLGsvPI7iUs0IqPH0Cg7HHYWSJMe/IwIsb2/cgafGhiB6fH5Noc71mvVh8rsNzzUHL7dC0ViBOGEeCAR00T8y2mLPmCISzq88iJzPXMA5W1UVDzgqEotHN1mMrI6ZustoieIaWrEM0PNfS3F9djFdQ+OAqGmWsFHkzPbwMdOldMkTM20l9Cbh59krif6S4cT5PEBvS7fK3CyfPcsgivl8kkJWC4YPmSXWjk/kHlBfUKvobpiUb9nzYND/DAxW9YqVz2h6SCEB0dqdSOkHmeJWGtqhCb+hhgG5OmhYeInVO9YviQjKkxO1rEX8QCRxxj3mvpCs4RGe7nZLjBq0OdpDG03HQiVMra/7vsZhCW6e23PXR49OP9dwKKk25XYgVcmk1led2OxMH4DzTf9wrN/PfJodztw6r6nBzaT21DSfW5uLHbJ8zHwK9esh9UG4EZ1FniVAoyg3uBOBTu0x)
+    access-validity-seconds: 3600
+    refresh-validity-seconds: 604800

@@ -1,6 +1,7 @@
 package com.autentia.tnt.api.rest.config.security;
 
 import com.autentia.tnt.api.rest.utils.services.SecretKeyService;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import java.security.spec.InvalidKeySpecException;
 
 @Configuration
 @EnableAuthorizationServer
+@EnableEncryptableProperties
 @Profile("!test")
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationConfig.class);
