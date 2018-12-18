@@ -34,7 +34,6 @@ import java.security.spec.InvalidKeySpecException;
 
 @Configuration
 @EnableAuthorizationServer
-@EnableEncryptableProperties
 @Profile("!test")
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(AuthorizationConfig.class);

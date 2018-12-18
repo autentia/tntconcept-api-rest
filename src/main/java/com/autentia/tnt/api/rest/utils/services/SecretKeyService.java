@@ -1,6 +1,7 @@
 package com.autentia.tnt.api.rest.utils.services;
 
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,6 +18,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 @Component
+@EnableEncryptableProperties
 @ConditionalOnProperty("security.jwt.key.public")
 public class SecretKeyService {
 
