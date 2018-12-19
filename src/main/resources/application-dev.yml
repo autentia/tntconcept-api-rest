@@ -6,7 +6,6 @@ spring:
     group-search-base: "ou=groups"
     group-search-filter: "(uniqueMember={0})"
 
-
   datasource:
     name: myDataSource
     url: jdbc:mysql://localhost:13307/tntconcept?autoReconnect=true&useSSL=false
@@ -19,12 +18,6 @@ client:
   secret: $2a$10$WntnffJ68Rji4Jb34kSH6ugcx2RcZsdQVg1Y60J4swrPawrgIVkCy
   scope: tnt
 
-keystore:
-  name: tnt
-  pass: tnt
-key:
-  name: tnt
-  pass: tnt
 security:
   jwt:
     key:

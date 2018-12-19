@@ -47,18 +47,6 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Value("${client.scope}")
     private String clientScope;
 
-    @Value("${keystore.name}")
-    private String keystore;
-
-    @Value("${keystore.pass}")
-    private String keystorepass;
-
-    @Value("${key.name}")
-    private String key;
-
-    @Value("${key.pass}")
-    private String keypass;
-
     @Value("${spring.ldap.urls}")
     private String ldapUrl;
 

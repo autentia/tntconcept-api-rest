@@ -1,10 +1,10 @@
 spring:
   ldap:
-     urls: ldap://openldap:389/dc=autentia,dc=com
-     userDnPatterns: uid={0},ou=People
-     user-search-base: "ou=users"
-     group-search-base: "ou=groups"
-     group-search-filter: "(uniqueMember={0})"
+    urls: ldap://openldap:389/dc=autentia,dc=com
+    userDnPatterns: uid={0},ou=People
+    user-search-base: "ou=users"
+    group-search-base: "ou=groups"
+    group-search-filter: "(uniqueMember={0})"
 
   datasource:
     name: myDataSource
@@ -13,18 +13,11 @@ spring:
     password: ENC(Dy2osLMLKqJazcGjlDa2gQ==)
     driver-class-name: com.mysql.jdbc.Driver
 
-
 client:
   name: tnt-client
   secret: $2a$10$WntnffJ68Rji4Jb34kSH6ugcx2RcZsdQVg1Y60J4swrPawrgIVkCy
   scope: tnt
 
-keystore:
-  name: tnt
-  pass: tnt
-key:
-  name: tnt
-  pass: tnt
 security:
   jwt:
     key:
