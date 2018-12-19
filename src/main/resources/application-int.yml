@@ -2,6 +2,9 @@ spring:
   ldap:
      urls: ldap://openldap:389/dc=autentia,dc=com
      userDnPatterns: uid={0},ou=People
+     user-search-base: "ou=users"
+     group-search-base: "ou=groups"
+     group-search-filter: "(uniqueMember={0})"
 
   datasource:
     name: myDataSource
