@@ -31,14 +31,18 @@ public class HolidayService {
 
 	public List<Holiday> getHolidaysPerYear(Integer year, User user) {
 		final List<Holiday> holidays = holidayRepository.getHolidaysPerYear(year);
-		return verifyHolidays(holidays, user);
+		return verifyHolidays(holidays, year, user.getHiringDate());
 	}
 
-	private List<Holiday> verifyHolidays(List<Holiday> holidaysList, User user) {
+	private List<Holiday> verifyHolidays(List<Holiday> holidaysList, Integer year, Date hiringDate) {
 
-		final Date hiringDate = user.getHiringDate();
+		LocalDate firstDayOfYear = LocalDate.now().withYear(year).with(TemporalAdjusters.firstDayOfYear());
 
-		if (compensationDaysAreNotAvailable(hiringDate)) {
+		if (isWeekend(firstDayOfYear)) {
+			firstDayOfYear = getNextWorkingDay(firstDayOfYear);
+		}
+
+		if (compensationDaysAreNotAvailable(hiringDate, firstDayOfYear)) {
 			return removeCompensationDays(holidaysList);
 		}
 
@@ -46,17 +50,11 @@ public class HolidayService {
 
 	}
 
-	private Boolean compensationDaysAreNotAvailable(Date hiringDate) {
-		LocalDate firstDayOfYear = LocalDate.now().with(TemporalAdjusters.firstDayOfYear());
-
-		if (isWeekend(firstDayOfYear)) {
-			firstDayOfYear = getNextWorkingDay(firstDayOfYear);
-		}
-
-		LocalDate localHiringDate = LocalDate
+	private Boolean compensationDaysAreNotAvailable(Date hiringDate, LocalDate firstDayOfYear) {
+		LocalDate hiringDateParsed = LocalDate
 				.from(Instant.ofEpochMilli(hiringDate.getTime()).atZone(ZoneId.systemDefault()));
 
-		return !(localHiringDate.isEqual(firstDayOfYear) || localHiringDate.isBefore(firstDayOfYear));
+		return !(hiringDateParsed.isEqual(firstDayOfYear) || hiringDateParsed.isBefore(firstDayOfYear));
 
 	}
 
@@ -81,7 +79,8 @@ public class HolidayService {
 	}
 
 	private List<Holiday> removeCompensationDays(List<Holiday> holidayList) {
-		return holidayList.stream().filter(holiday -> !holiday.getDescription().toLowerCase().contains("horas"))
+		return holidayList.stream()
+				.filter(holiday -> !holiday.getDescription().toLowerCase().contains("horas"))
 				.collect(Collectors.toList());
 	}
 }
